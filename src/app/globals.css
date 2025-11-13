@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --base-color-background: #fafafa;
+    --base-color-foreground: #0a0a0a;
+    --base-color-surface: #ffffff;
+    --base-color-surface-foreground: #0a0a0a;
+    --base-color-muted: #f3f4f6;
+    --base-color-muted-foreground: #4b5563;
+    --base-color-border: rgba(10, 10, 10, 0.08);
+    --base-color-ring: rgba(59, 130, 246, 0.35);
+    --base-color-accent: #3b82f6;
+    --base-color-accent-foreground: #f8faff;
+    --base-color-success: #10b981;
+    --base-color-error: #ef4444;
+    --base-shadow-soft: 0 18px 48px -20px rgba(15, 23, 42, 0.35);
+    --base-shadow-focus: 0 0 0 4px rgba(59, 130, 246, 0.24);
+    --base-radius-sm: 0.375rem;
+    --base-radius-md: 0.75rem;
+    --base-radius-lg: 1rem;
+    --base-spacing-section: clamp(3.5rem, 8vw, 6rem);
+    --base-spacing-grid: clamp(1.5rem, 3vw, 2.5rem);
+    --font-sans-stack: "Inter", "Manrope", -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+    --font-heading-stack: "Manrope", "Inter", -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+    --font-mono-stack: "JetBrains Mono", "SFMono-Regular", "Menlo", monospace;
+    --line-height-base: 1.65;
+    --transition-base: 180ms ease-in-out;
+    background-color: var(--base-color-background);
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+    --base-color-background: #0a0a0a;
+    --base-color-foreground: #f3f4f6;
+    --base-color-surface: #111827;
+    --base-color-surface-foreground: #f9fafb;
+    --base-color-muted: rgba(148, 163, 184, 0.12);
+    --base-color-muted-foreground: #cbd5f5;
+    --base-color-border: rgba(148, 163, 184, 0.24);
+    --base-color-ring: rgba(96, 165, 250, 0.35);
+    --base-color-accent: #60a5fa;
+    --base-color-accent-foreground: #0b1120;
+    --base-color-success: #34d399;
+    --base-color-error: #f87171;
+    --base-shadow-soft: 0 18px 48px -20px rgba(8, 47, 73, 0.5);
+    background-color: var(--base-color-background);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --base-color-background: #0a0a0a;
+      --base-color-foreground: #f3f4f6;
+      --base-color-surface: #111827;
+      --base-color-surface-foreground: #f9fafb;
+      --base-color-muted: rgba(148, 163, 184, 0.12);
+      --base-color-muted-foreground: #cbd5f5;
+      --base-color-border: rgba(148, 163, 184, 0.24);
+      --base-color-ring: rgba(96, 165, 250, 0.35);
+      --base-color-accent: #60a5fa;
+      --base-color-accent-foreground: #0b1120;
+      --base-color-success: #34d399;
+      --base-color-error: #f87171;
+      --base-shadow-soft: 0 18px 48px -20px rgba(8, 47, 73, 0.5);
+      background-color: var(--base-color-background);
+    }
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-sans, var(--font-sans-stack));
+    line-height: var(--line-height-base);
+    background-color: var(--base-color-background);
+    color: var(--base-color-foreground);
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgba(59, 130, 246, 0.18);
+    color: var(--base-color-foreground);
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  a {
+    color: var(--base-color-accent);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  a:hover {
+    color: color-mix(in srgb, var(--base-color-accent) 85%, white);
+  }
+
+  a:focus-visible {
+    outline: 3px solid var(--base-color-ring);
+    outline-offset: 2px;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading, var(--font-heading-stack));
+    margin: 0;
+    font-weight: 700;
+    color: var(--base-color-foreground);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  h3 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  p {
+    margin: 0;
+    color: var(--base-color-muted-foreground);
+  }
+
+  strong {
+    color: var(--base-color-foreground);
+    font-weight: 600;
+  }
+
+  code,
+  pre {
+    font-family: var(--font-mono, var(--font-mono-stack));
+    font-size: 0.95rem;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 50%;
+    top: 1rem;
+    transform: translate(-50%, -150%);
+    padding: 0.75rem 1.25rem;
+    background-color: var(--base-color-accent);
+    color: var(--base-color-accent-foreground);
+    border-radius: var(--base-radius-md);
+    font-weight: 600;
+    z-index: 50;
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base);
+    box-shadow: var(--base-shadow-soft);
+  }
+
+  .skip-link:focus-visible {
+    transform: translate(-50%, 0);
+    outline: none;
+  }
+}
+
+@theme inline {
+  --color-background: var(--base-color-background);
+  --color-foreground: var(--base-color-foreground);
+  --color-surface: var(--base-color-surface);
+  --color-surface-foreground: var(--base-color-surface-foreground);
+  --color-muted: var(--base-color-muted);
+  --color-muted-foreground: var(--base-color-muted-foreground);
+  --color-border: var(--base-color-border);
+  --color-ring: var(--base-color-ring);
+  --color-accent: var(--base-color-accent);
+  --color-accent-foreground: var(--base-color-accent-foreground);
+  --color-success: var(--base-color-success);
+  --color-error: var(--base-color-error);
+  --font-sans: var(--font-sans, var(--font-sans-stack));
+  --font-heading: var(--font-heading, var(--font-heading-stack));
+  --font-mono: var(--font-mono, var(--font-mono-stack));
+  --radius-sm: var(--base-radius-sm);
+  --radius-md: var(--base-radius-md);
+  --radius-lg: var(--base-radius-lg);
+  --shadow-soft: var(--base-shadow-soft);
+  --shadow-focus: var(--base-shadow-focus);
+  --spacing-section: var(--base-spacing-section);
+  --spacing-grid: var(--base-spacing-grid);
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading, var(--font-heading-stack));
+  }
+
+  .shadow-soft {
+    box-shadow: var(--base-shadow-soft);
+  }
+
+  .py-section {
+    padding-block: var(--base-spacing-section);
+  }
+}

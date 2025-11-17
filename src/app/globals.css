@@ -3,72 +3,74 @@
 @layer base {
   :root {
     color-scheme: light;
-    --base-color-background: #fafafa;
-    --base-color-foreground: #0a0a0a;
-    --base-color-surface: #ffffff;
-    --base-color-surface-foreground: #0a0a0a;
-    --base-color-muted: #f3f4f6;
-    --base-color-muted-foreground: #4b5563;
-    --base-color-border: rgba(10, 10, 10, 0.08);
-    --base-color-ring: rgba(59, 130, 246, 0.35);
-    --base-color-accent: #3b82f6;
-    --base-color-accent-foreground: #f8faff;
-    --base-color-success: #10b981;
-    --base-color-error: #ef4444;
-    --base-shadow-soft: 0 18px 48px -20px rgba(15, 23, 42, 0.35);
-    --base-shadow-focus: 0 0 0 4px rgba(59, 130, 246, 0.24);
+    
+    /* Primary colours from DESIGN_SYSTEM.md */
+    --ds-color-text-light: #f3f2f9; /* Text on dark backgrounds / Light background */
+    --ds-color-highlight-mute: #aab2d1; /* Highlight or mute elements */
+    --ds-color-text-dark: #606887; /* Text on light backgrounds / Medium background */
+    --ds-color-highlight-mute-dark: #45495d; /* Highlight or mute elements */
+    --ds-color-bg-dark: #2b2b33; /* Dark background */
+    
+    /* Adapted color system - Light theme */
+    --base-color-background: #f3f2f9; /* Light background from DS - Text on dark backgrounds / Light background */
+    --base-color-foreground: #2b2b33; /* Dark text from DS - Dark background */
+    --base-color-surface: #ffffff; /* White surface */
+    --base-color-surface-foreground: #2b2b33; /* Dark text on surface */
+    --base-color-muted: rgba(170, 178, 209, 0.2); /* Highlight/mute from DS with opacity */
+    --base-color-muted-foreground: #606887; /* Medium text from DS - Text on light backgrounds / Medium background */
+    --base-color-border: rgba(43, 43, 51, 0.12); /* Based on dark bg */
+    --base-color-ring: rgba(153, 185, 255, 0.35); /* Azure from shapes */
+    --base-color-accent: #99b9ff; /* AZURE from shapes colours */
+    --base-color-accent-foreground: #2b2b33;
+    --base-color-success: #78ffd1; /* SPRINGGREEN from shapes */
+    --base-color-error: #ffb3c2; /* FLAMINGO from shapes */
+    --base-shadow-soft: 0 18px 48px -20px rgba(43, 43, 51, 0.25);
+    --base-shadow-focus: 0 0 0 4px rgba(153, 185, 255, 0.24);
     --base-radius-sm: 0.375rem;
     --base-radius-md: 0.75rem;
     --base-radius-lg: 1rem;
     --base-spacing-section: clamp(3.5rem, 8vw, 6rem);
     --base-spacing-grid: clamp(1.5rem, 3vw, 2.5rem);
-    --font-sans-stack: "Inter", "Manrope", -apple-system, BlinkMacSystemFont,
+    
+    /* Typography from DESIGN_SYSTEM.md - using Inter Variable as alternative to Studio Feixen Sans */
+    --font-sans-stack: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont,
       "Segoe UI", sans-serif;
-    --font-heading-stack: "Manrope", "Inter", -apple-system, BlinkMacSystemFont,
+    --font-heading-stack: "Inter Variable", "Inter", -apple-system, BlinkMacSystemFont,
       "Segoe UI", sans-serif;
     --font-mono-stack: "JetBrains Mono", "SFMono-Regular", "Menlo", monospace;
-    --line-height-base: 1.65;
+    
+    /* Typography weights and widths from DESIGN_SYSTEM.md */
+    --font-weight-heading: 800; /* Headers */
+    --font-weight-subheading: 500; /* Subheaders, links */
+    --font-weight-body: 500; /* Paragraphs */
+    --font-stretch-heading: 125%; /* Headers width */
+    --font-stretch-subheading: 125%; /* Subheaders width */
+    --font-stretch-body: 100%; /* Paragraphs width */
+    
+    --line-height-base: 1.75; /* Increased for better readability */
     --transition-base: 180ms ease-in-out;
     background-color: var(--base-color-background);
   }
 
   [data-theme="dark"] {
     color-scheme: dark;
-    --base-color-background: #0a0a0a;
-    --base-color-foreground: #f3f4f6;
-    --base-color-surface: #111827;
-    --base-color-surface-foreground: #f9fafb;
-    --base-color-muted: rgba(148, 163, 184, 0.12);
-    --base-color-muted-foreground: #cbd5f5;
-    --base-color-border: rgba(148, 163, 184, 0.24);
-    --base-color-ring: rgba(96, 165, 250, 0.35);
-    --base-color-accent: #60a5fa;
-    --base-color-accent-foreground: #0b1120;
-    --base-color-success: #34d399;
-    --base-color-error: #f87171;
-    --base-shadow-soft: 0 18px 48px -20px rgba(8, 47, 73, 0.5);
+    /* Dark theme using DESIGN_SYSTEM.md colors */
+    --base-color-background: #2b2b33; /* Dark background from DS */
+    --base-color-foreground: #f3f2f9; /* Light text from DS */
+    --base-color-surface: #45495d; /* Medium dark from DS */
+    --base-color-surface-foreground: #f3f2f9;
+    --base-color-muted: rgba(170, 178, 209, 0.15); /* Highlight/mute with opacity */
+    --base-color-muted-foreground: #aab2d1; /* Highlight/mute from DS */
+    --base-color-border: rgba(243, 242, 249, 0.15);
+    --base-color-ring: rgba(153, 185, 255, 0.4); /* Azure from shapes */
+    --base-color-accent: #99b9ff; /* AZURE from shapes */
+    --base-color-accent-foreground: #2b2b33;
+    --base-color-success: #78ffd1; /* SPRINGGREEN from shapes */
+    --base-color-error: #ffb3c2; /* FLAMINGO from shapes */
+    --base-shadow-soft: 0 18px 48px -20px rgba(0, 0, 0, 0.6);
     background-color: var(--base-color-background);
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      color-scheme: dark;
-      --base-color-background: #0a0a0a;
-      --base-color-foreground: #f3f4f6;
-      --base-color-surface: #111827;
-      --base-color-surface-foreground: #f9fafb;
-      --base-color-muted: rgba(148, 163, 184, 0.12);
-      --base-color-muted-foreground: #cbd5f5;
-      --base-color-border: rgba(148, 163, 184, 0.24);
-      --base-color-ring: rgba(96, 165, 250, 0.35);
-      --base-color-accent: #60a5fa;
-      --base-color-accent-foreground: #0b1120;
-      --base-color-success: #34d399;
-      --base-color-error: #f87171;
-      --base-shadow-soft: 0 18px 48px -20px rgba(8, 47, 73, 0.5);
-      background-color: var(--base-color-background);
-    }
-  }
 
   *,
   *::before,
@@ -92,7 +94,7 @@
   }
 
   ::selection {
-    background-color: rgba(59, 130, 246, 0.18);
+    background-color: rgba(153, 185, 255, 0.25); /* Azure from shapes */
     color: var(--base-color-foreground);
   }
 
@@ -134,36 +136,52 @@
   h6 {
     font-family: var(--font-heading, var(--font-heading-stack));
     margin: 0;
-    font-weight: 700;
+    font-weight: var(--font-weight-heading, 800);
+    font-stretch: var(--font-stretch-heading, 125%);
+    text-transform: uppercase; /* Headers uppercase per DESIGN_SYSTEM.md */
     color: var(--base-color-foreground);
+    letter-spacing: 0.02em; /* Slight spacing for uppercase */
   }
 
   h1 {
     font-size: clamp(2.5rem, 5vw, 3.75rem);
     line-height: 1.08;
-    letter-spacing: -0.035em;
+    letter-spacing: 0.01em;
   }
 
   h2 {
     font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.15;
-    letter-spacing: -0.025em;
+    letter-spacing: 0.015em;
   }
 
   h3 {
     font-size: clamp(1.75rem, 3vw, 2.25rem);
     line-height: 1.2;
-    letter-spacing: -0.015em;
+    letter-spacing: 0.02em;
   }
 
   p {
     margin: 0;
     color: var(--base-color-muted-foreground);
+    font-weight: var(--font-weight-body, 500);
+    font-stretch: var(--font-stretch-body, 100%);
+    text-transform: none; /* Paragraphs mixed case per DESIGN_SYSTEM.md */
   }
 
   strong {
     color: var(--base-color-foreground);
-    font-weight: 600;
+    font-weight: var(--font-weight-subheading, 500);
+    font-stretch: var(--font-stretch-subheading, 125%);
+    text-transform: lowercase; /* Highlighted words lowercase per DESIGN_SYSTEM.md */
+  }
+  
+  /* Links and subheaders - lowercase per DESIGN_SYSTEM.md */
+  a,
+  .subheading {
+    font-weight: var(--font-weight-subheading, 500);
+    font-stretch: var(--font-stretch-subheading, 125%);
+    text-transform: lowercase;
   }
 
   code,
@@ -223,6 +241,20 @@
 @layer utilities {
   .font-heading {
     font-family: var(--font-heading, var(--font-heading-stack));
+    font-weight: var(--font-weight-heading, 800);
+    font-stretch: var(--font-stretch-heading, 125%);
+  }
+  
+  .font-subheading {
+    font-weight: var(--font-weight-subheading, 500);
+    font-stretch: var(--font-stretch-subheading, 125%);
+    text-transform: lowercase;
+  }
+  
+  .font-body {
+    font-weight: var(--font-weight-body, 500);
+    font-stretch: var(--font-stretch-body, 100%);
+    text-transform: none;
   }
 
   .shadow-soft {
@@ -231,5 +263,431 @@
 
   .py-section {
     padding-block: var(--base-spacing-section);
+  }
+
+  /* Logo component styles */
+  .logo {
+    display: inline-block;
+    flex-shrink: 0;
+    transition: transform 300ms ease, opacity 300ms ease;
+  }
+
+  .logo--animated {
+    animation: logo-appear 600ms ease-out;
+  }
+
+  .logo:hover {
+    transform: scale(1.05);
+  }
+
+  @keyframes logo-appear {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Logo color variables */
+  :root {
+    --logo-color-azure: #99b9ff;
+    --logo-color-springgreen: #78ffd1;
+    --logo-color-flamingo: #ffb3c2;
+    --logo-color-lime: #f0ffa6;
+  }
+
+  [data-theme="dark"] {
+    --logo-color-azure: #99b9ff;
+    --logo-color-springgreen: #78ffd1;
+    --logo-color-flamingo: #ffb3c2;
+    --logo-color-lime: #f0ffa6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo,
+    .logo--animated {
+      animation: none;
+      transition: none;
+    }
+  }
+
+  /* Hero section interactive background shapes */
+  .hero-shapes-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+  }
+
+  .hero-shape {
+    position: absolute;
+    transform-origin: center center;
+    will-change: transform, opacity;
+    /* Ensure forms are visible */
+    z-index: 0;
+  }
+
+  .hero-shape-logo {
+    filter: blur(35px); /* Blur for background effect */
+    opacity: 0.4; /* Reduced opacity for background */
+    transition: filter 0.3s ease, opacity 0.3s ease;
+  }
+  
+  /* Smoother blur for assembled forms */
+  .hero-shape[data-assembled="true"] .hero-shape-logo {
+    filter: blur(25px);
+    opacity: 0.5;
+  }
+  
+  /* Ensure SVG fills use currentColor */
+  .hero-shape-logo svg {
+    fill: currentColor;
+  }
+
+  .hero-shape-1 {
+    top: 10%;
+    left: 10%;
+  }
+
+  .hero-shape-2 {
+    top: 50%;
+    right: 15%;
+  }
+
+  .hero-shape-3 {
+    bottom: 20%;
+    left: 50%;
+  }
+
+  /* When assembled (SR/RS), forms converge to center */
+  .hero-shapes-container:has(.hero-shape[data-assembled="true"]) .hero-shape-1 {
+    top: 45%;
+    left: 45%;
+  }
+
+  .hero-shapes-container:has(.hero-shape[data-assembled="true"]) .hero-shape-2 {
+    top: 45%;
+    right: 45%;
+  }
+
+  .hero-shapes-container:has(.hero-shape[data-assembled="true"]) .hero-shape-3 {
+    bottom: 45%;
+    left: 50%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-shape {
+      animation: none;
+      transform: scale(1) !important;
+      opacity: 0.1 !important;
+    }
+  }
+
+  /* Code block styles for blog */
+  pre[class*="language-"] {
+    @apply m-0 overflow-x-auto;
+  }
+
+  code[class*="language-"] {
+    @apply text-sm;
+  }
+
+  /* Markdown content styles */
+  .prose {
+    @apply text-foreground;
+  }
+
+  .prose code:not([class*="language-"]) {
+    @apply font-mono rounded bg-accent/10 px-1.5 py-0.5 text-sm text-accent;
+  }
+
+  .prose pre {
+    @apply overflow-x-auto rounded-xl border border-border/60;
+  }
+
+  .prose pre code {
+    @apply block p-0 bg-transparent text-inherit;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply font-heading text-foreground;
+  }
+
+  .prose p {
+    @apply text-muted-foreground leading-relaxed;
+  }
+
+  .prose a {
+    @apply text-accent hover:text-accent/80 underline;
+  }
+
+  .prose strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .prose ul,
+  .prose ol {
+    @apply text-muted-foreground;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-accent pl-4 italic text-muted-foreground;
+  }
+
+  /* Marquee animation for technologies */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+    display: flex;
+    width: fit-content;
+  }
+
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-marquee {
+      animation: none;
+    }
+  }
+
+  /* Flip card styles */
+  .flip-card {
+    perspective: 1000px;
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--base-color-border);
+    box-shadow: var(--base-shadow-soft);
+    z-index: 1;
+  }
+
+  .flip-card-back {
+    z-index: 2;
+  }
+
+  .flip-card-colored {
+    border-color: var(--base-color-border) !important;
+  }
+
+  /* Background color for flip cards - higher opacity in light mode for better contrast */
+  .flip-card-colored[data-bg-color] {
+    background-color: color-mix(in srgb, var(--flip-card-bg-base) 30%, transparent) !important;
+  }
+
+  [data-theme="dark"] .flip-card-colored[data-bg-color] {
+    background-color: color-mix(in srgb, var(--flip-card-bg-base) 15%, transparent) !important;
+  }
+
+  /* Icon backgrounds - brighter in light mode */
+  .flip-card-icon-bg {
+    background-color: color-mix(in srgb, var(--icon-bg-color) 70%, transparent) !important;
+  }
+
+  [data-theme="dark"] .flip-card-icon-bg {
+    background-color: color-mix(in srgb, var(--icon-bg-color) 60%, transparent) !important;
+  }
+
+  /* Icon colors - dark in light mode, light in dark mode */
+  .flip-card-icon {
+    color: #2b2b33 !important; /* Dark in light mode */
+  }
+
+  [data-theme="dark"] .flip-card-icon {
+    color: #f3f2f9 !important; /* Light in dark mode */
+  }
+
+  /* Benefit boxes - more contrast in light mode */
+  .flip-card-benefit {
+    border-color: color-mix(in srgb, var(--benefit-color) 50%, transparent) !important;
+    background-color: color-mix(in srgb, var(--benefit-bg-color) 40%, transparent) !important;
+  }
+
+  [data-theme="dark"] .flip-card-benefit {
+    border-color: color-mix(in srgb, var(--benefit-color) 60%, transparent) !important;
+    background-color: color-mix(in srgb, var(--benefit-bg-color) 30%, transparent) !important;
+  }
+
+  /* Benefit text - dark in light mode, uses color in dark mode */
+  .flip-card-benefit-text {
+    color: #2b2b33 !important; /* Dark text in light mode */
+  }
+
+  [data-theme="dark"] .flip-card-benefit-text {
+    color: var(--benefit-color) !important; /* Colored text in dark mode */
+  }
+
+  /* Button borders and text adaptation */
+  .btn-accent {
+    border-color: #2b2b33 !important; /* Dark border in light mode */
+    color: #2b2b33 !important; /* Dark text in light mode */
+  }
+
+  [data-theme="dark"] .btn-accent {
+    border-color: #f3f2f9 !important; /* Light border in dark mode */
+    color: #f3f2f9 !important; /* Light text in dark mode */
+  }
+
+  .flip-card-front {
+    z-index: 2;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+    justify-content: flex-start;
+  }
+
+  /* Mobile: show back side by default */
+  @media (max-width: 767px) {
+    .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .flip-card-back {
+      opacity: 1 !important;
+      pointer-events: auto;
+      transform: rotateY(0deg);
+      z-index: 2;
+      visibility: visible !important;
+    }
+
+    /* When flipped to show front on mobile */
+    .flip-card-inner.mobile-flipped {
+      transform: rotateY(0deg);
+    }
+
+    .flip-card-inner.mobile-flipped .flip-card-front {
+      opacity: 1 !important;
+      pointer-events: auto;
+      z-index: 2;
+      visibility: visible !important;
+    }
+
+    .flip-card-inner.mobile-flipped .flip-card-back {
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flip-card-inner {
+      transition: none;
+    }
+    
+    .flip-card-inner:hover {
+      transform: none !important;
+    }
+  }
+
+  /* Dynamic background animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(30px, -30px) scale(1.1);
+    }
+    50% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+    75% {
+      transform: translate(20px, 30px) scale(1.05);
+    }
+  }
+
+  .bg-orb-1 {
+    animation: float 20s ease-in-out infinite;
+    animation-delay: 0s;
+  }
+
+  .bg-orb-2 {
+    animation: float 25s ease-in-out infinite;
+    animation-delay: 5s;
+  }
+
+  .bg-orb-3 {
+    animation: float 30s ease-in-out infinite;
+    animation-delay: 10s;
+  }
+
+  .bg-orb-4 {
+    animation: float 22s ease-in-out infinite;
+    animation-delay: 7s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bg-orb-1,
+    .bg-orb-2,
+    .bg-orb-3,
+    .bg-orb-4 {
+      animation: none;
+    }
+  }
+
+  /* Typewriter cursor animation */
+  @keyframes typewriter-blink {
+    0%, 50% {
+      opacity: 1;
+    }
+    51%, 100% {
+      opacity: 0;
+    }
+  }
+
+  .typewriter-cursor {
+    animation: typewriter-blink 1s infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typewriter-cursor {
+      animation: none;
+      opacity: 1;
+    }
   }
 }

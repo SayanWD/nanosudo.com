@@ -1,7 +1,11 @@
+'use client';
+
 // Layout wrapper: base shell for pages with optional header and footer.
 import type { ReactElement, ReactNode } from "react";
+import { usePathname } from "@/i18n/routing";
 
 import { cn } from "@/lib/cn";
+import { DynamicBackground } from "@/components/background/dynamic-background";
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 
@@ -18,7 +22,14 @@ export function SiteShell({
   header,
   footer,
 }: SiteShellProps): ReactElement {
-  const resolvedHeader = header ?? <SiteHeader />;
+  const pathname = usePathname();
+  // Show header only on home page (root or locale root)
+  const isHomePage = pathname === '/' || pathname.match(/^\/[a-z]{2}\/?$/);
+  const resolvedHeader = header !== undefined 
+    ? header 
+    : isHomePage 
+      ? <SiteHeader /> 
+      : null;
   const resolvedFooter = footer ?? <SiteFooter />;
 
   return (
@@ -28,14 +39,15 @@ export function SiteShell({
         className,
       )}
     >
+      <DynamicBackground />
       {resolvedHeader ? (
         <header className="sticky top-0 z-20 border-b border-border/60 bg-surface/80 backdrop-blur-lg">
           {resolvedHeader}
         </header>
       ) : null}
-      <div className="flex flex-1 flex-col">{children}</div>
+      <div className="relative z-10 flex flex-1 flex-col">{children}</div>
       {resolvedFooter ? (
-        <footer className="border-t border-border/60 bg-surface/80">
+        <footer className="relative z-10 border-t border-border/60 bg-surface/80">
           {resolvedFooter}
         </footer>
       ) : null}

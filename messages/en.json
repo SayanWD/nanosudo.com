@@ -1,0 +1,339 @@
+{
+  "common": {
+    "nav": {
+      "home": "Home",
+      "cases": "Cases",
+      "about": "About",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "footer": {
+      "quickLinks": "Quick links",
+      "contacts": "Contacts",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "github": "GitHub",
+      "fillBrief": "Fill Brief",
+      "process": "Process",
+      "status": {
+        "online": "online"
+      }
+    },
+    "cta": {
+      "submitRequest": "Submit Request",
+      "getFreeConsultation": "Get Free Consultation",
+      "cost": "Cost",
+      "howIWork": "How I Work",
+      "viewAllCases": "View All Cases"
+    }
+  },
+  "footer": {
+    "pitch": {
+      "title": "I build websites & web apps that grow revenue.",
+      "description": "One‑month delivery: strategy, development, integrations, launch & analytics. Focus on speed, conversion and ROI."
+    }
+  },
+  "home": {
+    "hero": {
+      "subtitle": "Full-stack developer · Almaty",
+      "title": "I develop solutions that <highlight>deliver results</highlight>",
+      "description": "High-performance web applications on Next.js and TypeScript. Full cycle: development, integrations with CRM/1C/Kaspi, marketing. ROI 2-3 months.",
+      "photoPlaceholder": "Photo — Sayan Roor"
+    }
+  },
+  "cases": {
+    "list": {
+      "label": "cases",
+      "title": "Real projects with measurable results",
+      "description": "Each project solves specific business goals with clear tasks and outcomes.",
+      "openCaseAria": "More about project {title}"
+    },
+    "detail": {
+      "backToCases": "Back to cases",
+      "goals": "Project goals",
+      "tasks": "Tasks",
+      "results": "Results",
+      "metricsSubtitle": "Measurable performance indicators",
+      "keyMetrics": "Key metrics",
+      "keyMetricsSubtitle": "Specific performance indicators of the project",
+      "backToList": "Back to cases list",
+      "openProject": "Open project"
+    }
+  },
+  "about": {
+    "hero": {
+      "label": "about",
+      "title": "From education to independent development",
+      "description": "I build web apps that solve business problems and deliver measurable results. From code to launch — full development cycle."
+    },
+    "sections": {
+      "education": "Education",
+      "experience": "Experience"
+    },
+    "pdf": {
+      "view": "View document",
+      "close": "Close"
+    },
+    "education": {
+      "bachelor": {
+        "title": "Bachelor of Engineering and Technology",
+        "description": "Specialization in information technology and programming.",
+        "university": "Manash Kozybayev University",
+        "faculty": "Faculty of Engineering and Digital Technologies"
+      },
+      "master": {
+        "title": "Master of Engineering and Technology",
+        "description": "In‑depth study of modern technologies and development methodologies.",
+        "university": "Manash Kozybayev University",
+        "faculty": "Faculty of Engineering and Digital Technologies"
+      }
+    },
+    "experience": {
+      "frontend": {
+        "title": "Frontend Developer",
+        "description": "Built UIs with React and TypeScript for enterprise and e‑commerce. Since 2020 — coding as a hobby alongside main job."
+      },
+      "fullstack": {
+        "title": "Full‑stack Developer",
+        "description": "Added backend with Node.js, databases and external API integrations. Full development cycle ownership."
+      },
+      "independent": {
+        "title": "Independent Developer",
+        "description": "Hobby became profession. End‑to‑end delivery from design to launch. Next.js, TypeScript, CRM/1C/Kaspi integrations. Focus on conversion and performance."
+      }
+    },
+    "story": {
+      "title": "How I became a developer",
+      "p1": "Before development, I worked in the quasi‑public sector — at <kaz>Kazatomprom</kaz>, <alt>Altynalmas</alt> and <sk>Samruk‑Kazyna</sk>. This was experience in large organizations with strict requirements and responsibility.",
+      "p2": "Over time, I realized I wanted to do what brings measurable outcomes. I burned out from bureaucracy and processes that didn’t help business. I decided to turn development into my main occupation — a hobby into a profession.",
+      "p3": "This path taught me responsibility, work on large projects and how business processes should function in practice. Now every project is a tool to achieve goals.",
+      "p4": "I work for results and value time and quality. Your project is an opportunity to create something that truly helps."
+    }
+  },
+  "contact": {
+    "hero": {
+      "label": "contact",
+      "title": "Let's discuss your project",
+      "description": "Reach out in any convenient way. I reply within 24 hours. First consultation is free."
+    },
+    "methods": {
+      "email": {
+        "title": "Email",
+        "description": "For business inquiries and questions"
+      },
+      "telegram": {
+        "title": "Telegram",
+        "description": "Fast channel to discuss your project"
+      }
+    },
+    "location": {
+      "title": "Location",
+      "description": "Working remotely",
+      "details": "Almaty, Kazakhstan · GMT+5"
+    },
+    "cta": {
+      "title": "Ready to start a project?",
+      "description": "Fill out a brief and I'll prepare a detailed proposal with scope, timeline and budget.",
+      "button": "Fill the brief"
+    },
+    "hours": {
+      "title": "Working hours",
+      "weekdays": {
+        "day": "Monday – Friday",
+        "time": "9:00 – 20:00 (GMT+5)"
+      },
+      "saturday": {
+        "day": "Saturday",
+        "time": "10:00 – 18:00"
+      },
+      "sunday": {
+        "day": "Sunday",
+        "time": "By appointment"
+      }
+    },
+    "next": {
+      "title": "What happens next?",
+      "points": {
+        "responseTime": "I respond to all messages within 24 hours",
+        "freeConsultation": "First consultation is free (30–60 minutes)",
+        "worldwide": "I work with clients worldwide",
+        "channels": "Available via Telegram / WhatsApp for quick communication"
+      }
+    }
+  },
+  "home": {
+    "hero": {
+      "subtitle": "Full-stack developer · Almaty",
+      "title": "I develop solutions that <highlight>deliver results</highlight>",
+      "description": "High-performance web applications on Next.js and TypeScript. Full cycle: development, integrations with CRM/1C/Kaspi, marketing. ROI 2-3 months.",
+      "photoPlaceholder": "Photo — Sayan Roor"
+    },
+    "stats": {
+      "label": "results",
+      "title": "Measurable quality metrics",
+      "items": {
+        "successfulProjects": "Successful projects",
+        "pageSpeed": "PageSpeed Score",
+        "avgLoad": "Average load time",
+        "codeWarranty": "Code warranty"
+      }
+    },
+    "expertise": {
+      "label": "expertise",
+      "title": "What I can do and what I work with",
+      "description": "One contractor covering design, development, integrations, and marketing. No intermediaries, no unnecessary overhead.",
+      "items": {
+        "dev": {
+          "title": "Full-cycle development",
+          "description": "Frontend, Backend, Database, API — the whole stack in one pair of hands. From architecture to deploy."
+        },
+        "integrations": {
+          "title": "Integrations & automation",
+          "description": "CRM, 1C, Kaspi API, payments — connecting systems into one workflow."
+        },
+        "performance": {
+          "title": "Performance & SEO",
+          "description": "Load speed 1–1.5s, Core Web Vitals green. Technical optimizations."
+        },
+        "marketing": {
+          "title": "Marketing & analytics",
+          "description": "Ads setup, analytics, A/B tests — full picture of effectiveness."
+        }
+      }
+    },
+    "whyMe": {
+      "label": "why me",
+      "title": "Economics: why one developer is better than an agency",
+      "items": {
+        "direct": {
+          "title": "Direct communication",
+          "description": "You talk directly to the developer. No managers or delays — decisions are made fast.",
+          "benefit": "Tasks get done 2–3x faster"
+        },
+        "savings": {
+          "title": "40–60% savings",
+          "description": "No agency overhead. You pay for work, not for offices and margins.",
+          "benefit": "Expertise for 40–60% of agency price"
+        },
+        "responsibility": {
+          "title": "Personal responsibility",
+          "description": "I write the code — I own the result. Know every line, fix quickly.",
+          "benefit": "Fewer bugs, faster support"
+        },
+        "speed": {
+          "title": "Flexibility & speed",
+          "description": "Urgent changes and new ideas — discuss and ship within a day.",
+          "benefit": "Faster decisions"
+        },
+        "partnership": {
+          "title": "Long-term partnership",
+          "description": "I know your business, proactively propose improvements. Always in touch.",
+          "benefit": "Help after launch as well"
+        },
+        "transparency": {
+          "title": "Guarantees & transparency",
+          "description": "Contract, staged payments, weekly reports, access to staging. 12-month warranty.",
+          "benefit": "Transparent process without surprises"
+        }
+      }
+    },
+    "process": {
+      "label": "work process",
+      "title": "Transparent process. No surprises",
+      "description": "From consultation to launch — <highlight>1 month</highlight>. Fast, transparent, with guarantees. See progress every week.",
+      "outputLabel": "What you get:",
+      "steps": {
+        "consult": {
+          "title": "Free consultation",
+          "duration": "30–60 minutes",
+          "description": "Understand your case, analyze competitors. Give rough estimate and timing.",
+          "output": "Clarity on next steps. Free."
+        },
+        "scope": {
+          "title": "Strategy & spec",
+          "duration": "3–5 days",
+          "description": "Detailed spec with wireframes, development plan, marketing strategy, contract & payment schedule.",
+          "output": "Full project picture. We adjust before start."
+        },
+        "development": {
+          "title": "Development",
+          "duration": "2–3 weeks",
+          "description": "Weekly call with report, access to staging, changes on the go.",
+          "output": "Visible progress. No black boxes."
+        },
+        "launch": {
+          "title": "Launch & setup",
+          "duration": "3–5 days",
+          "description": "Production deploy, analytics setup, ads launch, team onboarding.",
+          "output": "Working tool + first leads"
+        },
+        "growth": {
+          "title": "Growth & optimization",
+          "duration": "Ongoing",
+          "description": "Weekly analytics check, ads optimization, improvement suggestions, 24/7 support.",
+          "output": "Stable sales growth"
+        }
+      }
+    },
+    "guarantees": {
+      "label": "guarantees",
+      "title": "Your protection and my responsibility",
+      "items": {
+        "warranty": {
+          "title": "Warranty",
+          "description": "12 months of free bug fixes and support"
+        },
+        "contract": {
+          "title": "Contract",
+          "description": "Work with legal entities, all terms in contract"
+        },
+        "payment": {
+          "title": "Payment",
+          "description": "30% → 40% → 30%. Pay only for completed work"
+        },
+        "process": {
+          "title": "Process",
+          "description": "Weekly calls, staging access, full progress transparency"
+        }
+      }
+    },
+    "portfolio": {
+      "label": "portfolio",
+      "title": "Latest Projects",
+      "description": "Real cases with measurable results: speed, conversion, integrations."
+    },
+    "finalCta": {
+      "label": "ready to start?",
+      "title": "Let's discuss your project?",
+      "description": "First consultation is free. In 30-60 minutes you'll get an action plan and specific recommendations.",
+      "subtitle": "Even if we don't start working together — you'll get an action plan.",
+      "benefits": {
+        "item1": "We'll review your case",
+        "item2": "I'll analyze competitors",
+        "item3": "Get specific recommendations",
+        "item4": "Estimate cost and timeline"
+      }
+    }
+  },
+  "blog": {
+    "list": {
+      "label": "blog",
+      "title": "Developer blog",
+      "description": "Practical articles on development, performance and best practices. Real experience from projects.",
+      "readMore": "Read article",
+      "empty": "Articles coming soon",
+      "readPostAria": "Read article: {title}"
+    },
+    "post": {
+      "backToBlog": "Back to blog",
+      "prevArticle": "Previous article",
+      "nextArticle": "Next article",
+      "backToList": "Back to articles list",
+      "authorBio": "Full‑stack developer. I build Next.js & TypeScript web apps with focus on performance and conversion."
+    }
+  }
+}
+

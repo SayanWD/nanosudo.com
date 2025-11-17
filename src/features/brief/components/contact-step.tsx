@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useState, type ReactElement } from "react";
+import { Link } from "@/i18n/routing";
 
 import { cn } from "@/lib/cn";
 

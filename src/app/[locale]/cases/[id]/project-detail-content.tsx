@@ -8,7 +8,7 @@ import { ArrowLeft, ExternalLink, Target, CheckCircle2, TrendingUp, Calendar, Ta
 import { useTranslations } from "next-intl";
 
 import { Container } from "@/components/layout/container";
-import type { PortfolioProject } from "@/lib/portfolio-data";
+import { getTranslatedProject, type PortfolioProject } from "@/lib/portfolio-data";
 
 // Animation variants
 const fadeInUp = {
@@ -31,6 +31,8 @@ type ProjectDetailContentProps = {
 
 export function ProjectDetailContent({ project }: ProjectDetailContentProps): ReactElement {
   const t = useTranslations();
+  // Get translated project data
+  const translatedProject = getTranslatedProject(project.id, t) ?? project;
   return (
     <>
       {/* Header with breadcrumb */}
@@ -58,25 +60,25 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
                   <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                     <span className="inline-flex items-center gap-1.5">
                       <Tag className="w-4 h-4" />
-                      {project.category}
+                      {translatedProject.category}
                     </span>
                     <span className="text-border">·</span>
                     <span className="inline-flex items-center gap-1.5">
                       <Calendar className="w-4 h-4" />
-                      {project.year}
+                      {translatedProject.year}
                     </span>
                   </div>
                   <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl leading-tight">
-                    {project.title}
+                    {translatedProject.title}
                   </h1>
                   <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-                    {project.description}
+                    {translatedProject.description}
                   </p>
                 </div>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 pt-2">
-                  {project.tags.map((tag) => (
+                  {translatedProject.tags.map((tag) => (
                     <span
                       key={tag}
                       className="rounded-full border border-border/60 bg-background px-4 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-accent/60 hover:text-foreground"
@@ -88,10 +90,10 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
               </motion.div>
 
               {/* CTA Button */}
-              {project.url && (
+              {translatedProject.url && (
                 <motion.div variants={fadeInUp} className="lg:sticky lg:top-24">
                   <a
-                    href={project.url}
+                    href={translatedProject.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold normal-case text-accent-foreground shadow-soft transition-all hover:bg-accent/90 hover:shadow-lg hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
@@ -116,8 +118,8 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
             transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
           >
             <Image
-              src={project.image}
-              alt={project.imageAlt}
+              src={translatedProject.image}
+              alt={translatedProject.imageAlt}
               fill
               className="object-cover"
               priority
@@ -131,7 +133,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
         <Container className="max-w-6xl">
           <div className="grid gap-16 lg:grid-cols-2">
             {/* Goals */}
-            {project.goals && project.goals.length > 0 && (
+            {translatedProject.goals && translatedProject.goals.length > 0 && (
               <motion.div
                 className="space-y-6"
                 initial="initial"
@@ -146,7 +148,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
                        <h2 className="font-heading text-2xl md:text-3xl">{t("cases.detail.goals")}</h2>
                 </motion.div>
                      <ul className="space-y-4">
-                  {project.goals.map((goal, index) => (
+                  {translatedProject.goals.map((goal, index) => (
                     <motion.li
                       key={index}
                       className="flex items-start gap-4 rounded-xl border border-border/40 bg-surface/40 p-4 transition-colors hover:border-accent/40 hover:bg-surface/60"
@@ -163,7 +165,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
             )}
 
             {/* Tasks */}
-            {project.tasks && project.tasks.length > 0 && (
+            {translatedProject.tasks && translatedProject.tasks.length > 0 && (
               <motion.div
                 className="space-y-6"
                 initial="initial"
@@ -178,7 +180,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
                        <h2 className="font-heading text-2xl md:text-3xl">{t("cases.detail.tasks")}</h2>
                 </motion.div>
                 <ul className="space-y-4">
-                  {project.tasks.map((task, index) => (
+                  {translatedProject.tasks.map((task, index) => (
                     <motion.li
                       key={index}
                       className="flex items-start gap-4 rounded-xl border border-border/40 bg-surface/40 p-4 transition-colors hover:border-accent/40 hover:bg-surface/60"
@@ -196,7 +198,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
           </div>
 
           {/* Results - Highlighted Section */}
-          {project.results && project.results.length > 0 && (
+          {translatedProject.results && translatedProject.results.length > 0 && (
             <motion.div
               className="mt-16 space-y-8 rounded-3xl border-2 border-accent/40 bg-gradient-to-br from-accent/10 via-accent/5 to-surface/40 p-8 md:p-12 shadow-soft"
               initial="initial"
@@ -214,7 +216,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
                 </div>
               </motion.div>
               <ul className="grid gap-4 md:grid-cols-2">
-                {project.results.map((result, index) => (
+                {translatedProject.results.map((result, index) => (
                   <motion.li
                     key={index}
                     className="flex items-start gap-4 rounded-xl border border-accent/30 bg-surface/60 p-5 transition-all hover:border-accent/50 hover:bg-surface/80"
@@ -231,7 +233,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
           )}
 
           {/* Metrics */}
-          {project.metrics && project.metrics.length > 0 && (
+          {translatedProject.metrics && translatedProject.metrics.length > 0 && (
             <motion.div
               className="mt-16 space-y-6"
               initial="initial"
@@ -244,7 +246,7 @@ export function ProjectDetailContent({ project }: ProjectDetailContentProps): Re
                      <p className="text-muted-foreground">{t("cases.detail.keyMetricsSubtitle")}</p>
               </motion.div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                {project.metrics.map((metric, index) => (
+                {translatedProject.metrics.map((metric, index) => (
                   <motion.div
                     key={index}
                     className="rounded-2xl border border-border/60 bg-surface/80 p-6 text-center shadow-soft transition-all hover:-translate-y-1 hover:border-accent/40 hover:shadow-lg"

@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import type { Metadata } from "next";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -10,6 +11,7 @@ import {
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { routing } from "@/i18n/routing";
+import { generateMetadata as generateBaseMetadata } from "@/lib/metadata";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -33,6 +35,22 @@ const jetBrainsMono = JetBrainsMono({
 
 export function generateStaticParams(): Array<{ locale: string }> {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+type LocaleLayoutMetadataProps = {
+  readonly params: Promise<{ readonly locale: string }>;
+};
+
+export async function generateMetadata({ params }: LocaleLayoutMetadataProps): Promise<Metadata> {
+  const { locale } = await params;
+  
+  if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
+    return generateBaseMetadata();
+  }
+
+  return generateBaseMetadata({
+    locale,
+  });
 }
 
 type LocaleLayoutProps = {

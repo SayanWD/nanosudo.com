@@ -31,7 +31,7 @@ const CONTACT_LINKS: Array<{
   { labelKey: "common.footer.telegram", href: "https://t.me/satoshi_iam", icon: Send },
   { labelKey: "common.footer.instagram", href: "https://instagram.com/satoshi_iam", icon: Instagram },
   { labelKey: "common.footer.linkedin", href: "https://www.linkedin.com/in/sayan-roor/", icon: Linkedin },
-  { labelKey: "common.footer.github", href: "https://github.com/sayanroor/nanosudo.com", icon: Github },
+  { labelKey: "common.footer.github", href: "https://github.com/SayanWD", icon: Github },
 ];
 
 const QUICK_LINKS: Array<{
@@ -115,7 +115,7 @@ export function SiteFooter(): ReactElement {
                   >
                     <Icon className="w-4 h-4" />
                     <span>{t(link.labelKey)}</span>
-                    {link.href.includes("github.com") && link.href.includes("/nanosudo.com") && (
+                    {link.href.includes("github.com") && link.href.includes("SayanWD") && (
                       <span className="ml-1 inline-flex items-center gap-1 rounded-full border border-border/60 bg-surface/80 px-2 py-0.5 text-[11px] leading-none">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
                         {t("common.footer.status.online")}

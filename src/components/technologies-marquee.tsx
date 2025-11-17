@@ -26,10 +26,17 @@ const technologies = [
   { name: 'Jest', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jest/jest-plain.svg' },
 ] as const;
 
-export function TechnologiesMarquee(): ReactElement {
+type TechnologiesMarqueeProps = {
+  readonly direction?: 'left' | 'right';
+};
+
+export function TechnologiesMarquee({ direction = 'left' }: TechnologiesMarqueeProps): ReactElement {
+  const animationClass = direction === 'right' ? 'animate-marquee-reverse' : 'animate-marquee';
+  const flexDirection = direction === 'right' ? 'flex-row-reverse' : 'flex-row';
+  
   return (
     <div className="relative w-full overflow-hidden py-6 border-t border-border/60">
-      <div className="flex animate-marquee gap-8 w-fit">
+      <div className={`flex ${flexDirection} ${animationClass} gap-8 w-fit`}>
         {/* First set */}
         {technologies.map((tech, i) => (
           <div

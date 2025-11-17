@@ -10,6 +10,7 @@ import { Container } from "@/components/layout/container";
 import { SiteShell } from "@/components/layout/site-shell";
 import { getPostBySlug, getAllPosts, type AppLocale } from "@/lib/blog-data";
 import { MarkdownContent } from "@/components/blog/markdown-content";
+import { generateMetadata as generateBaseMetadata } from "@/lib/metadata";
 
 type BlogPostPageParams = {
   readonly slug: string;
@@ -34,30 +35,22 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
-  return {
-    title: `${post.title} | Sayan Roor`,
+  const baseUrl = 'https://nanosudo.com';
+  const url = locale === 'ru' 
+    ? `${baseUrl}/blog/${slug}`
+    : `${baseUrl}/${locale}/blog/${slug}`;
+
+  return generateBaseMetadata({
+    title: post.title,
     description: post.description,
-    openGraph: {
-      title: post.title,
-      description: post.description,
-      type: 'article',
-      publishedTime: post.publishedAt,
-      authors: [post.author],
-      tags: [...post.tags],
-      images: [
-        {
-          url: post.image,
-          alt: post.imageAlt,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.description,
-      images: [post.image],
-    },
-  };
+    image: post.image.startsWith('http') ? post.image : `${baseUrl}${post.image}`,
+    url,
+    locale,
+    type: 'article',
+    publishedTime: post.publishedAt,
+    modifiedTime: post.updatedAt,
+    author: post.author,
+  });
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps): Promise<ReactElement> {

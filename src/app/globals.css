@@ -2,7 +2,7 @@
 
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: dark;
     
     /* Primary colours from DESIGN_SYSTEM.md */
     --ds-color-text-light: #f3f2f9; /* Text on dark backgrounds / Light background */
@@ -452,18 +452,35 @@
     }
   }
 
+  @keyframes marquee-reverse {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
   .animate-marquee {
     animation: marquee 30s linear infinite;
     display: flex;
     width: fit-content;
   }
 
-  .animate-marquee:hover {
+  .animate-marquee-reverse {
+    animation: marquee-reverse 30s linear infinite;
+    display: flex;
+    width: fit-content;
+  }
+
+  .animate-marquee:hover,
+  .animate-marquee-reverse:hover {
     animation-play-state: paused;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .animate-marquee {
+    .animate-marquee,
+    .animate-marquee-reverse {
       animation: none;
     }
   }
@@ -472,8 +489,14 @@
   .flip-card {
     perspective: 1000px;
     width: 100%;
-    height: 100%;
+    height: auto;
     min-height: 240px;
+    display: block;
+  }
+
+  /* Static card (no flip animation) */
+  .flip-card-static {
+    perspective: none !important;
   }
 
   .flip-card-inner {
@@ -491,18 +514,185 @@
     height: 100%;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    border-radius: 1rem;
-    padding: 1.5rem;
+    border-radius: 1.25rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 1px solid var(--base-color-border);
+    border: 1.5px solid var(--base-color-border);
     box-shadow: var(--base-shadow-soft);
     z-index: 1;
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .flip-card-back {
     z-index: 2;
+    transform: rotateY(180deg);
+    justify-content: flex-start;
+  }
+
+  /* Why Me Cards - Improved UX/UI */
+  .why-me-card {
+    height: 100%;
+    min-height: 320px;
+  }
+
+  /* Icon wrapper - front side */
+  .why-me-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--icon-bg-color) 20%, transparent);
+    border: 2px solid color-mix(in srgb, var(--icon-bg-color) 40%, transparent);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .why-me-icon {
+    color: var(--icon-bg-color);
+    transition: transform 0.3s ease;
+  }
+
+  /* Icon wrapper - back side */
+  .why-me-icon-small-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--icon-bg-color) 25%, transparent);
+    border: 1.5px solid color-mix(in srgb, var(--icon-bg-color) 50%, transparent);
+  }
+
+  [data-theme="dark"] .why-me-icon-small-wrapper {
+    background: color-mix(in srgb, var(--icon-bg-color) 35%, transparent);
+    border: 1.5px solid color-mix(in srgb, var(--icon-bg-color) 60%, transparent);
+  }
+
+  .why-me-icon {
+    color: var(--icon-bg-color);
+  }
+
+  [data-theme="dark"] .why-me-icon {
+    color: var(--icon-bg-color);
+    filter: brightness(1.1);
+  }
+
+  /* Benefit badge */
+  .why-me-benefit {
+    padding: 0.875rem 1rem;
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, var(--benefit-bg-color) 25%, transparent);
+    border: 1.5px solid color-mix(in srgb, var(--benefit-color) 50%, transparent);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-theme="dark"] .why-me-benefit {
+    background: color-mix(in srgb, var(--benefit-bg-color) 30%, transparent);
+    border: 1.5px solid color-mix(in srgb, var(--benefit-color) 65%, transparent);
+  }
+
+  .why-me-benefit-text {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--benefit-color);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  [data-theme="dark"] .why-me-benefit-text {
+    color: var(--benefit-color);
+    filter: brightness(1.15);
+  }
+
+  /* Mobile: Simple card with information visible */
+  .why-me-card-mobile {
+    width: 100%;
+    display: block;
+    height: 100%;
+    min-height: 320px;
+  }
+
+  .why-me-card-mobile-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 1.25rem;
+    border: 1.5px solid var(--base-color-border);
+    box-shadow: var(--base-shadow-soft);
+    background-color: var(--base-color-surface);
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Active state for mobile cards */
+  @media (max-width: 767px) {
+    .why-me-card-mobile-content:active {
+      transform: scale(0.98);
+      box-shadow: 0 8px 24px -12px rgba(43, 43, 51, 0.2);
+    }
+  }
+
+  /* Desktop flip card */
+  .flip-card-desktop {
+    display: none;
+    height: 100%;
+    min-height: 320px;
+  }
+
+  /* Mobile: show mobile cards, hide desktop flip cards */
+  @media (max-width: 767px) {
+    .why-me-card-mobile {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    .why-me-card-mobile-content {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .flip-card-desktop {
+      display: none !important;
+    }
+  }
+
+  /* Desktop: hide mobile cards, show desktop flip cards */
+  @media (min-width: 768px) {
+    .why-me-card-mobile {
+      display: none !important;
+    }
+
+    .flip-card-desktop {
+      display: block !important;
+    }
+
+    /* Enhanced hover effects for desktop */
+    .flip-card-desktop .flip-card-inner {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .flip-card-desktop:hover .flip-card-front {
+      box-shadow: 0 24px 64px -16px rgba(43, 43, 51, 0.3);
+    }
+
+    .flip-card-desktop:hover .flip-card-back {
+      box-shadow: 0 24px 64px -16px rgba(43, 43, 51, 0.3);
+    }
   }
 
   .flip-card-colored {
@@ -576,42 +766,44 @@
     justify-content: flex-start;
   }
 
-  /* Mobile: show back side by default */
+  /* Mobile: show front side by default, flip to back on scroll */
   @media (max-width: 767px) {
     .flip-card-inner {
-      transform: rotateY(180deg);
+      transform: rotateY(0deg);
     }
 
     .flip-card-front {
-      opacity: 0;
-      pointer-events: none;
-      z-index: 1;
+      opacity: 1 !important;
+      pointer-events: auto;
+      z-index: 2;
+      visibility: visible !important;
+      transform: rotateY(0deg);
     }
 
     .flip-card-back {
-      opacity: 1 !important;
-      pointer-events: auto;
-      transform: rotateY(0deg);
-      z-index: 2;
-      visibility: visible !important;
+      opacity: 0;
+      pointer-events: none;
+      transform: rotateY(180deg);
+      z-index: 1;
     }
 
-    /* When flipped to show front on mobile */
+    /* When flipped to show back on mobile (after scroll) */
     .flip-card-inner.mobile-flipped {
-      transform: rotateY(0deg);
+      transform: rotateY(180deg);
     }
 
     .flip-card-inner.mobile-flipped .flip-card-front {
-      opacity: 1 !important;
-      pointer-events: auto;
-      z-index: 2;
-      visibility: visible !important;
-    }
-
-    .flip-card-inner.mobile-flipped .flip-card-back {
       opacity: 0;
       pointer-events: none;
       z-index: 1;
+    }
+
+    .flip-card-inner.mobile-flipped .flip-card-back {
+      opacity: 1 !important;
+      pointer-events: auto;
+      transform: rotateY(0deg);
+      z-index: 2;
+      visibility: visible !important;
     }
   }
 
@@ -625,48 +817,71 @@
     }
   }
 
-  /* Dynamic background animations */
-  @keyframes float {
+  /* Modern dynamic background animations */
+  @keyframes orbFloat1 {
     0%, 100% {
       transform: translate(0, 0) scale(1);
     }
-    25% {
-      transform: translate(30px, -30px) scale(1.1);
+    33% {
+      transform: translate(30px, -20px) scale(1.05);
+    }
+    66% {
+      transform: translate(-20px, 30px) scale(0.95);
+    }
+  }
+
+  @keyframes orbFloat2 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(-25px, 25px) scale(1.03);
+    }
+    66% {
+      transform: translate(20px, -30px) scale(0.97);
+    }
+  }
+
+  @keyframes orbFloat3 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
     }
     50% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-    75% {
-      transform: translate(20px, 30px) scale(1.05);
+      transform: translate(25px, 20px) scale(1.04);
     }
   }
 
-  .bg-orb-1 {
-    animation: float 20s ease-in-out infinite;
-    animation-delay: 0s;
+  @keyframes orbFloat4 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-20px, -25px) scale(0.96);
+    }
   }
 
-  .bg-orb-2 {
-    animation: float 25s ease-in-out infinite;
-    animation-delay: 5s;
+  .animate-orb-1 {
+    animation: orbFloat1 20s ease-in-out infinite;
   }
 
-  .bg-orb-3 {
-    animation: float 30s ease-in-out infinite;
-    animation-delay: 10s;
+  .animate-orb-2 {
+    animation: orbFloat2 25s ease-in-out infinite;
   }
 
-  .bg-orb-4 {
-    animation: float 22s ease-in-out infinite;
-    animation-delay: 7s;
+  .animate-orb-3 {
+    animation: orbFloat3 30s ease-in-out infinite;
+  }
+
+  .animate-orb-4 {
+    animation: orbFloat4 22s ease-in-out infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .bg-orb-1,
-    .bg-orb-2,
-    .bg-orb-3,
-    .bg-orb-4 {
-      animation: none;
+    .animate-orb-1,
+    .animate-orb-2,
+    .animate-orb-3,
+    .animate-orb-4 {
+      animation: none !important;
     }
   }
 

@@ -40,7 +40,7 @@ export function SiteHeader(): ReactElement {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/40 bg-surface/80 backdrop-blur-md transition-colors duration-200">
+    <header className="sticky top-0 z-50 border-b border-border/40 bg-surface/60 backdrop-blur-xl transition-colors duration-200">
       <Container className="flex h-16 items-center justify-between gap-6 md:h-20">
         <Link
           href="/"
@@ -103,7 +103,7 @@ export function SiteHeader(): ReactElement {
       <div
         id="mobile-navigation"
         className={cn(
-          "border-t border-border/40 bg-surface/95 backdrop-blur-md transition-all duration-300 md:hidden",
+          "border-t border-border/40 bg-surface/80 backdrop-blur-xl transition-all duration-300 md:hidden",
           isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden",
         )}
       >

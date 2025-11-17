@@ -2,7 +2,6 @@
 
 import type { ReactElement, ReactNode } from "react";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import { cn } from "@/lib/cn";
 
 type FlipCardProps = {
@@ -10,54 +9,71 @@ type FlipCardProps = {
   readonly back: ReactNode;
   readonly className?: string;
   readonly backgroundColor?: string;
+  readonly autoFlipOnMobile?: boolean;
 };
 
-export function FlipCard({ front, back, className, backgroundColor }: FlipCardProps): ReactElement {
-  // Initialize isMobile based on window width if available (client-side)
-  // On server, default to false to match initial render
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth < 768;
-    }
-    return false;
-  });
-  const [isFlipped, setIsFlipped] = useState(false);
+export function FlipCard({ front, back, className, backgroundColor, autoFlipOnMobile = false }: FlipCardProps): ReactElement {
+  // Mobile: show simple card with back content (information visible)
+  // Desktop: show flip card with hover effect
+  // Use CSS media queries instead of JS to avoid hydration issues
+  if (autoFlipOnMobile) {
+    return (
+      <>
+        {/* Mobile version - simple card with information (visible on mobile) */}
+        <div className={cn("why-me-card-mobile", className)}>
+          <div 
+            className="why-me-card-mobile-content flip-card-colored"
+            style={{
+              ...(backgroundColor ? { 
+                '--flip-card-bg-base': backgroundColor,
+              } : {}),
+            } as React.CSSProperties}
+            data-bg-color={backgroundColor}
+          >
+            {back}
+          </div>
+        </div>
+        
+        {/* Desktop version - flip card with hover (visible on desktop) */}
+        <div className={cn("flip-card flip-card-desktop", className)}>
+          <motion.div
+            className="flip-card-inner"
+            whileHover={{ rotateY: 180 }}
+            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <div 
+              className="flip-card-front flip-card-colored"
+              style={backgroundColor ? { 
+                '--flip-card-bg-base': backgroundColor,
+              } as React.CSSProperties : undefined}
+              data-bg-color={backgroundColor}
+            >
+              {front}
+            </div>
+            <div 
+              className="flip-card-back flip-card-colored"
+              style={backgroundColor ? { 
+                '--flip-card-bg-base': backgroundColor,
+              } as React.CSSProperties : undefined}
+              data-bg-color={backgroundColor}
+            >
+              {back}
+            </div>
+          </motion.div>
+        </div>
+      </>
+    );
+  }
 
-  useEffect(() => {
-    const checkMobile = (): void => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      // On mobile, start with back side visible (not flipped, so isFlipped = false)
-      // isFlipped = true means front is visible, isFlipped = false means back is visible
-      if (mobile) {
-        setIsFlipped(false);
-      }
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return (): void => {
-      window.removeEventListener('resize', checkMobile);
-    };
-  }, []);
-
-  const handleTap = (): void => {
-    if (isMobile) {
-      setIsFlipped(!isFlipped);
-    }
-  };
-
+  // Default flip card (when autoFlipOnMobile is false)
   return (
     <div className={cn("flip-card", className)}>
       <motion.div
-        className={cn("flip-card-inner", isMobile && isFlipped && "mobile-flipped")}
-        animate={isMobile ? { rotateY: isFlipped ? 0 : 180 } : {}}
-        whileHover={!isMobile ? { rotateY: 180 } : {}}
-        onTap={handleTap}
+        className="flip-card-inner"
+        whileHover={{ rotateY: 180 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         style={{ transformStyle: 'preserve-3d' }}
-        initial={false}
-        suppressHydrationWarning
       >
         <div 
           className="flip-card-front flip-card-colored"

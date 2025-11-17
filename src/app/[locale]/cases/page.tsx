@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 
 import { Container } from "@/components/layout/container";
 import { SiteShell } from "@/components/layout/site-shell";
-import { getAllProjects, type PortfolioProject } from "@/lib/portfolio-data";
+import { getAllProjects, getTranslatedProject, type PortfolioProject } from "@/lib/portfolio-data";
 
 // Animation variants
 const fadeInUp = {
@@ -28,6 +28,8 @@ const staggerContainer = {
 
 function ProjectCard({ project }: { readonly project: PortfolioProject }): ReactElement {
   const t = useTranslations();
+  // Get translated project data
+  const translatedProject = getTranslatedProject(project.id, t) ?? project;
   return (
     <motion.article
       className="group relative rounded-2xl border border-border/60 bg-surface/80 overflow-hidden shadow-soft transition-all hover:-translate-y-2 hover:border-accent/70 hover:shadow-lg"
@@ -37,15 +39,15 @@ function ProjectCard({ project }: { readonly project: PortfolioProject }): React
       variants={fadeInUp}
     >
       <Link
-        href={`/cases/${project.id}`}
+        href={`/cases/${translatedProject.id}`}
         className="block"
-        aria-label={t("cases.list.openCaseAria", { title: project.title })}
+        aria-label={t("cases.list.openCaseAria", { title: translatedProject.title })}
       >
         {/* Image */}
         <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-accent/20 to-accent/5">
           <Image
-            src={project.image}
-            alt={project.imageAlt}
+            src={translatedProject.image}
+            alt={translatedProject.imageAlt}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
@@ -56,18 +58,18 @@ function ProjectCard({ project }: { readonly project: PortfolioProject }): React
           <div className="space-y-2">
             <div className="flex items-start justify-between gap-2">
               <h3 className="font-heading text-xl group-hover:text-accent transition-colors">
-                {project.title}
+                {translatedProject.title}
               </h3>
               <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-accent transition-colors flex-shrink-0 mt-0.5" />
             </div>
             <p className="text-sm text-muted-foreground line-clamp-2">
-              {project.shortDescription}
+              {translatedProject.shortDescription}
             </p>
           </div>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
-            {project.tags.slice(0, 3).map((tag) => (
+            {translatedProject.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
                 className="rounded-full border border-border/60 bg-background px-3 py-1 text-xs font-medium text-muted-foreground"

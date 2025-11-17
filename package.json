@@ -12,7 +12,9 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db:setup": "echo 'Для настройки БД выполните один из вариантов:\n1. supabase db push (если используете Supabase CLI)\n2. Скопируйте supabase/setup-db.sql в Supabase SQL Editor\n3. См. supabase/SETUP.md для подробной инструкции'",
+    "db:migrate": "supabase db push"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

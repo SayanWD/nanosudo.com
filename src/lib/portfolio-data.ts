@@ -23,13 +23,21 @@ export type PortfolioProject = {
   }[];
 };
 
+/**
+ * Translation function type for project data
+ */
+export type ProjectTranslator = {
+  (key: string, values?: Record<string, string | number>): string;
+  raw: (key: string) => unknown;
+};
+
 export const PORTFOLIO_PROJECTS: readonly PortfolioProject[] = [
   {
     id: 'zakyat-kz',
     title: 'ZAKYAT.KZ — Платформа добрых дел',
     description: 'Независимая онлайн-платформа для адресной помощи, построенная на принципах доверия, прозрачности и ручной модерации. Позволяет людям, нуждающимся в помощи, напрямую связываться с донорами без посредников и сбора денег.',
     shortDescription: 'Платформа для адресной помощи с ручной модерацией и прозрачностью',
-    image: '/zakyat-platform.png',
+    image: '/zakyat-project.png',
     imageAlt: 'ZAKYAT.KZ — Платформа для адресной помощи',
     url: 'https://zakyat.kz',
     tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Telegram Bot'],
@@ -102,6 +110,62 @@ export function getProjects(page: number = 1, perPage: number = 3): {
  */
 export function getProjectById(id: string): PortfolioProject | undefined {
   return PORTFOLIO_PROJECTS.find((p) => p.id === id);
+}
+
+/**
+ * Get translated project data
+ */
+export function getTranslatedProject(
+  id: string,
+  t: ProjectTranslator,
+): PortfolioProject | undefined {
+  const baseProject = PORTFOLIO_PROJECTS.find((p) => p.id === id);
+  if (!baseProject) {
+    return undefined;
+  }
+
+  const projectKey = `cases.projects.${id}`;
+  
+  // Try to get translated data, fallback to base project if translation doesn't exist
+  const translatedTitle = t.raw(`${projectKey}.title`) as string | undefined;
+  const translatedDescription = t.raw(`${projectKey}.description`) as string | undefined;
+  const translatedShortDescription = t.raw(`${projectKey}.shortDescription`) as string | undefined;
+  const translatedImageAlt = t.raw(`${projectKey}.imageAlt`) as string | undefined;
+  const translatedCategory = t.raw(`${projectKey}.category`) as string | undefined;
+  const translatedGoals = t.raw(`${projectKey}.goals`) as string[] | undefined;
+  const translatedTasks = t.raw(`${projectKey}.tasks`) as string[] | undefined;
+  const translatedResults = t.raw(`${projectKey}.results`) as string[] | undefined;
+  const translatedMetrics = t.raw(`${projectKey}.metrics`) as Record<string, string> | undefined;
+
+  // Build metrics array from translated data
+  let metrics: Array<{ readonly label: string; readonly value: string }> | undefined;
+  if (baseProject.metrics && translatedMetrics) {
+    // Map metrics by index to translated labels
+    const metricKeys = ['userRoles', 'requestStatuses', 'spamProtection', 'implementationPhases'];
+    metrics = baseProject.metrics.map((metric, index) => {
+      const metricKey = metricKeys[index];
+      const translatedLabel = metricKey && translatedMetrics[metricKey]
+        ? (translatedMetrics[metricKey] as string)
+        : metric.label;
+      return {
+        label: translatedLabel,
+        value: metric.value, // Value stays the same (e.g., "4 типа")
+      };
+    });
+  }
+
+  return {
+    ...baseProject,
+    title: translatedTitle ?? baseProject.title,
+    description: translatedDescription ?? baseProject.description,
+    shortDescription: translatedShortDescription ?? baseProject.shortDescription,
+    imageAlt: translatedImageAlt ?? baseProject.imageAlt,
+    category: translatedCategory ?? baseProject.category,
+    goals: translatedGoals ?? baseProject.goals,
+    tasks: translatedTasks ?? baseProject.tasks,
+    results: translatedResults ?? baseProject.results,
+    metrics: metrics ?? baseProject.metrics,
+  };
 }
 
 /**

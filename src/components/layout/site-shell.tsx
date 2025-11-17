@@ -41,7 +41,7 @@ export function SiteShell({
     >
       <DynamicBackground />
       {resolvedHeader ? (
-        <header className="sticky top-0 z-20 border-b border-border/60 bg-surface/80 backdrop-blur-lg">
+        <header className="sticky top-0 z-20 border-b border-border/60 bg-surface/60 backdrop-blur-xl">
           {resolvedHeader}
         </header>
       ) : null}

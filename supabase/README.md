@@ -2,37 +2,74 @@
 
 ## Requirements
 
-- Supabase CLI `>=1.138`
-- Configured Supabase project (local or cloud)
-- Auth user that will act as the admin for submissions
+- Supabase CLI `>=1.138` (опционально, для локальной разработки)
+- Настроенный Supabase проект (локальный или облачный)
+- Пользователь Auth, который будет администратором
 
-## Applying migrations
+## Быстрая настройка
+
+### Вариант 1: Использование Supabase CLI (рекомендуется)
 
 ```bash
+# Применить все миграции
 supabase db push
+
+# Или для локального проекта
+supabase migration up
 ```
 
-This will create:
+### Вариант 2: Ручное применение через SQL Editor
 
-- `public.submissions` table with all brief fields
-- `public.admin_members` table to store authorized dashboard users
-- Storage bucket `brandbooks` (public, 10MB limit, PDF/ZIP only)
-- RLS policies allowing anonymous inserts and admin management access
+1. Откройте Supabase Dashboard → SQL Editor
+2. Скопируйте и выполните содержимое файла `supabase/setup-db.sql`
 
-## Granting admin access
+### Вариант 3: Применение миграций по отдельности
 
-After the admin signs in at least once (so their Auth user exists), add them to `admin_members`:
+Примените миграции в порядке:
+1. `20250115120000_create_submissions.sql`
+2. `20250116000000_create_brief_submissions.sql`
+
+## Что создается
+
+После применения миграций будут созданы:
+
+- `public.submissions` - таблица для старой формы брифов
+- `public.brief_submissions` - таблица для новой интерактивной формы с расчетом стоимости
+- `public.admin_members` - таблица для хранения администраторов
+- Storage bucket `brandbooks` - хранилище для файлов брендбуков (10MB, PDF/ZIP)
+- RLS политики для безопасного доступа
+- Индексы для оптимизации запросов
+
+## Настройка администратора
+
+После создания таблиц добавьте администратора:
 
 ```sql
 insert into public.admin_members (auth_user_id, email)
-values ('{AUTH_USER_UUID}', 'admin@email.com');
+values ('{AUTH_USER_UUID}', 'your-email@example.com');
 ```
 
-Replace `{AUTH_USER_UUID}` with the Supabase Auth `user.id`. Once inserted, the admin can query/update submissions through authenticated APIs.
+**Как получить AUTH_USER_UUID:**
+1. Зарегистрируйтесь/войдите в Supabase Auth
+2. В Dashboard → Authentication → Users найдите пользователя
+3. Скопируйте UUID из поля `id`
+
+## Проверка настройки
+
+```sql
+-- Проверить таблицы
+select table_name 
+from information_schema.tables 
+where table_schema = 'public' 
+and table_name in ('admin_members', 'submissions', 'brief_submissions');
+
+-- Проверить storage bucket
+select * from storage.buckets where id = 'brandbooks';
+```
 
 ## Environment variables
 
-Ensure the following variables are set (see `.env.example`):
+Убедитесь, что установлены следующие переменные (см. `.env.example`):
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
@@ -40,3 +77,7 @@ Ensure the following variables are set (see `.env.example`):
 - `BREVO_API_KEY`
 - `NEXT_PUBLIC_BREVO_SENDER_EMAIL`
 - `BREVO_NOTIFICATION_EMAIL`
+
+## Дополнительная информация
+
+См. `supabase/SETUP.md` для подробной документации по настройке.

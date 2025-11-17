@@ -1,0 +1,17 @@
+# robots.txt для nanosudo.com
+# Разрешаем индексацию всех страниц
+
+User-agent: *
+Allow: /
+
+# Исключаем админ-панель и API
+Disallow: /admin
+Disallow: /api
+
+# Исключаем служебные директории Next.js
+Disallow: /_next/
+Disallow: /_vercel/
+
+# Указываем расположение sitemap
+Sitemap: https://nanosudo.com/sitemap.xml
+

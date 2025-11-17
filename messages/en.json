@@ -61,6 +61,47 @@
       "keyMetricsSubtitle": "Specific performance indicators of the project",
       "backToList": "Back to cases list",
       "openProject": "Open project"
+    },
+    "projects": {
+      "zakyat-kz": {
+        "title": "ZAKYAT.KZ — Platform for Good Deeds",
+        "description": "Independent online platform for targeted assistance, built on principles of trust, transparency and manual moderation. Enables people in need to directly connect with donors without intermediaries or money collection.",
+        "shortDescription": "Platform for targeted assistance with manual moderation and transparency",
+        "imageAlt": "ZAKYAT.KZ — Platform for targeted assistance",
+        "category": "Social Project",
+        "goals": [
+          "Create a transparent platform for targeted assistance without intermediaries",
+          "Ensure manual moderation of all requests for safety",
+          "Eliminate money collection and third-party involvement",
+          "Implement filtering and randomization system for requests"
+        ],
+        "tasks": [
+          "Develop request submission system with data validation",
+          "Create moderation panel with access rights (moderator/administrator)",
+          "Implement public request catalog with filtering by district and assistance type",
+          "Configure request display randomization for fairness",
+          "Implement request status system (pending/verified/rejected/assistance received)",
+          "Create logging for all moderator actions",
+          "Implement spam protection (1 request per day per phone number)",
+          "Configure SEO optimization and contact protection from indexing",
+          "Develop Telegram bot for moderators (Phase 2)",
+          "Add \"I helped\" button with spam protection (Phase 2)"
+        ],
+        "results": [
+          "Launched platform with full request moderation cycle",
+          "Implemented role system with access rights separation",
+          "Deployed spam protection and automatic data validation",
+          "Created transparent catalog with filtering and randomization",
+          "Configured logging system for tracking all actions",
+          "Ensured contact security through robots.txt and noindex"
+        ],
+        "metrics": {
+          "userRoles": "User roles",
+          "requestStatuses": "Request statuses",
+          "spamProtection": "Spam protection",
+          "implementationPhases": "Implementation phases"
+        }
+      }
     }
   },
   "about": {
@@ -169,7 +210,9 @@
       "subtitle": "Full-stack developer · Almaty",
       "title": "I develop solutions that <highlight>deliver results</highlight>",
       "description": "High-performance web applications on Next.js and TypeScript. Full cycle: development, integrations with CRM/1C/Kaspi, marketing. ROI 2-3 months.",
-      "photoPlaceholder": "Photo — Sayan Roor"
+      "photoPlaceholder": "Photo — Sayan Roor",
+      "resume": "Resume",
+      "commercialProposal": "Commercial Proposal"
     },
     "stats": {
       "label": "results",
@@ -333,6 +376,253 @@
       "nextArticle": "Next article",
       "backToList": "Back to articles list",
       "authorBio": "Full‑stack developer. I build Next.js & TypeScript web apps with focus on performance and conversion."
+    }
+  },
+  "brief": {
+    "label": "brief",
+    "title": "Interactive Commercial Proposal Generator",
+    "description": "Fill out the form and we'll automatically calculate an estimated cost and timeline for your project. After filling out, submit your request and we'll contact you to clarify details.",
+    "tips": {
+      "title": "Filling Tips",
+      "tip1": "Select only necessary modules for accurate calculation.",
+      "tip2": "Draft is automatically saved in your browser.",
+      "tip3": "After completing all steps, submit your request."
+    },
+    "projectInfo": {
+      "title": "Project Information",
+      "projectName": {
+        "label": "Project Name",
+        "placeholder": "e.g., Electronics Online Store"
+      },
+      "projectType": {
+        "label": "Project Type",
+        "landing": "Landing Page",
+        "corporate": "Corporate Website",
+        "ecommerce": "E-commerce",
+        "saas": "SaaS Platform",
+        "customMvp": "Custom MVP"
+      },
+      "description": {
+        "label": "Brief Project Description",
+        "placeholder": "Describe the main idea of the project, key features and goals...",
+        "characters": "{count} / 500 characters"
+      }
+    },
+    "modules": {
+      "title": "Modules & Features",
+      "frontend": {
+        "title": "Frontend Modules",
+        "mainPage": "Main Page",
+        "contactForm": "Contact Form",
+        "interactiveMap": "Interactive Map",
+        "calculator": "Calculator/Configurator",
+        "animations": "Animations & Interactivity",
+        "multilingual": "Multilingual Support",
+        "innerPages": "Inner Pages (count)"
+      },
+      "backend": {
+        "title": "Backend & Database",
+        "restApi": "REST API (basic)",
+        "auth": "Authentication/Registration",
+        "adminPanel": "Admin Panel",
+        "database": "Database & Models (basic)",
+        "fileStorage": "File Storage",
+        "emailNotifications": "Email Notifications"
+      },
+      "ecommerce": {
+        "title": "E-commerce Specific",
+        "catalog": "Product Catalog",
+        "cartCheckout": "Cart & Checkout",
+        "userAccount": "Customer Account",
+        "orderSystem": "Order System",
+        "paymentSystems": {
+          "title": "Payment Systems"
+        }
+      },
+      "integrations": {
+        "title": "Integrations",
+        "crm": {
+          "title": "CRM Systems",
+          "bitrix24": "Bitrix24",
+          "amocrm": "AmoCRM",
+          "hubspot": "HubSpot",
+          "other": "Other"
+        },
+        "analytics": {
+          "title": "Analytics",
+          "ga4": "Google Analytics 4",
+          "yandex": "Yandex.Metrica",
+          "both": "Both"
+        },
+        "emailMarketing": {
+          "title": "Email Marketing",
+          "mailchimp": "Mailchimp",
+          "sendgrid": "SendGrid",
+          "brevo": "Brevo",
+          "other": "Other"
+        },
+        "socialMedia": "Social Media Integration",
+        "telegramBot": "Telegram Bot",
+        "erp1c": "1C ERP Integration",
+        "emailMarketing": {
+          "title": "Email Marketing"
+        }
+      },
+      "paymentSystems": {
+        "title": "Payment Systems",
+        "kaspi": "Kaspi",
+        "halyk": "Halyk Bank",
+        "stripe": "Stripe",
+        "paypal": "PayPal",
+        "yandex": "Yandex.Kassa",
+        "other": "Other"
+      }
+    },
+    "design": {
+      "title": "Design",
+      "useTemplate": {
+        "label": "Use Ready Template",
+        "description": "-50% design time"
+      },
+      "adaptBrandbook": {
+        "label": "Adapt Existing Brandbook",
+        "description": "{hours}h"
+      },
+      "designFromScratch": {
+        "label": "Design from Scratch",
+        "description": "{hours}-40h (depending on pages)"
+      },
+      "currentValue": "Current value: {count}",
+      "uiKit": {
+        "label": "UI Kit & Design System",
+        "description": "+{hours}h additional"
+      },
+      "pageCount": {
+        "label": "Number of Pages"
+      }
+    },
+    "content": {
+      "title": "Content",
+      "clientProvides": {
+        "label": "Client Provides Content",
+        "description": "0h"
+      },
+      "needsCopywriting": {
+        "label": "Copywriting Needed",
+        "description": "Not included, partner"
+      },
+      "needsMediaProcessing": {
+        "label": "Photo/Video Processing Needed",
+        "description": "Not included, partner"
+      }
+    },
+    "technical": {
+      "title": "Technical Requirements",
+      "expectedLoad": {
+        "label": "Expected Load",
+        "low": "<1000 visitors/day",
+        "medium": "1000-10000 visitors/day",
+        "high": ">10000 visitors/day",
+        "optimization": "+{hours}h for optimization"
+      },
+      "highSecurity": {
+        "label": "High Security Requirements",
+        "description": "+{hours}h"
+      },
+      "pwa": {
+        "label": "PWA/Offline Mode",
+        "description": "+{hours}h"
+      },
+      "realtime": {
+        "label": "Realtime Features (WebSocket)",
+        "description": "+{hours}h"
+      }
+    },
+    "timeline": {
+      "title": "Timeline",
+      "desiredWeeks": {
+        "label": "Desired Launch Timeline (weeks)",
+        "urgent": "Urgent (<4 weeks)",
+        "normal": "Normal (4-8 weeks)",
+        "flexible": "Flexible Schedule (>8 weeks)",
+        "coefficient": "Coefficient: {coeff}x",
+        "urgentNote": " (urgency increases cost by 30%)",
+        "flexibleNote": " (flexible schedule reduces cost by 10%)"
+      },
+      "phasedDelivery": {
+        "label": "Phased Delivery",
+        "description": "+10% time for coordination"
+      }
+    },
+    "contact": {
+      "title": "Contact Information",
+      "contactName": {
+        "label": "Contact Person Name",
+        "placeholder": "John Doe"
+      },
+      "companyName": {
+        "label": "Company Name",
+        "placeholder": "Company LLC"
+      },
+      "contactEmail": {
+        "label": "Email",
+        "placeholder": "john@company.com"
+      },
+      "contactPhone": {
+        "label": "Phone",
+        "placeholder": "+1 234 567 8900"
+      }
+    },
+    "calculation": {
+      "loading": "Loading...",
+      "fillForm": "Fill out the form to calculate cost",
+      "estimatedCost": "Estimated Cost",
+      "totalHours": "{hours} hours (differentiated rates)",
+      "important": "Important: Cost is estimated. Final rates will be adjusted after discussing project details.",
+      "breakdown": {
+        "title": "Detailed Breakdown",
+        "discovery": "Discovery & Planning",
+        "free": "FREE",
+        "freeNote": "$0 (free)",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "ecommerce": "E-commerce",
+        "integrations": "Integrations",
+        "design": "Design",
+        "technical": "Technical Requirements",
+        "testing": "Testing & QA (15%)",
+        "deployment": "Deployment & Setup",
+        "documentation": "Documentation",
+        "perHour": "{hours}h × ${rate}/h",
+        "perHourRu": "{hours}h × ${rate}/ч"
+      },
+      "coefficients": {
+        "title": "Applied Coefficients",
+        "complexity": "Project Complexity: {coeff}x",
+        "urgency": "Urgency: {coeff}x"
+      },
+      "submit": {
+        "label": "Submit Request",
+        "submitting": "Submitting...",
+        "success": {
+          "title": "Request Submitted!",
+          "message": "We'll review your request and contact you to clarify details and project cost.",
+          "note": "Important: The indicated cost is estimated. Final rates will be adjusted after discussing project details."
+        }
+      }
+    },
+    "errors": {
+      "fillRequired": "Please fill in all required form fields.",
+      "calculationError": "Cost calculation error: {error}",
+      "missingBreakdown": "Error: cost breakdown is missing. Please refresh the page and try again.",
+      "submitError": "Error submitting request: {error}",
+      "unknownError": "Unknown error"
+    },
+    "navigation": {
+      "back": "Back",
+      "next": "Next",
+      "saving": "Saving...",
+      "generateProposal": "Generate Proposal"
     }
   }
 }

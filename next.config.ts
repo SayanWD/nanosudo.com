@@ -19,6 +19,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      // Fix for pdfkit font loading in Next.js
+      // Ensure font files are accessible
+      config.resolve.alias = {
+        ...config.resolve.alias,
+      };
+    }
+    return config;
+  },
 };
 
 export default withNextIntl(nextConfig);

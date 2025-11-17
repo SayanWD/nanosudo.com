@@ -17,7 +17,7 @@ const THEME_STORAGE_KEY = 'nanosudo-theme';
 
 function getInitialTheme(): Theme {
   if (typeof window === 'undefined') {
-    return 'light';
+    return 'dark';
   }
   
   const stored = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
@@ -25,8 +25,8 @@ function getInitialTheme(): Theme {
     return stored;
   }
   
-  // Default to light theme
-  return 'light';
+  // Default to dark theme
+  return 'dark';
 }
 
 type ThemeProviderProps = {
@@ -36,7 +36,7 @@ type ThemeProviderProps = {
 export function ThemeProvider({ children }: ThemeProviderProps): ReactElement {
   const [theme, setThemeState] = useState<Theme>(() => {
     if (typeof window === 'undefined') {
-      return 'light';
+      return 'dark';
     }
     return getInitialTheme();
   });

@@ -4,7 +4,8 @@ import type { ReactElement } from "react";
 import { motion, useSpring, useMotionValueEvent, useInView, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { StructuredData, generatePersonStructuredData, generateWebsiteStructuredData, generateServiceStructuredData } from "@/components/seo/structured-data";
 import { 
   Code, 
   Link2, 
@@ -24,27 +25,31 @@ import {
   Rocket,
   Handshake,
   ShieldCheck,
+  Linkedin,
+  Instagram,
+  Github,
+  Send,
   type LucideIcon,
 } from "lucide-react";
 
 import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { SiteShell } from "@/components/layout/site-shell";
-import { FlipCard } from "@/components/flip-card";
 import { TechnologiesMarquee } from "@/components/technologies-marquee";
-import { getFeaturedProjects, type PortfolioProject } from "@/lib/portfolio-data";
+import { getFeaturedProjects, getTranslatedProject, type PortfolioProject } from "@/lib/portfolio-data";
 
 // Animation variants
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
 };
 
 const staggerContainer = {
   animate: {
     transition: {
       staggerChildren: 0.15,
+      delayChildren: 0.1,
     },
   },
 };
@@ -58,10 +63,51 @@ function HeroSection(): ReactElement {
   const t = useTranslations();
   return (
     <section className="relative py-section overflow-hidden">
-      <Container>
+      {/* Background with gradient orbs and grid pattern */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+        {/* Base gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
+        
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0">
+          {/* Orb 1 - Azure (top-left) */}
+          <div
+            className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full bg-[#99b9ff] opacity-20 blur-3xl transition-opacity duration-1000 dark:opacity-10"
+          />
+          
+          {/* Orb 2 - Spring Green (top-right) */}
+          <div
+            className="absolute -right-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
+          />
+          
+          {/* Orb 3 - Flamingo (bottom-left) */}
+          <div
+            className="absolute -bottom-1/4 -left-1/4 h-[550px] w-[550px] rounded-full bg-[#ffb3c2] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
+          />
+          
+          {/* Orb 4 - Lime (bottom-right) */}
+          <div
+            className="absolute -bottom-1/4 -right-1/4 h-[450px] w-[450px] rounded-full bg-[#f0ffa6] opacity-12 blur-3xl transition-opacity duration-1000 dark:opacity-6"
+          />
+        </div>
+        
+        {/* Subtle grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, currentColor 1px, transparent 1px),
+              linear-gradient(to bottom, currentColor 1px, transparent 1px)
+            `,
+            backgroundSize: '48px 48px',
+          }}
+        />
+      </div>
+      
+      <Container className="relative z-10">
         <div className="grid gap-12 lg:grid-cols-[1fr_400px] lg:items-center items-center">
           <motion.div
-            className="space-y-8 text-balance"
+            className="space-y-8 text-balance text-center md:text-left"
             initial="initial"
             animate="animate"
             variants={staggerContainer}
@@ -75,7 +121,7 @@ function HeroSection(): ReactElement {
                   highlight: (chunks) => <span className="text-accent">{chunks}</span>,
                 })}
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto md:mx-0">
                 {t("home.hero.description")}
               </p>
             </motion.div>
@@ -102,12 +148,12 @@ function HeroSection(): ReactElement {
 
           {/* Photo section */}
           <motion.div
-            className="relative"
+            className="relative space-y-6 flex flex-col items-center"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="relative rounded-2xl border border-border/60 bg-surface/80 p-4 lg:p-6 shadow-soft overflow-hidden">
+            <div className="relative rounded-2xl border border-border/60 bg-surface/80 p-4 lg:p-6 shadow-soft overflow-hidden w-full max-w-[300px] md:max-w-none">
               <motion.div
                 className="aspect-square relative rounded-xl overflow-hidden bg-gradient-to-br from-accent/20 to-accent/5 max-w-[300px] mx-auto lg:max-w-none"
                 style={{ transformStyle: 'preserve-3d' }}
@@ -123,6 +169,55 @@ function HeroSection(): ReactElement {
                   sizes="(max-width: 1024px) 300px, 400px"
                 />
               </motion.div>
+            </div>
+
+            {/* Social media icons */}
+            <div className="flex items-center justify-center gap-4">
+              <a
+                href="https://www.linkedin.com/in/sayan-roor/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a
+                href="https://instagram.com/satoshi_iam"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://t.me/satoshi_iam"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                aria-label="Telegram"
+              >
+                <Send className="w-5 h-5" />
+              </a>
+              <a
+                href="https://wa.me/87478277485"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="w-5 h-5" />
+              </a>
+              <a
+                href="https://github.com/SayanWD"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5" />
+              </a>
             </div>
           </motion.div>
         </div>
@@ -399,8 +494,49 @@ function ExpertiseSection(): ReactElement {
   ];
 
   return (
-    <section id="expertise" className="border-t border-border/60 py-section bg-surface/40">
-      <Container className="space-y-12">
+    <section id="expertise" className="relative border-t border-border/60 py-section overflow-hidden">
+      {/* Background with gradient orbs and grid pattern */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+        {/* Base gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
+        
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0">
+          {/* Orb 1 - Azure (top-left) */}
+          <div
+            className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full bg-[#99b9ff] opacity-20 blur-3xl transition-opacity duration-1000 dark:opacity-10"
+          />
+          
+          {/* Orb 2 - Spring Green (top-right) */}
+          <div
+            className="absolute -right-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
+          />
+          
+          {/* Orb 3 - Flamingo (bottom-left) */}
+          <div
+            className="absolute -bottom-1/4 -left-1/4 h-[550px] w-[550px] rounded-full bg-[#ffb3c2] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
+          />
+          
+          {/* Orb 4 - Lime (bottom-right) */}
+          <div
+            className="absolute -bottom-1/4 -right-1/4 h-[450px] w-[450px] rounded-full bg-[#f0ffa6] opacity-12 blur-3xl transition-opacity duration-1000 dark:opacity-6"
+          />
+        </div>
+        
+        {/* Subtle grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, currentColor 1px, transparent 1px),
+              linear-gradient(to bottom, currentColor 1px, transparent 1px)
+            `,
+            backgroundSize: '48px 48px',
+          }}
+        />
+      </div>
+      
+      <Container className="relative z-10 space-y-12">
         <motion.div
           className="space-y-4 text-balance text-center"
           initial="initial"
@@ -472,25 +608,118 @@ function ExpertiseSection(): ReactElement {
        );
      }
 
+type Advantage = {
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly benefit: string;
+  readonly icon: LucideIcon;
+  readonly color: string;
+  readonly colorBright: string;
+};
+
+type WhyMeCardProps = {
+  readonly advantage: Advantage;
+  readonly t: ReturnType<typeof useTranslations>;
+};
+
+// Animation variants for why me cards (same as guarantee cards)
+const whyMeCardVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+};
+
+function WhyMeCard({ advantage, t }: WhyMeCardProps): ReactElement {
+  const Icon = advantage.icon;
+
+  return (
+    <motion.div
+      className="h-full rounded-2xl border border-border/60 bg-surface/80 p-6 shadow-soft why-me-card-static overflow-hidden relative cursor-pointer"
+      initial="initial"
+      whileInView="animate"
+      viewport={getViewportSettings(0.2)}
+      variants={whyMeCardVariants}
+      whileHover={{
+        scale: 1.05,
+        y: -8,
+        transition: {
+          duration: 0.3,
+          ease: [0.4, 0, 0.2, 1] as const,
+        },
+      }}
+    >
+      {/* Animated background gradient on hover */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-accent/5 to-accent/10 opacity-0"
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
+      
+      <div className="flex flex-col h-full gap-5 relative z-10">
+        <div className="flex items-start gap-4">
+          <motion.div 
+            className="why-me-icon-small-wrapper flex-shrink-0"
+            style={{ 
+              '--icon-bg-color': advantage.colorBright,
+            } as React.CSSProperties}
+            whileHover={{
+              scale: 1.1,
+              opacity: 0.8,
+              transition: {
+                duration: 0.3,
+                ease: [0.4, 0, 0.2, 1] as const,
+              },
+            }}
+          >
+            <motion.div
+              whileHover={{
+                scale: 1.2,
+                rotate: [0, -10, 10, -10, 10, 0],
+                transition: {
+                  duration: 0.6,
+                  ease: [0.4, 0, 0.2, 1] as const,
+                },
+              }}
+            >
+              <Icon className="w-6 h-6 why-me-icon" />
+            </motion.div>
+          </motion.div>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-heading text-lg md:text-xl text-foreground leading-tight mb-3">
+              {t(`home.whyMe.items.${advantage.id}.title`)}
+            </h3>
+            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+              {t(`home.whyMe.items.${advantage.id}.description`)}
+            </p>
+          </div>
+        </div>
+        <div 
+          className="why-me-benefit mt-auto"
+          style={{ 
+            '--benefit-color': advantage.color,
+            '--benefit-bg-color': advantage.colorBright,
+          } as React.CSSProperties}
+        >
+          <p className="why-me-benefit-text">
+            {t(`home.whyMe.items.${advantage.id}.benefit`)}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function WhyMeSection(): ReactElement {
   const t = useTranslations();
-  const advantages: Array<{
-    readonly id: string;
-    readonly title: string;
-    readonly description: string;
-    readonly benefit: string;
-    readonly icon: LucideIcon;
-    readonly color: string;
-    readonly colorBright: string;
-  }> = [
+  const advantages: Array<Advantage> = [
     {
       id: 'direct',
       title: 'Прямая коммуникация',
       description: 'Общаетесь напрямую с разработчиком. Нет менеджеров и задержек — решения принимаются сразу.',
       benefit: 'Задачи решаются в 2-3 раза быстрее',
       icon: MessageCircle,
-      color: '#99b9ff', // AZURE - синий
-      colorBright: '#b8d1ff',
+      color: '#3b82f6', // Blue - хорошо виден в обоих режимах
+      colorBright: '#60a5fa', // Lighter blue
     },
     {
       id: 'savings',
@@ -498,8 +727,8 @@ function WhyMeSection(): ReactElement {
       description: 'Один разработчик = без накладных расходов. Платите за работу, а не за офис и маржу агентства.',
       benefit: 'Экспертиза за 40-60% от цены агентства',
       icon: DollarSign,
-      color: '#78ffd1', // SPRINGGREEN - бирюзовый
-      colorBright: '#a3ffe0',
+      color: '#10b981', // Green - хорошо виден в обоих режимах
+      colorBright: '#34d399', // Lighter green
     },
     {
       id: 'responsibility',
@@ -507,8 +736,8 @@ function WhyMeSection(): ReactElement {
       description: 'Пишу код сам = отвечаю за результат. Знаю каждую строчку, быстро исправлю любую проблему.',
       benefit: 'Меньше багов, быстрее поддержка',
       icon: UserCheck,
-      color: '#ffb3c2', // FLAMINGO - розовый
-      colorBright: '#ffc9d4',
+      color: '#ec4899', // Pink - хорошо виден в обоих режимах
+      colorBright: '#f472b6', // Lighter pink
     },
     {
       id: 'speed',
@@ -516,8 +745,8 @@ function WhyMeSection(): ReactElement {
       description: 'Срочные изменения и новые идеи — обсудим и сделаем за день. Без бюрократии и согласований.',
       benefit: 'Быстрые решения',
       icon: Rocket,
-      color: '#f0ffa6', // LIME - лайм
-      colorBright: '#f5ffc4',
+      color: '#f59e0b', // Amber - хорошо виден в обоих режимах
+      colorBright: '#fbbf24', // Lighter amber
     },
     {
       id: 'partnership',
@@ -525,8 +754,8 @@ function WhyMeSection(): ReactElement {
       description: 'В курсе вашего бизнеса, предлагаю улучшения сам. На связи всегда — получаете партнёра.',
       benefit: 'Помогу и после проекта с советом',
       icon: Handshake,
-      color: '#c4a5ff', // PURPLE - фиолетовый
-      colorBright: '#d9c4ff',
+      color: '#8b5cf6', // Purple - хорошо виден в обоих режимах
+      colorBright: '#a78bfa', // Lighter purple
     },
     {
       id: 'transparency',
@@ -534,8 +763,8 @@ function WhyMeSection(): ReactElement {
       description: 'Договор, поэтапная оплата, еженедельные отчёты, доступ к тестовой версии. Гарантия 12 месяцев.',
       benefit: 'Прозрачный процесс без сюрпризов',
       icon: ShieldCheck,
-      color: '#ffb366', // CORAL - коралловый/оранжевый
-      colorBright: '#ffcc99',
+      color: '#06b6d4', // Cyan - хорошо виден в обоих режимах
+      colorBright: '#22d3ee', // Lighter cyan
     },
   ];
 
@@ -564,66 +793,19 @@ function WhyMeSection(): ReactElement {
         </motion.div>
 
         <motion.div
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
+          className="grid gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto"
           initial="initial"
           whileInView="animate"
           viewport={getViewportSettings(0.2)}
           variants={staggerContainer}
         >
-          {advantages.map((advantage, index) => {
-            const Icon = advantage.icon;
-            return (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-              >
-                <FlipCard
-                  front={
-                    <div className="flex flex-col items-center justify-center h-full gap-4">
-                      <div 
-                        className="rounded-full p-4 flip-card-icon-bg"
-                        style={{ 
-                          '--icon-bg-color': advantage.colorBright,
-                        } as React.CSSProperties}
-                      >
-                        <Icon className="w-12 h-12 flip-card-icon" />
-                      </div>
-                      <h3 className="font-heading text-xl text-center text-foreground">{t(`home.whyMe.items.${advantage.id}.title`)}</h3>
-                    </div>
-                  }
-                  back={
-                    <div className="space-y-4 h-full">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div 
-                          className="rounded-lg p-2 flip-card-icon-bg"
-                          style={{ 
-                            '--icon-bg-color': advantage.colorBright,
-                          } as React.CSSProperties}
-                        >
-                          <Icon className="w-5 h-5 flip-card-icon" />
-                        </div>
-                        <h3 className="font-heading text-lg">{t(`home.whyMe.items.${advantage.id}.title`)}</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-4 flex-1">{t(`home.whyMe.items.${advantage.id}.description`)}</p>
-                      <div 
-                        className="rounded-lg border p-3 mt-auto flip-card-benefit"
-                        style={{ 
-                          '--benefit-color': advantage.color,
-                          '--benefit-bg-color': advantage.colorBright,
-                        } as React.CSSProperties}
-                      >
-                        <p className="text-xs font-semibold flip-card-benefit-text">
-                          {t(`home.whyMe.items.${advantage.id}.benefit`)}
-                        </p>
-                      </div>
-                    </div>
-                  }
-                  className="rounded-2xl"
-                  backgroundColor={advantage.color}
-                />
-              </motion.div>
-            );
-          })}
+          {advantages.map((advantage) => (
+            <WhyMeCard
+              key={advantage.id}
+              advantage={advantage}
+              t={t}
+            />
+          ))}
         </motion.div>
       </Container>
     </section>
@@ -650,8 +832,8 @@ function ProcessStepCard({ step, t }: ProcessStepCardProps): ReactElement {
   const [isDragged, setIsDragged] = useState(false);
   const [showOutput, setShowOutput] = useState(false);
   const y = useMotionValue(0);
-  const outputOpacity = useTransform(y, [-60, -30, 0], [1, 0.5, 0]);
-  const outputScale = useTransform(y, [-60, -30, 0], [1, 0.98, 0.95]);
+  const outputOpacity = useTransform(y, [-50, -25, 0], [1, 0.6, 0]);
+  const outputScale = useTransform(y, [-50, -25, 0], [1, 0.99, 0.96]);
 
   useMotionValueEvent(y, "change", (latest) => {
     if (latest < -20) {
@@ -677,20 +859,23 @@ function ProcessStepCard({ step, t }: ProcessStepCardProps): ReactElement {
 
   return (
     <motion.article
-      className="group rounded-2xl border border-border/60 bg-surface/80 p-8 shadow-soft transition-all duration-300 hover:border-accent/60 hover:shadow-lg cursor-grab active:cursor-grabbing touch-none"
-      variants={fadeInUp}
+      className="group rounded-2xl border border-border/60 bg-surface/80 p-6 md:p-8 shadow-soft transition-all duration-300 hover:border-accent/60 hover:shadow-lg cursor-grab active:cursor-grabbing"
       drag="y"
       dragConstraints={{ top: -60, bottom: 0 }}
-      dragElastic={0.3}
+      dragElastic={0.2}
       onDragEnd={handleDragEnd}
       onMouseEnter={() => !isDragged && setIsHovered(true)}
       onMouseLeave={() => !isDragged && setIsHovered(false)}
       style={{ y }}
       whileDrag={{ 
-        scale: 1.02,
-        boxShadow: "0 20px 60px -20px rgba(0, 0, 0, 0.3)",
+        scale: 1.01,
+        boxShadow: "0 20px 60px -20px rgba(0, 0, 0, 0.25)",
         zIndex: 10,
         cursor: "grabbing",
+      }}
+      whileHover={{
+        scale: 1.01,
+        transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
       }}
     >
       <div className="grid gap-6 md:grid-cols-[100px_1fr]">
@@ -709,15 +894,15 @@ function ProcessStepCard({ step, t }: ProcessStepCardProps): ReactElement {
               opacity: showOutput || isHovered || isDragged ? (isHovered || isDragged ? 1 : outputOpacity) : 0,
               maxHeight: showOutput || isHovered || isDragged ? 300 : 0,
               marginTop: showOutput || isHovered || isDragged ? 12 : 0,
-              scale: showOutput || isHovered || isDragged ? (isHovered || isDragged ? 1 : outputScale) : 0.95,
+              scale: showOutput || isHovered || isDragged ? (isHovered || isDragged ? 1 : outputScale) : 0.96,
             }}
             transition={{ 
-              duration: 0.5,
+              duration: 0.4,
               ease: [0.16, 1, 0.3, 1],
-              opacity: { duration: 0.4 },
-              scale: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-              maxHeight: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-              marginTop: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+              opacity: { duration: 0.3 },
+              scale: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+              maxHeight: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+              marginTop: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
             }}
           >
             {(showOutput || isHovered || isDragged) && (
@@ -787,8 +972,49 @@ function ProcessSection(): ReactElement {
   ];
 
   return (
-    <section id="process" className="border-t border-border/60 py-section bg-surface/40">
-      <Container className="space-y-12">
+    <section id="process" className="relative border-t border-border/60 py-section overflow-hidden">
+      {/* Background with gradient orbs and grid pattern */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+        {/* Base gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
+        
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0">
+          {/* Orb 1 - Azure (top-left) */}
+          <div
+            className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full bg-[#99b9ff] opacity-20 blur-3xl transition-opacity duration-1000 dark:opacity-10"
+          />
+          
+          {/* Orb 2 - Spring Green (top-right) */}
+          <div
+            className="absolute -right-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
+          />
+          
+          {/* Orb 3 - Flamingo (bottom-left) */}
+          <div
+            className="absolute -bottom-1/4 -left-1/4 h-[550px] w-[550px] rounded-full bg-[#ffb3c2] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
+          />
+          
+          {/* Orb 4 - Lime (bottom-right) */}
+          <div
+            className="absolute -bottom-1/4 -right-1/4 h-[450px] w-[450px] rounded-full bg-[#f0ffa6] opacity-12 blur-3xl transition-opacity duration-1000 dark:opacity-6"
+          />
+        </div>
+        
+        {/* Subtle grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, currentColor 1px, transparent 1px),
+              linear-gradient(to bottom, currentColor 1px, transparent 1px)
+            `,
+            backgroundSize: '48px 48px',
+          }}
+        />
+      </div>
+      
+      <Container className="relative z-10 space-y-12">
         <motion.div
           className="space-y-4 text-balance text-center"
           initial="initial"
@@ -822,15 +1048,20 @@ function ProcessSection(): ReactElement {
           className="space-y-8"
           initial="initial"
           whileInView="animate"
-          viewport={getViewportSettings(0.2)}
+          viewport={getViewportSettings(0.15)}
           variants={staggerContainer}
         >
-          {steps.map((step) => (
-            <ProcessStepCard
+          {steps.map((step, index) => (
+            <motion.div
               key={step.id}
-              step={step}
-              t={t}
-            />
+              variants={fadeInUp}
+              transition={{ duration: 0.6, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <ProcessStepCard
+                step={step}
+                t={t}
+              />
+            </motion.div>
           ))}
         </motion.div>
       </Container>
@@ -910,9 +1141,7 @@ function GuaranteeCard({ guarantee, t }: GuaranteeCardProps): ReactElement {
           </motion.div>
         </div>
         <motion.h3
-          className="font-heading text-lg mb-2"
-          whileHover={{ color: 'var(--base-color-accent)' }}
-          transition={{ duration: 0.2 }}
+          className="font-heading text-lg mb-2 text-foreground"
         >
           {t(`home.guarantees.items.${guarantee.id}.title`)}
         </motion.h3>
@@ -1000,8 +1229,49 @@ function PortfolioSection(): ReactElement {
   const projects = getFeaturedProjects();
 
   return (
-    <section className="border-t border-border/60 py-section">
-      <Container className="space-y-12">
+    <section className="relative border-t border-border/60 py-section overflow-hidden">
+      {/* Background with gradient orbs and grid pattern */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+        {/* Base gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
+        
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0">
+          {/* Orb 1 - Azure (top-left) */}
+          <div
+            className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full bg-[#99b9ff] opacity-20 blur-3xl transition-opacity duration-1000 dark:opacity-10"
+          />
+          
+          {/* Orb 2 - Spring Green (top-right) */}
+          <div
+            className="absolute -right-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
+          />
+          
+          {/* Orb 3 - Flamingo (bottom-left) */}
+          <div
+            className="absolute -bottom-1/4 -left-1/4 h-[550px] w-[550px] rounded-full bg-[#ffb3c2] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
+          />
+          
+          {/* Orb 4 - Lime (bottom-right) */}
+          <div
+            className="absolute -bottom-1/4 -right-1/4 h-[450px] w-[450px] rounded-full bg-[#f0ffa6] opacity-12 blur-3xl transition-opacity duration-1000 dark:opacity-6"
+          />
+        </div>
+        
+        {/* Subtle grid pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, currentColor 1px, transparent 1px),
+              linear-gradient(to bottom, currentColor 1px, transparent 1px)
+            `,
+            backgroundSize: '48px 48px',
+          }}
+        />
+      </div>
+      
+      <Container className="relative z-10 space-y-12">
         <motion.div
           className="space-y-4 text-balance text-center"
           initial="initial"
@@ -1031,25 +1301,28 @@ function PortfolioSection(): ReactElement {
 
         <div className="flex justify-center">
           <div className="grid gap-6 max-w-2xl w-full">
-            {projects.map((project, index) => (
-              <motion.article
-                key={project.id}
-                className="group relative rounded-2xl border border-border/60 bg-surface/80 overflow-hidden shadow-soft transition-all hover:-translate-y-2 hover:border-accent/70 hover:shadow-lg"
-                initial="initial"
-                whileInView="animate"
-                viewport={getViewportSettings(0.2)}
-                variants={fadeInUp}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Link
-                  href={`/cases/${project.id}`}
-                  className="block"
-                  aria-label={t("cases.list.openCaseAria", { title: project.title })}
+            {projects.map((project, index) => {
+              const translatedProject = getTranslatedProject(project.id, t) ?? project;
+              return (
+                <motion.article
+                  key={project.id}
+                  className="group relative rounded-2xl border border-border/60 bg-surface/80 overflow-hidden shadow-soft transition-all hover:-translate-y-2 hover:border-accent/70 hover:shadow-lg"
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={getViewportSettings(0.2)}
+                  variants={fadeInUp}
+                  transition={{ delay: index * 0.1 }}
                 >
-                  <ProjectCardContent project={project} />
-                </Link>
-              </motion.article>
-            ))}
+                  <Link
+                    href={`/cases/${translatedProject.id}`}
+                    className="block"
+                    aria-label={t("cases.list.openCaseAria", { title: translatedProject.title })}
+                  >
+                    <ProjectCardContent project={translatedProject} />
+                  </Link>
+                </motion.article>
+              );
+            })}
           </div>
         </div>
 
@@ -1207,13 +1480,19 @@ function FinalCTASection(): ReactElement {
 }
 
 export default function Home(): ReactElement {
+  const locale = useLocale();
+
   return (
     <SiteShell>
+      <StructuredData data={generatePersonStructuredData(locale)} />
+      <StructuredData data={generateWebsiteStructuredData(locale)} />
+      <StructuredData data={generateServiceStructuredData()} />
       <main id="main-content" className="flex flex-1 flex-col">
         <HeroSection />
         <StatsSection />
         <TechnologiesMarquee />
         <ExpertiseSection />
+        <TechnologiesMarquee direction="right" />
         <WhyMeSection />
         <ProcessSection />
         <GuaranteesSection />

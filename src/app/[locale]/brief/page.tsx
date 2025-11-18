@@ -55,6 +55,7 @@ function BriefCalculationSection(): ReactElement {
       // Validate required fields first
       if (!values.projectInfo?.projectName || !values.contact?.contactEmail) {
         alert(t("brief.errors.fillRequired"));
+        setIsSubmitting(false);
         return;
       }
 

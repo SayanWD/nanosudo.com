@@ -582,7 +582,8 @@
         "testing": "Тестілеу & QA (15%)",
         "deployment": "Деплой және баптау",
         "documentation": "Құжаттама",
-        "perHour": "{hours}h × ${rate}/h"
+        "perHour": "{hours}h × ${rate}/h",
+        "perHourRu": "{hours}h × ${rate}/ч"
       },
       "coefficients": {
         "title": "Қолданылған коэффициенттер",

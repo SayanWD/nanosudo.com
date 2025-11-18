@@ -1,6 +1,9 @@
 "use client";
 
 import type { ReactElement } from "react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useBriefNewStep } from "../hooks/use-brief-new-step";
 import { BriefNewStepNavigator } from "./brief-new-step-navigator";
@@ -12,6 +15,20 @@ export function ModulesStep(): ReactElement {
     form: { register, watch, setValue },
     goNext,
   } = useBriefNewStep("modules");
+
+  const [expandedSections, setExpandedSections] = useState({
+    frontend: true,
+    backend: true,
+    ecommerce: true,
+    integrations: true,
+  });
+
+  const toggleSection = (section: keyof typeof expandedSections): void => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
 
   const FRONTEND_MODULES = [
     { key: "mainPage" as const, label: t("brief.modules.frontend.mainPage"), hours: MODULE_HOURS.frontend.mainPage },
@@ -87,11 +104,31 @@ export function ModulesStep(): ReactElement {
   return (
     <div className="space-y-8">
       {/* Frontend */}
-      <section>
-        <h3 className="text-lg font-semibold text-foreground mb-4">
-          {t("brief.modules.frontend.title")}
-        </h3>
-        <div className="space-y-4">
+      <section className="rounded-lg border border-border/60 bg-surface/40 p-4">
+        <button
+          type="button"
+          onClick={() => toggleSection("frontend")}
+          className="flex w-full items-center justify-between text-left"
+        >
+          <h3 className="text-lg font-semibold text-foreground">
+            {t("brief.modules.frontend.title")}
+          </h3>
+          {expandedSections.frontend ? (
+            <ChevronUp className="w-5 h-5 text-muted-foreground" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-muted-foreground" />
+          )}
+        </button>
+        <AnimatePresence>
+          {expandedSections.frontend && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="space-y-4 pt-4">
           {FRONTEND_MODULES.map((module) => (
             <label
               key={module.key}
@@ -127,15 +164,38 @@ export function ModulesStep(): ReactElement {
               {frontend.innerPages * MODULE_HOURS.frontend.innerPage}h
             </p>
           </div>
-        </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* Backend */}
-      <section>
-        <h3 className="text-lg font-semibold text-foreground mb-4">
-          Backend & Database
-        </h3>
-        <div className="space-y-4">
+      <section className="rounded-lg border border-border/60 bg-surface/40 p-4">
+        <button
+          type="button"
+          onClick={() => toggleSection("backend")}
+          className="flex w-full items-center justify-between text-left"
+        >
+          <h3 className="text-lg font-semibold text-foreground">
+            Backend & Database
+          </h3>
+          {expandedSections.backend ? (
+            <ChevronUp className="w-5 h-5 text-muted-foreground" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-muted-foreground" />
+          )}
+        </button>
+        <AnimatePresence>
+          {expandedSections.backend && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="space-y-4 pt-4">
           {BACKEND_MODULES.map((module) => (
             <label
               key={module.key}
@@ -154,15 +214,38 @@ export function ModulesStep(): ReactElement {
               </div>
             </label>
           ))}
-        </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* E-commerce */}
-      <section>
-        <h3 className="text-lg font-semibold text-foreground mb-4">
-          E-commerce специфика
-        </h3>
-        <div className="space-y-4">
+      <section className="rounded-lg border border-border/60 bg-surface/40 p-4">
+        <button
+          type="button"
+          onClick={() => toggleSection("ecommerce")}
+          className="flex w-full items-center justify-between text-left"
+        >
+          <h3 className="text-lg font-semibold text-foreground">
+            E-commerce специфика
+          </h3>
+          {expandedSections.ecommerce ? (
+            <ChevronUp className="w-5 h-5 text-muted-foreground" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-muted-foreground" />
+          )}
+        </button>
+        <AnimatePresence>
+          {expandedSections.ecommerce && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="space-y-4 pt-4">
           {ECOMMERCE_MODULES.map((module) => (
             <label
               key={module.key}
@@ -213,15 +296,38 @@ export function ModulesStep(): ReactElement {
               {ecommerce.paymentSystems.length * MODULE_HOURS.ecommerce.paymentSystem}h
             </p>
           </div>
-        </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* Интеграции */}
-      <section>
-        <h3 className="text-lg font-semibold text-foreground mb-4">
-          Интеграции
-        </h3>
-        <div className="space-y-4">
+      <section className="rounded-lg border border-border/60 bg-surface/40 p-4">
+        <button
+          type="button"
+          onClick={() => toggleSection("integrations")}
+          className="flex w-full items-center justify-between text-left"
+        >
+          <h3 className="text-lg font-semibold text-foreground">
+            Интеграции
+          </h3>
+          {expandedSections.integrations ? (
+            <ChevronUp className="w-5 h-5 text-muted-foreground" />
+          ) : (
+            <ChevronDown className="w-5 h-5 text-muted-foreground" />
+          )}
+        </button>
+        <AnimatePresence>
+          {expandedSections.integrations && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="space-y-4 pt-4">
           <div className="p-4 rounded-lg border border-border/60 bg-surface/80">
             <label className="block text-sm font-medium text-foreground mb-3">
               CRM системы
@@ -366,7 +472,10 @@ export function ModulesStep(): ReactElement {
               </div>
             </div>
           </label>
-        </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       <BriefNewStepNavigator onNext={goNext} />

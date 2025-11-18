@@ -18,9 +18,9 @@ export function ModulesStep(): ReactElement {
 
   const [expandedSections, setExpandedSections] = useState({
     frontend: true,
-    backend: true,
-    ecommerce: true,
-    integrations: true,
+    backend: false,
+    ecommerce: false,
+    integrations: false,
   });
 
   const toggleSection = (section: keyof typeof expandedSections): void => {

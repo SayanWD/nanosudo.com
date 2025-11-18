@@ -18,6 +18,7 @@ import {
 } from "@/features/brief/components";
 import type { BriefNewStepId } from "@/features/brief/constants/steps-new";
 import { SiteShell } from "@/components/layout/site-shell";
+import { DynamicBackground } from "@/components/background/dynamic-background";
 import { calculateProjectCost } from "@/features/brief/utils/calculation";
 
 const STEP_COMPONENTS: Record<
@@ -139,8 +140,10 @@ export default function BriefPage(): ReactElement {
 
   return (
     <SiteShell header={null}>
-      <main className="min-h-screen bg-background py-section">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 sm:px-6 lg:px-8">
+      {/* Dynamic background */}
+      <DynamicBackground />
+      <main className="relative min-h-screen bg-background py-section">
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 sm:px-6 lg:px-8">
           <div className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-[0.32em] text-muted-foreground">
               {t("brief.label")}

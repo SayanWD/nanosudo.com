@@ -218,7 +218,7 @@ export async function POST(
         { indent: 20 },
       );
       doc.fontSize(12).text(
-        `${calculation.breakdown.discovery}h × $45/ч = $${Math.round(calculation.costBreakdown.discovery).toLocaleString("en-US")}`,
+        `${calculation.breakdown.discovery}h × $10/ч = $${Math.round(calculation.costBreakdown.discovery).toLocaleString("en-US")}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -405,7 +405,7 @@ export async function POST(
         indent: 20,
       });
       doc.fontSize(12).text(
-        `${calculation.breakdown.testing}h × $40/ч = $${Math.round(calculation.costBreakdown.testing).toLocaleString("en-US")}`,
+        `${calculation.breakdown.testing}h × $15/ч = $${Math.round(calculation.costBreakdown.testing).toLocaleString("en-US")}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -419,7 +419,7 @@ export async function POST(
       doc.moveDown(0.5);
       doc.fontSize(12).text(`• Деплой и настройка`, { indent: 20 });
       doc.fontSize(12).text(
-        `${calculation.breakdown.deployment}h × $45/ч = $${Math.round(calculation.costBreakdown.deployment).toLocaleString("en-US")}`,
+        `${calculation.breakdown.deployment}h × $30/ч = $${Math.round(calculation.costBreakdown.deployment).toLocaleString("en-US")}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -431,7 +431,7 @@ export async function POST(
       doc.moveDown(0.5);
       doc.fontSize(12).text(`• Документация`, { indent: 20 });
       doc.fontSize(12).text(
-        `${calculation.breakdown.documentation}h × $35/ч = $${Math.round(calculation.costBreakdown.documentation).toLocaleString("en-US")}`,
+        `${calculation.breakdown.documentation}h × $10/ч = $${Math.round(calculation.costBreakdown.documentation).toLocaleString("en-US")}`,
         { align: "right" },
       );
       doc.moveDown();

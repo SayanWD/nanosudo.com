@@ -96,11 +96,11 @@ export function CalculationPreview({
                 {t("brief.calculation.breakdown.discovery")}
               </span>
               <span className="text-sm text-muted-foreground">
-                {breakdown.discovery}h × <span className="text-accent font-semibold">{t("brief.calculation.breakdown.free")}</span>
+                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.discovery, rate: HOURLY_RATES.discovery })}
               </span>
             </div>
-            <div className="text-xs text-accent font-semibold">
-              {t("brief.calculation.breakdown.freeNote")}
+            <div className="text-xs text-muted-foreground">
+              ${Math.round(costBreakdown.discovery).toLocaleString("en-US")}
             </div>
           </div>
         )}

@@ -227,7 +227,7 @@ function buildClientEmailHtml(
             <p>Часов: ${calculation.totalHours}</p>
             <p class="total">$${calculation.totalCost.toLocaleString("en-US")}</p>
             <p style="font-size: 12px; color: #666; margin-top: 10px;">
-              * Discovery & Планирование — бесплатно<br>
+              * Discovery & Планирование — $10/ч<br>
               * Все тарифы уменьшены на 50% от рыночных
             </p>
           </div>

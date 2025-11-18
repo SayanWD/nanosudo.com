@@ -27,7 +27,7 @@ const CONTACT_LINKS: Array<{
   readonly icon: typeof Mail;
 }> = [
   { labelKey: "common.footer.email", href: "mailto:roorsayan@gmail.com", icon: Mail },
-  { labelKey: "common.footer.whatsapp", href: "https://wa.me/87478277485", icon: MessageCircle },
+  { labelKey: "common.footer.whatsapp", href: "https://wa.me/77478277485", icon: MessageCircle },
   { labelKey: "common.footer.telegram", href: "https://t.me/satoshi_iam", icon: Send },
   { labelKey: "common.footer.instagram", href: "https://instagram.com/satoshi_iam", icon: Instagram },
   { labelKey: "common.footer.linkedin", href: "https://www.linkedin.com/in/sayan-roor/", icon: Linkedin },

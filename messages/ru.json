@@ -113,7 +113,7 @@
           "both": "Обе"
         },
         "emailMarketing": {
-          "title": "Email маркетинг",
+          "title": "Email-маркетинг",
           "mailchimp": "Mailchimp",
           "sendgrid": "SendGrid",
           "brevo": "Brevo",
@@ -121,10 +121,7 @@
         },
         "socialMedia": "Интеграция с социальными сетями",
         "telegramBot": "Telegram бот",
-        "erp1c": "Интеграция с 1С ERP",
-        "emailMarketing": {
-          "title": "Email-маркетинг"
-        }
+        "erp1c": "Интеграция с 1С ERP"
       },
       "paymentSystems": {
         "title": "Платежные системы",

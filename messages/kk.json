@@ -455,10 +455,7 @@
         },
         "socialMedia": "Әлеуметтік желілер интеграциясы",
         "telegramBot": "Telegram бот",
-        "erp1c": "1С ERP интеграциясы",
-        "emailMarketing": {
-          "title": "Email маркетинг"
-        }
+        "erp1c": "1С ERP интеграциясы"
       },
       "paymentSystems": {
         "title": "Төлем жүйелері",

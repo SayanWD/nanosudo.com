@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactElement } from "react";
-import { motion, useSpring, useMotionValueEvent, useInView, useMotionValue, useTransform } from "framer-motion";
+import { motion, useSpring, useMotionValueEvent, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
@@ -827,58 +827,37 @@ type ProcessStepCardProps = {
   readonly t: ReturnType<typeof useTranslations>;
 };
 
+// Animation variants for process step cards (same as why me cards)
+const processStepCardVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+};
+
 function ProcessStepCard({ step, t }: ProcessStepCardProps): ReactElement {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isDragged, setIsDragged] = useState(false);
-  const [showOutput, setShowOutput] = useState(false);
-  const y = useMotionValue(0);
-  const outputOpacity = useTransform(y, [-50, -25, 0], [1, 0.6, 0]);
-  const outputScale = useTransform(y, [-50, -25, 0], [1, 0.99, 0.96]);
-
-  useMotionValueEvent(y, "change", (latest) => {
-    if (latest < -20) {
-      setShowOutput(true);
-    } else if (latest > -10 && !isHovered && !isDragged) {
-      setShowOutput(false);
-    }
-  });
-
-  const handleDragEnd = (): void => {
-    const currentY = y.get();
-    if (currentY < -30) {
-      setIsHovered(true);
-      setIsDragged(true);
-      setShowOutput(true);
-    } else {
-      setIsHovered(false);
-      setIsDragged(false);
-      setShowOutput(false);
-    }
-    y.set(0);
-  };
-
   return (
     <motion.article
-      className="group rounded-2xl border border-border/60 bg-surface/80 p-6 md:p-8 shadow-soft transition-all duration-300 hover:border-accent/60 hover:shadow-lg cursor-grab active:cursor-grabbing"
-      drag="y"
-      dragConstraints={{ top: -60, bottom: 0 }}
-      dragElastic={0.2}
-      onDragEnd={handleDragEnd}
-      onMouseEnter={() => !isDragged && setIsHovered(true)}
-      onMouseLeave={() => !isDragged && setIsHovered(false)}
-      style={{ y }}
-      whileDrag={{ 
-        scale: 1.01,
-        boxShadow: "0 20px 60px -20px rgba(0, 0, 0, 0.25)",
-        zIndex: 10,
-        cursor: "grabbing",
-      }}
+      className="rounded-2xl border border-border/60 bg-surface/80 p-6 md:p-8 shadow-soft cursor-pointer overflow-hidden relative"
+      initial="initial"
+      whileInView="animate"
+      viewport={getViewportSettings(0.2)}
+      variants={processStepCardVariants}
       whileHover={{
-        scale: 1.01,
-        transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] },
+        scale: 1.05,
+        y: -8,
+        transition: {
+          duration: 0.3,
+          ease: [0.4, 0, 0.2, 1] as const,
+        },
       }}
     >
-      <div className="grid gap-6 md:grid-cols-[100px_1fr]">
+      {/* Animated background gradient on hover */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-br from-accent/5 to-accent/10 opacity-0"
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
+      
+      <div className="grid gap-6 md:grid-cols-[100px_1fr] relative z-10">
         <div className="flex flex-col items-center md:items-start">
           <span className="text-4xl font-heading text-accent mb-2">{step.number}</span>
           <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -888,34 +867,10 @@ function ProcessStepCard({ step, t }: ProcessStepCardProps): ReactElement {
         <div className="space-y-3">
           <h3 className="font-heading text-2xl">{step.title}</h3>
           <p className="text-muted-foreground">{t(`home.process.steps.${step.id}.description`)}</p>
-          <motion.div
-            className="rounded-lg border border-accent/40 bg-accent/10 p-4 overflow-hidden"
-            style={{
-              opacity: showOutput || isHovered || isDragged ? (isHovered || isDragged ? 1 : outputOpacity) : 0,
-              maxHeight: showOutput || isHovered || isDragged ? 300 : 0,
-              marginTop: showOutput || isHovered || isDragged ? 12 : 0,
-              scale: showOutput || isHovered || isDragged ? (isHovered || isDragged ? 1 : outputScale) : 0.96,
-            }}
-            transition={{ 
-              duration: 0.4,
-              ease: [0.16, 1, 0.3, 1],
-              opacity: { duration: 0.3 },
-              scale: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-              maxHeight: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-              marginTop: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
-            }}
-          >
-            {(showOutput || isHovered || isDragged) && (
-              <motion.div
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <p className="text-sm font-semibold text-accent mb-1">{t("home.process.outputLabel")}</p>
-                <p className="text-sm text-muted-foreground">{t(`home.process.steps.${step.id}.output`)}</p>
-              </motion.div>
-            )}
-          </motion.div>
+          <div className="rounded-lg border border-accent/40 bg-accent/10 p-4 mt-4">
+            <p className="text-sm font-semibold text-accent mb-1">{t("home.process.outputLabel")}</p>
+            <p className="text-sm text-muted-foreground">{t(`home.process.steps.${step.id}.output`)}</p>
+          </div>
         </div>
       </div>
     </motion.article>

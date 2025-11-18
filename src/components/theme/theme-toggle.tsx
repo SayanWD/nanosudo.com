@@ -11,9 +11,12 @@ export function ThemeToggle(): ReactElement {
 
   // Prevent hydration mismatch by only showing icon after mount
   // useLayoutEffect runs synchronously before browser paint
+  // This is necessary to prevent hydration mismatch between server and client
+  /* eslint-disable react-hooks/set-state-in-effect */
   useLayoutEffect(() => {
     setMounted(true);
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Show Moon when theme is 'light' (because clicking will switch to dark)
   // Show Sun when theme is 'dark' (because clicking will switch to light)

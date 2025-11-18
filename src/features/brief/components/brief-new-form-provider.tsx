@@ -148,14 +148,16 @@ export function BriefNewFormProvider({
     if (!enableAutosave || typeof window === "undefined") {
       return;
     }
-    const subscription = form.watch((values) => {
+    /* eslint-disable react-hooks/incompatible-library */
+    const subscription = form.watch((values: BriefNewFormValues): void => {
       try {
         localStorage.setItem(BRIEF_STORAGE_KEY, JSON.stringify(values));
       } catch {
         // Ignore storage errors
       }
     });
-    return () => {
+    /* eslint-enable react-hooks/incompatible-library */
+    return (): void => {
       subscription.unsubscribe();
     };
   }, [form, enableAutosave]);

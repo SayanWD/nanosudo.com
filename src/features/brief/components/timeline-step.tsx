@@ -12,7 +12,6 @@ export function TimelineStep(): ReactElement {
   } = useBriefNewStep("timeline");
 
   const desiredWeeks = watch("timeline.desiredWeeks");
-  const phasedDelivery = watch("timeline.phasedDelivery");
 
   const getUrgencyCoefficient = (weeks: number): number => {
     if (weeks < 4) return URGENCY_COEFFICIENTS.urgent;

@@ -5,7 +5,16 @@ import { useBriefNewFormContext } from "../components/brief-new-form-provider";
 import type { BriefNewFormValues } from "../schemas/brief-new";
 import type { BriefNewStepId } from "../constants/steps-new";
 
-export function useBriefNewStep(stepId: BriefNewStepId) {
+type UseBriefNewStepReturn = {
+  readonly form: ReturnType<typeof useFormContext<BriefNewFormValues>>;
+  readonly goNext: () => Promise<void>;
+  readonly goBack: () => void;
+  readonly canGoBack: boolean;
+  readonly canGoForward: boolean;
+  readonly currentStep: BriefNewStepId;
+};
+
+export function useBriefNewStep(stepId: BriefNewStepId): UseBriefNewStepReturn {
   const form = useFormContext<BriefNewFormValues>();
   const {
     goToNextStep,
@@ -17,6 +26,7 @@ export function useBriefNewStep(stepId: BriefNewStepId) {
 
   const goNext = async (): Promise<void> => {
     const fieldPath = stepId as keyof BriefNewFormValues;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isValid = await form.trigger(fieldPath as any);
     if (isValid) {
       goToNextStep();

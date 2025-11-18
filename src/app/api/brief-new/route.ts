@@ -68,12 +68,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       user_agent: request.headers.get("user-agent"),
     };
 
-    console.log("[Brief Submission] Saving to database:", {
-      submissionId,
-      projectName: formData.projectInfo.projectName,
-      contactEmail: formData.contact.contactEmail,
-    });
-
     const insertResult = await supabaseAdmin
       .from("brief_submissions")
       .insert(insertPayload)
@@ -96,11 +90,6 @@ export async function POST(request: Request): Promise<NextResponse> {
         { status: 500 },
       );
     }
-
-    console.log("[Brief Submission] Successfully saved:", {
-      submissionId: insertResult.data?.id,
-      createdAt: insertResult.data?.created_at,
-    });
 
     // Отправляем email уведомления
     const adminEmail = process.env.BREVO_NOTIFICATION_EMAIL;

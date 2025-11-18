@@ -126,13 +126,14 @@ export async function POST(
     const fontDataPath = join(pdfkitRoot, "js", "data");
     
     // Monkey-patch fs.readFileSync to intercept font file reads
-    const originalReadFileSync = require("fs").readFileSync;
-    const patchedReadFileSync = (filePath: string, ...args: unknown[]) => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const fsModule = require("fs") as { readFileSync: (path: string, ...args: unknown[]) => Buffer | string };
+    const originalReadFileSync = fsModule.readFileSync;
+    const patchedReadFileSync = (filePath: string, ...args: unknown[]): Buffer | string => {
       // If PDFKit is trying to read a font file with incorrect path, redirect it
       if (typeof filePath === "string" && filePath.includes("Helvetica.afm")) {
         const correctPath = join(fontDataPath, "Helvetica.afm");
         if (existsSync(correctPath)) {
-          console.log("[PDF] Redirecting font load to:", correctPath);
           return originalReadFileSync(correctPath, ...args);
         }
       }

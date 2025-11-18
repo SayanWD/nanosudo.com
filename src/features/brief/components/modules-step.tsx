@@ -68,16 +68,8 @@ export function ModulesStep(): ReactElement {
   ] as const;
 
   const frontend = watch("modules.frontend");
-  const backend = watch("modules.backend");
   const ecommerce = watch("modules.ecommerce");
   const integrations = watch("modules.integrations");
-
-  const toggleCheckbox = (
-    path: string,
-    current: boolean,
-  ): void => {
-    setValue(path as any, !current, { shouldTouch: true });
-  };
 
   const toggleArray = (
     path: string,
@@ -88,6 +80,7 @@ export function ModulesStep(): ReactElement {
     const next = exists
       ? current.filter((item) => item !== value)
       : [...current, value];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setValue(path as any, next, { shouldTouch: true });
   };
 

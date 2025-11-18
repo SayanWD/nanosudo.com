@@ -27,9 +27,11 @@ export function ProjectInfoStep(): ReactElement {
   const [descriptionLength, setDescriptionLength] = useState(0);
 
   // Prevent hydration mismatch by only updating length on client
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setDescriptionLength(description?.length ?? 0);
   }, [description]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   return (
     <div className="space-y-6">

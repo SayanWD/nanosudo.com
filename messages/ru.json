@@ -123,7 +123,7 @@
         "telegramBot": "Telegram бот",
         "erp1c": "Интеграция с 1С ERP",
         "emailMarketing": {
-          "title": "Email-рассылки"
+          "title": "Email-маркетинг"
         }
       },
       "paymentSystems": {
@@ -280,7 +280,7 @@
       "back": "Назад",
       "next": "Далее",
       "saving": "Сохранение...",
-      "generateProposal": "Сгенерировать КП"
+      "generateProposal": "Сохранить черновик"
     }
   },
   "home": {

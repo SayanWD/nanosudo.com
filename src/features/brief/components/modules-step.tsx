@@ -290,7 +290,7 @@ export function ModulesStep(): ReactElement {
 
           <div className="p-4 rounded-lg border border-border/60 bg-surface/80">
             <label className="block text-sm font-medium text-foreground mb-3">
-              Email-рассылки
+              {t("brief.modules.integrations.emailMarketing.title")}
             </label>
             <div className="grid gap-2 sm:grid-cols-2">
               {EMAIL_MARKETING.map((system) => (

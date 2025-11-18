@@ -58,7 +58,7 @@ function formatModuleDetails(formData: BriefNewFormValues): string {
     details.push(`• Аналитика (${formData.modules.integrations.analytics.length} шт.)`);
   }
   if (formData.modules.integrations.emailMarketing.length > 0) {
-    details.push(`• Email-рассылки (${formData.modules.integrations.emailMarketing.length} шт.)`);
+    details.push(`• Email-маркетинг (${formData.modules.integrations.emailMarketing.length} шт.)`);
   }
   if (formData.modules.integrations.socialMedia) details.push("• Социальные сети");
   if (formData.modules.integrations.telegramBot) details.push("• Телеграм-бот");
@@ -341,7 +341,7 @@ export async function POST(
         .filter((line) => line.startsWith("•") && (
           line.includes("CRM") ||
           line.includes("Аналитика") ||
-          line.includes("Email-рассылки") ||
+          line.includes("Email-маркетинг") ||
           line.includes("Социальные сети") ||
           line.includes("Телеграм-бот") ||
           line.includes("1С/ERP")

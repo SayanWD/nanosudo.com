@@ -723,9 +723,9 @@ function WhyMeSection(): ReactElement {
     },
     {
       id: 'savings',
-      title: 'Экономия 40-60%',
+      title: 'Экономия бюджета на 30-50%',
       description: 'Один разработчик = без накладных расходов. Платите за работу, а не за офис и маржу агентства.',
-      benefit: 'Экспертиза за 40-60% от цены агентства',
+      benefit: 'Качество по лучшей цене',
       icon: DollarSign,
       color: '#10b981', // Green - хорошо виден в обоих режимах
       colorBright: '#34d399', // Lighter green

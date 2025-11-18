@@ -149,9 +149,10 @@ export function BriefNewFormProvider({
       return;
     }
     /* eslint-disable react-hooks/incompatible-library */
-    const subscription = form.watch((values: BriefNewFormValues): void => {
+    const subscription = form.watch(() => {
       try {
-        localStorage.setItem(BRIEF_STORAGE_KEY, JSON.stringify(values));
+        const currentValues = form.getValues();
+        localStorage.setItem(BRIEF_STORAGE_KEY, JSON.stringify(currentValues));
       } catch {
         // Ignore storage errors
       }

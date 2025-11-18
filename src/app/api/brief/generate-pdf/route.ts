@@ -141,8 +141,6 @@ export async function POST(
     };
     
     // Temporarily replace readFileSync
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const fsModule = require("fs") as { readFileSync: (path: string, ...args: unknown[]) => Buffer | string };
     fsModule.readFileSync = patchedReadFileSync;
     
     let doc: InstanceType<typeof PDFDocument>;

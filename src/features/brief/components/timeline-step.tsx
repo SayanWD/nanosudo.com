@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
+import { useTranslations } from "next-intl";
 import { useBriefNewStep } from "../hooks/use-brief-new-step";
 import { BriefNewStepNavigator } from "./brief-new-step-navigator";
 import { URGENCY_COEFFICIENTS } from "../schemas/brief-new";
@@ -10,6 +11,7 @@ export function TimelineStep(): ReactElement {
     form: { register, watch },
     goNext,
   } = useBriefNewStep("timeline");
+  const t = useTranslations("brief.timeline");
 
   const desiredWeeks = watch("timeline.desiredWeeks");
 
@@ -22,17 +24,17 @@ export function TimelineStep(): ReactElement {
   const urgencyCoeff = getUrgencyCoefficient(desiredWeeks);
   const urgencyLabel =
     desiredWeeks < 4
-      ? "Срочно (<4 недели)"
+      ? t("desiredWeeks.urgent")
       : desiredWeeks <= 8
-        ? "Нормальная (4-8 недель)"
-        : "Гибкий график (>8 недель)";
+        ? t("desiredWeeks.normal")
+        : t("desiredWeeks.flexible");
 
   return (
     <div className="space-y-6">
       <div className="space-y-4">
         <div className="p-4 rounded-lg border border-border/60 bg-surface/80">
           <label className="block text-sm font-medium text-foreground mb-2">
-            Желаемый срок запуска (недель) <span className="text-error">*</span>
+            {t("desiredWeeks.label")} <span className="text-error">*</span>
           </label>
           <input
             type="number"
@@ -43,12 +45,12 @@ export function TimelineStep(): ReactElement {
           />
           <div className="mt-3 space-y-2">
             <div className="text-sm text-foreground">
-              <strong>Режим:</strong> {urgencyLabel}
+              <strong>{t("desiredWeeks.mode", { mode: urgencyLabel })}</strong>
             </div>
             <div className="text-xs text-muted-foreground">
-              Коэффициент: {urgencyCoeff}x
-              {desiredWeeks < 4 && " (срочность увеличивает стоимость на 30%)"}
-              {desiredWeeks > 8 && " (гибкий график снижает стоимость на 10%)"}
+              {t("desiredWeeks.coefficient", { coeff: urgencyCoeff })}
+              {desiredWeeks < 4 && t("desiredWeeks.urgentNote")}
+              {desiredWeeks > 8 && t("desiredWeeks.flexibleNote")}
             </div>
           </div>
         </div>
@@ -62,10 +64,10 @@ export function TimelineStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                Поэтапная сдача
+                {t("phasedDelivery.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                +10% времени на координацию
+                {t("phasedDelivery.description")}
               </div>
             </div>
           </label>

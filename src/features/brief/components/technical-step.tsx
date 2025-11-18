@@ -1,30 +1,32 @@
 "use client";
 
 import type { ReactElement } from "react";
+import { useTranslations } from "next-intl";
 import { useBriefNewStep } from "../hooks/use-brief-new-step";
 import { BriefNewStepNavigator } from "./brief-new-step-navigator";
 import { MODULE_HOURS } from "../schemas/brief-new";
-
-const LOAD_OPTIONS = [
-  { value: "low" as const, label: "<1000 посетителей/день", hours: 0 },
-  { value: "medium" as const, label: "1000-10000 посетителей/день", hours: 0 },
-  { value: "high" as const, label: ">10000 посетителей/день", hours: MODULE_HOURS.technical.highLoad },
-] as const;
 
 export function TechnicalStep(): ReactElement {
   const {
     form: { register, watch },
     goNext,
   } = useBriefNewStep("technical");
+  const t = useTranslations("brief.technical");
 
   const expectedLoad = watch("technical.expectedLoad");
+
+  const LOAD_OPTIONS = [
+    { value: "low" as const, label: t("expectedLoad.low"), hours: 0 },
+    { value: "medium" as const, label: t("expectedLoad.medium"), hours: 0 },
+    { value: "high" as const, label: t("expectedLoad.high"), hours: MODULE_HOURS.technical.highLoad },
+  ] as const;
 
   return (
     <div className="space-y-6">
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-semibold text-foreground mb-3">
-            Ожидаемая нагрузка <span className="text-error">*</span>
+            {t("expectedLoad.label")} <span className="text-error">*</span>
           </label>
           <div className="space-y-3">
             {LOAD_OPTIONS.map((option) => (
@@ -48,7 +50,7 @@ export function TechnicalStep(): ReactElement {
                   </div>
                   {option.hours > 0 && (
                     <div className="text-xs text-muted-foreground mt-1">
-                      +{option.hours}h на оптимизацию
+                      {t("expectedLoad.optimization", { hours: option.hours })}
                     </div>
                   )}
                 </div>
@@ -66,10 +68,10 @@ export function TechnicalStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                Высокие требования к безопасности
+                {t("highSecurity.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                +{MODULE_HOURS.technical.highSecurity}h
+                {t("highSecurity.description", { hours: MODULE_HOURS.technical.highSecurity })}
               </div>
             </div>
           </label>
@@ -84,10 +86,10 @@ export function TechnicalStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                PWA/оффлайн режим
+                {t("pwa.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                +{MODULE_HOURS.technical.pwa}h
+                {t("pwa.description", { hours: MODULE_HOURS.technical.pwa })}
               </div>
             </div>
           </label>
@@ -102,10 +104,10 @@ export function TechnicalStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                Реалтайм функции (WebSocket)
+                {t("realtime.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                +{MODULE_HOURS.technical.realtime}h
+                {t("realtime.description", { hours: MODULE_HOURS.technical.realtime })}
               </div>
             </div>
           </label>

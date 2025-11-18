@@ -178,7 +178,7 @@ export function ModulesStep(): ReactElement {
           className="flex w-full items-center justify-between text-left"
         >
           <h3 className="text-lg font-semibold text-foreground">
-            Backend & Database
+            {t("brief.modules.backend.title")}
           </h3>
           {expandedSections.backend ? (
             <ChevronUp className="w-5 h-5 text-muted-foreground" />
@@ -228,7 +228,7 @@ export function ModulesStep(): ReactElement {
           className="flex w-full items-center justify-between text-left"
         >
           <h3 className="text-lg font-semibold text-foreground">
-            E-commerce специфика
+            {t("brief.modules.ecommerce.title")}
           </h3>
           {expandedSections.ecommerce ? (
             <ChevronUp className="w-5 h-5 text-muted-foreground" />
@@ -266,7 +266,7 @@ export function ModulesStep(): ReactElement {
           ))}
           <div className="p-4 rounded-lg border border-border/60 bg-surface/80">
             <label className="block text-sm font-medium text-foreground mb-3">
-              Платежные системы
+              {t("brief.modules.paymentSystems.title")}
             </label>
             <div className="grid gap-2 sm:grid-cols-2">
               {PAYMENT_SYSTEMS.map((system) => (
@@ -310,7 +310,7 @@ export function ModulesStep(): ReactElement {
           className="flex w-full items-center justify-between text-left"
         >
           <h3 className="text-lg font-semibold text-foreground">
-            Интеграции
+            {t("brief.modules.integrations.title")}
           </h3>
           {expandedSections.integrations ? (
             <ChevronUp className="w-5 h-5 text-muted-foreground" />
@@ -330,7 +330,7 @@ export function ModulesStep(): ReactElement {
               <div className="space-y-4 pt-4">
           <div className="p-4 rounded-lg border border-border/60 bg-surface/80">
             <label className="block text-sm font-medium text-foreground mb-3">
-              CRM системы
+              {t("brief.modules.integrations.crm.title")}
             </label>
             <div className="grid gap-2 sm:grid-cols-2">
               {CRM_SYSTEMS.map((system) => (
@@ -363,7 +363,7 @@ export function ModulesStep(): ReactElement {
 
           <div className="p-4 rounded-lg border border-border/60 bg-surface/80">
             <label className="block text-sm font-medium text-foreground mb-3">
-              Аналитика
+              {t("brief.modules.integrations.analytics.title")}
             </label>
             <div className="grid gap-2 sm:grid-cols-2">
               {ANALYTICS_SYSTEMS.map((system) => (
@@ -435,10 +435,10 @@ export function ModulesStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                Социальные сети
+                {t("brief.modules.integrations.socialMedia.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                {MODULE_HOURS.integrations.socialMedia}h
+                {t("brief.modules.integrations.socialMedia.description", { hours: MODULE_HOURS.integrations.socialMedia })}
               </div>
             </div>
           </label>
@@ -450,9 +450,11 @@ export function ModulesStep(): ReactElement {
               className="h-4 w-4 text-accent focus:ring-accent"
             />
             <div className="flex-1">
-              <div className="font-medium text-foreground">Телеграм-бот</div>
+              <div className="font-medium text-foreground">
+                {t("brief.modules.integrations.telegramBot.label")}
+              </div>
               <div className="text-xs text-muted-foreground">
-                {MODULE_HOURS.integrations.telegramBot}h
+                {t("brief.modules.integrations.telegramBot.description", { hours: MODULE_HOURS.integrations.telegramBot })}
               </div>
             </div>
           </label>
@@ -465,10 +467,10 @@ export function ModulesStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                1С/ERP системы
+                {t("brief.modules.integrations.erp1c.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                {MODULE_HOURS.integrations.erp1c}h
+                {t("brief.modules.integrations.erp1c.description", { hours: MODULE_HOURS.integrations.erp1c })}
               </div>
             </div>
           </label>

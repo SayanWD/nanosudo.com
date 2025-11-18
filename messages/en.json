@@ -388,6 +388,39 @@
       "tip2": "Draft is automatically saved in your browser.",
       "tip3": "After completing all steps, submit your request."
     },
+    "progress": {
+      "label": "Progress",
+      "steps": {
+        "projectInfo": {
+          "title": "About Project",
+          "description": "Project name, type and brief description."
+        },
+        "modules": {
+          "title": "Functional Modules",
+          "description": "Select required Frontend, Backend, E-commerce modules and integrations."
+        },
+        "design": {
+          "title": "Design",
+          "description": "Choose design approach and number of pages."
+        },
+        "content": {
+          "title": "Content",
+          "description": "Specify who will provide content for the project."
+        },
+        "technical": {
+          "title": "Technical Requirements",
+          "description": "Expected load and additional technical requirements."
+        },
+        "timeline": {
+          "title": "Timeline & Features",
+          "description": "Desired launch timeline and project work features."
+        },
+        "contact": {
+          "title": "Contact Information",
+          "description": "Your contact details for communication."
+        }
+      }
+    },
     "projectInfo": {
       "title": "Project Information",
       "projectName": {

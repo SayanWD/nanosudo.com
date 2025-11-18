@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
+import { useTranslations } from "next-intl";
 import { useBriefNewStep } from "../hooks/use-brief-new-step";
 import { BriefNewStepNavigator } from "./brief-new-step-navigator";
 import { MODULE_HOURS } from "../schemas/brief-new";
@@ -10,6 +11,7 @@ export function DesignStep(): ReactElement {
     form: { register, watch },
     goNext,
   } = useBriefNewStep("design");
+  const t = useTranslations("brief.design");
 
   const design = watch("design");
 
@@ -25,10 +27,10 @@ export function DesignStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                Использовать готовый шаблон
+                {t("useTemplate.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                -50% времени на дизайн
+                {t("useTemplate.description")}
               </div>
             </div>
           </label>
@@ -43,10 +45,10 @@ export function DesignStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                Адаптация существующего брендбука
+                {t("adaptBrandbook.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                {MODULE_HOURS.design.adaptBrandbook}h
+                {t("adaptBrandbook.description", { hours: MODULE_HOURS.design.adaptBrandbook })}
               </div>
             </div>
           </label>
@@ -61,10 +63,10 @@ export function DesignStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                Дизайн с нуля
+                {t("designFromScratch.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                {MODULE_HOURS.design.fromScratch}-40h (в зависимости от страниц)
+                {t("designFromScratch.description", { hours: MODULE_HOURS.design.fromScratch })}
               </div>
             </div>
           </label>
@@ -79,10 +81,10 @@ export function DesignStep(): ReactElement {
             />
             <div className="flex-1">
               <div className="font-medium text-foreground">
-                UI Kit и дизайн-система
+                {t("uiKit.label")}
               </div>
               <div className="text-xs text-muted-foreground">
-                +{MODULE_HOURS.design.uiKit}h дополнительно
+                {t("uiKit.description", { hours: MODULE_HOURS.design.uiKit })}
               </div>
             </div>
           </label>
@@ -90,7 +92,7 @@ export function DesignStep(): ReactElement {
 
         <div className="p-4 rounded-lg border border-border/60 bg-surface/80">
           <label className="block text-sm font-medium text-foreground mb-2">
-            Количество страниц
+            {t("pageCount.label")}
           </label>
           <input
             type="number"
@@ -100,7 +102,7 @@ export function DesignStep(): ReactElement {
             className="w-full rounded-lg border border-border/60 bg-background px-3 py-2 text-foreground"
           />
           <p className="mt-1 text-xs text-muted-foreground">
-            Текущее значение: {design.pageCount}
+            {t("currentValue", { count: design.pageCount })}
           </p>
         </div>
       </div>

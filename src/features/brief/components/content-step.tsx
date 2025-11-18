@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
+import { useTranslations } from "next-intl";
 import { useBriefNewStep } from "../hooks/use-brief-new-step";
 import { BriefNewStepNavigator } from "./brief-new-step-navigator";
 
@@ -9,6 +10,7 @@ export function ContentStep(): ReactElement {
     form: { register },
     goNext,
   } = useBriefNewStep("content");
+  const t = useTranslations("brief.content");
 
   return (
     <div className="space-y-6">
@@ -21,9 +23,11 @@ export function ContentStep(): ReactElement {
           />
           <div className="flex-1">
             <div className="font-medium text-foreground">
-              Контент предоставляет клиент
+              {t("clientProvides.label")}
             </div>
-            <div className="text-xs text-muted-foreground">0h</div>
+            <div className="text-xs text-muted-foreground">
+              {t("clientProvides.description")}
+            </div>
           </div>
         </label>
 
@@ -35,10 +39,10 @@ export function ContentStep(): ReactElement {
           />
           <div className="flex-1">
             <div className="font-medium text-foreground">
-              Нужен копирайтинг
+              {t("needsCopywriting.label")}
             </div>
             <div className="text-xs text-muted-foreground">
-              Не включено, партнёр
+              {t("needsCopywriting.description")}
             </div>
           </div>
         </label>
@@ -51,10 +55,10 @@ export function ContentStep(): ReactElement {
           />
           <div className="flex-1">
             <div className="font-medium text-foreground">
-              Нужна обработка фото/видео
+              {t("needsMediaProcessing.label")}
             </div>
             <div className="text-xs text-muted-foreground">
-              Не включено, партнёр
+              {t("needsMediaProcessing.description")}
             </div>
           </div>
         </label>

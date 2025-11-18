@@ -46,6 +46,39 @@
       "tip2": "Черновик сохраняется автоматически в браузере.",
       "tip3": "После заполнения всех шагов отправьте заявку."
     },
+    "progress": {
+      "label": "Прогресс",
+      "steps": {
+        "projectInfo": {
+          "title": "О проекте",
+          "description": "Название, тип проекта и краткое описание."
+        },
+        "modules": {
+          "title": "Функциональные модули",
+          "description": "Выберите необходимые модули Frontend, Backend, E-commerce и интеграции."
+        },
+        "design": {
+          "title": "Дизайн",
+          "description": "Выберите подход к дизайну и количество страниц."
+        },
+        "content": {
+          "title": "Контент",
+          "description": "Укажите, кто будет предоставлять контент для проекта."
+        },
+        "technical": {
+          "title": "Технические требования",
+          "description": "Ожидаемая нагрузка и дополнительные технические требования."
+        },
+        "timeline": {
+          "title": "Сроки и особенности",
+          "description": "Желаемый срок запуска и особенности работы над проектом."
+        },
+        "contact": {
+          "title": "Контактная информация",
+          "description": "Ваши контактные данные для связи."
+        }
+      }
+    },
     "projectInfo": {
       "title": "Информация о проекте",
       "projectName": {
@@ -87,6 +120,15 @@
         "fileStorage": "Файловое хранилище",
         "emailNotifications": "Email-уведомления"
       },
+      "backendOld": {
+        "title": "Backend & Database",
+        "restApi": "REST API (базовая)",
+        "auth": "Авторизация/регистрация",
+        "adminPanel": "Панель администратора",
+        "database": "База данных и модели (базовая)",
+        "fileStorage": "Файловое хранилище",
+        "emailNotifications": "Email-уведомления"
+      },
       "ecommerce": {
         "title": "E-commerce специфика",
         "catalog": "Каталог товаров",
@@ -119,9 +161,18 @@
           "brevo": "Brevo",
           "other": "Другая"
         },
-        "socialMedia": "Интеграция с социальными сетями",
-        "telegramBot": "Telegram бот",
-        "erp1c": "Интеграция с 1С ERP"
+        "socialMedia": {
+          "label": "Социальные сети",
+          "description": "{hours}h"
+        },
+        "telegramBot": {
+          "label": "Телеграм-бот",
+          "description": "{hours}h"
+        },
+        "erp1c": {
+          "label": "1С/ERP системы",
+          "description": "{hours}h"
+        }
       },
       "paymentSystems": {
         "title": "Платежные системы",
@@ -178,7 +229,8 @@
         "low": "<1000 посетителей/день",
         "medium": "1000-10000 посетителей/день",
         "high": ">10000 посетителей/день",
-        "optimization": "+{hours}h на оптимизацию"
+        "optimization": "+{hours}h на оптимизацию",
+        "mode": "Режим: {mode}"
       },
       "highSecurity": {
         "label": "Высокие требования к безопасности",
@@ -202,7 +254,8 @@
         "flexible": "Гибкий график (>8 недель)",
         "coefficient": "Коэффициент: {coeff}x",
         "urgentNote": " (срочность увеличивает стоимость на 30%)",
-        "flexibleNote": " (гибкий график снижает стоимость на 10%)"
+        "flexibleNote": " (гибкий график снижает стоимость на 10%)",
+        "mode": "Режим: {mode}"
       },
       "phasedDelivery": {
         "label": "Поэтапная сдача",

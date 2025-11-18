@@ -1,18 +1,20 @@
 "use client";
 
 import type { ReactElement } from "react";
+import { useTranslations } from "next-intl";
 import { useBriefNewFormContext } from "./brief-new-form-provider";
 
 export function BriefNewProgress(): ReactElement {
   const { steps, stepMeta, getStepProgress } = useBriefNewFormContext();
   const progress = getStepProgress();
+  const t = useTranslations("brief.progress");
 
   return (
     <div className="space-y-6">
       <div>
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Прогресс
+            {t("label")}
           </span>
           <span className="text-xs font-semibold text-foreground">
             {Math.round(progress)}%
@@ -55,9 +57,11 @@ export function BriefNewProgress(): ReactElement {
                   {isCompleted ? "✓" : step.index + 1}
                 </div>
                 <div className="flex-1">
-                  <div className="font-medium">{step.title}</div>
+                  <div className="font-medium">
+                    {t(`steps.${step.id}.title`)}
+                  </div>
                   <div className="text-xs opacity-75 mt-0.5">
-                    {step.description}
+                    {t(`steps.${step.id}.description`)}
                   </div>
                 </div>
               </div>

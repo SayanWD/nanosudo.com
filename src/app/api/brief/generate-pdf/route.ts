@@ -5,7 +5,7 @@ import { join, dirname } from "node:path";
 import { existsSync } from "node:fs";
 import type { BriefNewFormValues } from "@/features/brief/schemas/brief-new";
 import type { CalculationResult } from "@/features/brief/utils/calculation";
-import { formatCurrency, formatHourlyRate, usdToKzt } from "@/lib/currency";
+import { formatCurrency, formatHourlyRate } from "@/lib/currency";
 import type { Locale } from "@/i18n/config";
 import { HOURLY_RATES } from "@/features/brief/schemas/brief-new";
 

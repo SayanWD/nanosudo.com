@@ -154,12 +154,7 @@ function HeroSection(): ReactElement {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="relative rounded-2xl border border-border/60 bg-surface/80 p-4 lg:p-6 shadow-soft overflow-hidden w-full max-w-[300px] md:max-w-none">
-              <motion.div
-                className="aspect-square relative rounded-xl overflow-hidden bg-gradient-to-br from-accent/20 to-accent/5 max-w-[300px] mx-auto lg:max-w-none"
-                style={{ transformStyle: 'preserve-3d' }}
-                whileHover={{ rotateY: 180 }}
-                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-              >
+              <div className="aspect-square relative rounded-xl overflow-hidden bg-gradient-to-br from-accent/20 to-accent/5 max-w-[300px] mx-auto lg:max-w-none animate-photo-pulse">
                 <Image
                   src="/Sayan_Roor_Web_Dev.jpg"
                   alt="Sayan Roor - Full-stack разработчик"
@@ -168,7 +163,7 @@ function HeroSection(): ReactElement {
                   priority
                   sizes="(max-width: 1024px) 300px, 400px"
                 />
-              </motion.div>
+              </div>
             </div>
 
             {/* Social media icons */}

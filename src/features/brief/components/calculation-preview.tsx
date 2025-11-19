@@ -2,10 +2,12 @@
 
 import type { ReactElement } from "react";
 import { useMemo, useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useBriefNewFormContext } from "./brief-new-form-provider";
 import { calculateProjectCost } from "../utils/calculation";
 import { HOURLY_RATES } from "../schemas/brief-new";
+import { formatCurrency, formatHourlyRate } from "@/lib/currency";
+import type { Locale } from "@/i18n/config";
 
 type CalculationPreviewProps = {
   readonly onSubmitRequest?: () => Promise<void>;
@@ -17,6 +19,7 @@ export function CalculationPreview({
   isSubmitting = false,
 }: CalculationPreviewProps): ReactElement {
   const t = useTranslations();
+  const locale = useLocale() as Locale;
   const { form } = useBriefNewFormContext();
   const values = form.watch();
   const [isMounted, setIsMounted] = useState(false);
@@ -67,7 +70,7 @@ export function CalculationPreview({
             className="text-4xl font-bold text-foreground"
             suppressHydrationWarning
           >
-            ${totalCost.toLocaleString("en-US")}
+            {formatCurrency(totalCost, locale)}
           </div>
           <div 
             className="text-sm text-muted-foreground"
@@ -96,11 +99,11 @@ export function CalculationPreview({
                 {t("brief.calculation.breakdown.discovery")}
               </span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.discovery, rate: HOURLY_RATES.discovery })}
+                {breakdown.discovery}h × {formatHourlyRate(HOURLY_RATES.discovery, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.discovery).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.discovery), locale)}
             </div>
           </div>
         )}
@@ -110,11 +113,11 @@ export function CalculationPreview({
             <div className="flex justify-between items-center mb-2">
               <span className="font-medium text-foreground">{t("brief.calculation.breakdown.frontend")}</span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.frontend, rate: HOURLY_RATES.frontend })}
+                {breakdown.frontend}h × {formatHourlyRate(HOURLY_RATES.frontend, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.frontend).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.frontend), locale)}
             </div>
           </div>
         )}
@@ -124,11 +127,11 @@ export function CalculationPreview({
             <div className="flex justify-between items-center mb-2">
               <span className="font-medium text-foreground">{t("brief.calculation.breakdown.backend")}</span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.backend, rate: HOURLY_RATES.backend })}
+                {breakdown.backend}h × {formatHourlyRate(HOURLY_RATES.backend, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.backend).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.backend), locale)}
             </div>
           </div>
         )}
@@ -138,11 +141,11 @@ export function CalculationPreview({
             <div className="flex justify-between items-center mb-2">
               <span className="font-medium text-foreground">{t("brief.calculation.breakdown.ecommerce")}</span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.ecommerce, rate: HOURLY_RATES.ecommerce })}
+                {breakdown.ecommerce}h × {formatHourlyRate(HOURLY_RATES.ecommerce, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.ecommerce).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.ecommerce), locale)}
             </div>
           </div>
         )}
@@ -152,11 +155,11 @@ export function CalculationPreview({
             <div className="flex justify-between items-center mb-2">
               <span className="font-medium text-foreground">{t("brief.calculation.breakdown.integrations")}</span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.integrations, rate: HOURLY_RATES.integrations })}
+                {breakdown.integrations}h × {formatHourlyRate(HOURLY_RATES.integrations, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.integrations).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.integrations), locale)}
             </div>
           </div>
         )}
@@ -166,11 +169,11 @@ export function CalculationPreview({
             <div className="flex justify-between items-center mb-2">
               <span className="font-medium text-foreground">{t("brief.calculation.breakdown.design")}</span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.design, rate: HOURLY_RATES.design })}
+                {breakdown.design}h × {formatHourlyRate(HOURLY_RATES.design, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.design).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.design), locale)}
             </div>
           </div>
         )}
@@ -182,11 +185,11 @@ export function CalculationPreview({
                 {t("brief.calculation.breakdown.technical")}
               </span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.technical, rate: HOURLY_RATES.technical })}
+                {breakdown.technical}h × {formatHourlyRate(HOURLY_RATES.technical, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.technical).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.technical), locale)}
             </div>
           </div>
         )}
@@ -198,11 +201,11 @@ export function CalculationPreview({
                 {t("brief.calculation.breakdown.testing")}
               </span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.testing, rate: HOURLY_RATES.testing })}
+                {breakdown.testing}h × {formatHourlyRate(HOURLY_RATES.testing, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.testing).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.testing), locale)}
             </div>
           </div>
         )}
@@ -214,11 +217,11 @@ export function CalculationPreview({
                 {t("brief.calculation.breakdown.deployment")}
               </span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.deployment, rate: HOURLY_RATES.deployment })}
+                {breakdown.deployment}h × {formatHourlyRate(HOURLY_RATES.deployment, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.deployment).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.deployment), locale)}
             </div>
           </div>
         )}
@@ -228,11 +231,11 @@ export function CalculationPreview({
             <div className="flex justify-between items-center mb-2">
               <span className="font-medium text-foreground">{t("brief.calculation.breakdown.documentation")}</span>
               <span className="text-sm text-muted-foreground">
-                {t("brief.calculation.breakdown.perHourRu", { hours: breakdown.documentation, rate: HOURLY_RATES.documentation })}
+                {breakdown.documentation}h × {formatHourlyRate(HOURLY_RATES.documentation, locale)}
               </span>
             </div>
             <div className="text-xs text-muted-foreground">
-              ${Math.round(costBreakdown.documentation).toLocaleString("en-US")}
+              {formatCurrency(Math.round(costBreakdown.documentation), locale)}
             </div>
           </div>
         )}

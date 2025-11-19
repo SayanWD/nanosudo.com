@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState, type ReactElement } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import type { Locale } from "@/i18n/config";
 
 import {
   ProjectInfoStep,
@@ -45,6 +46,7 @@ function BriefNewWizard(): ReactElement {
 function BriefCalculationSection(): ReactElement {
   const { form } = useBriefNewFormContext();
   const t = useTranslations();
+  const locale = useLocale() as Locale;
   const values = form.watch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -77,6 +79,7 @@ function BriefCalculationSection(): ReactElement {
       const payload = {
         formData: values,
         calculation,
+        locale,
       };
 
       const response = await fetch("/api/brief-new", {

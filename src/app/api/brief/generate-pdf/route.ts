@@ -5,10 +5,14 @@ import { join, dirname } from "node:path";
 import { existsSync } from "node:fs";
 import type { BriefNewFormValues } from "@/features/brief/schemas/brief-new";
 import type { CalculationResult } from "@/features/brief/utils/calculation";
+import { formatCurrency, formatHourlyRate, usdToKzt } from "@/lib/currency";
+import type { Locale } from "@/i18n/config";
+import { HOURLY_RATES } from "@/features/brief/schemas/brief-new";
 
 type GeneratePDFRequest = {
   readonly formData: BriefNewFormValues;
   readonly calculation: CalculationResult;
+  readonly locale?: Locale; // Optional locale for currency formatting
 };
 
 const PROJECT_TYPE_LABELS: Record<string, string> = {
@@ -82,7 +86,7 @@ export async function POST(
       );
     }
 
-    const { formData, calculation } = body;
+    const { formData, calculation, locale = 'ru' } = body;
 
     // Validate input
     if (!formData || !calculation) {
@@ -189,7 +193,7 @@ export async function POST(
     doc.fontSize(14).text("Общая стоимость и сроки:", { underline: true });
     doc.moveDown(0.5);
     doc.fontSize(20).text(
-      `$${calculation.totalCost.toLocaleString("en-US")}`,
+      formatCurrency(calculation.totalCost, locale),
       { align: "center" },
     );
     doc.fontSize(12).text(
@@ -218,7 +222,7 @@ export async function POST(
         { indent: 20 },
       );
       doc.fontSize(12).text(
-        `${calculation.breakdown.discovery}h × $10/ч = $${Math.round(calculation.costBreakdown.discovery).toLocaleString("en-US")}`,
+        `${calculation.breakdown.discovery}h × ${formatHourlyRate(HOURLY_RATES.discovery, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.discovery), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -242,7 +246,7 @@ export async function POST(
       designDescription += ` (${formData.design.pageCount} страниц)`;
       doc.fontSize(12).text(designDescription, { indent: 20 });
       doc.fontSize(12).text(
-        `${calculation.breakdown.design}h × $35/ч = $${Math.round(calculation.costBreakdown.design).toLocaleString("en-US")}`,
+        `${calculation.breakdown.design}h × ${formatHourlyRate(HOURLY_RATES.design, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.design), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -271,7 +275,7 @@ export async function POST(
         doc.fontSize(12).text(`• Разработка интерфейса`, { indent: 20 });
       }
       doc.fontSize(12).text(
-        `${calculation.breakdown.frontend}h × $40/ч = $${Math.round(calculation.costBreakdown.frontend).toLocaleString("en-US")}`,
+        `${calculation.breakdown.frontend}h × ${formatHourlyRate(HOURLY_RATES.frontend, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.frontend), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -299,7 +303,7 @@ export async function POST(
         doc.fontSize(12).text(`• Backend разработка`, { indent: 20 });
       }
       doc.fontSize(12).text(
-        `${calculation.breakdown.backend}h × $50/ч = $${Math.round(calculation.costBreakdown.backend).toLocaleString("en-US")}`,
+        `${calculation.breakdown.backend}h × ${formatHourlyRate(HOURLY_RATES.backend, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.backend), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -326,7 +330,7 @@ export async function POST(
         doc.fontSize(12).text(`• E-commerce функционал`, { indent: 20 });
       }
       doc.fontSize(12).text(
-        `${calculation.breakdown.ecommerce}h × $50/ч = $${Math.round(calculation.costBreakdown.ecommerce).toLocaleString("en-US")}`,
+        `${calculation.breakdown.ecommerce}h × ${formatHourlyRate(HOURLY_RATES.ecommerce, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.ecommerce), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -356,7 +360,7 @@ export async function POST(
         });
       }
       doc.fontSize(12).text(
-        `${calculation.breakdown.integrations}h × $60/ч = $${Math.round(calculation.costBreakdown.integrations).toLocaleString("en-US")}`,
+        `${calculation.breakdown.integrations}h × ${formatHourlyRate(HOURLY_RATES.integrations, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.integrations), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -391,7 +395,7 @@ export async function POST(
         });
       }
       doc.fontSize(12).text(
-        `${calculation.breakdown.technical}h × $60/ч = $${Math.round(calculation.costBreakdown.technical).toLocaleString("en-US")}`,
+        `${calculation.breakdown.technical}h × ${formatHourlyRate(HOURLY_RATES.technical, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.technical), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -405,7 +409,7 @@ export async function POST(
         indent: 20,
       });
       doc.fontSize(12).text(
-        `${calculation.breakdown.testing}h × $15/ч = $${Math.round(calculation.costBreakdown.testing).toLocaleString("en-US")}`,
+        `${calculation.breakdown.testing}h × ${formatHourlyRate(HOURLY_RATES.testing, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.testing), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -419,7 +423,7 @@ export async function POST(
       doc.moveDown(0.5);
       doc.fontSize(12).text(`• Деплой и настройка`, { indent: 20 });
       doc.fontSize(12).text(
-        `${calculation.breakdown.deployment}h × $30/ч = $${Math.round(calculation.costBreakdown.deployment).toLocaleString("en-US")}`,
+        `${calculation.breakdown.deployment}h × ${formatHourlyRate(HOURLY_RATES.deployment, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.deployment), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -431,7 +435,7 @@ export async function POST(
       doc.moveDown(0.5);
       doc.fontSize(12).text(`• Документация`, { indent: 20 });
       doc.fontSize(12).text(
-        `${calculation.breakdown.documentation}h × $10/ч = $${Math.round(calculation.costBreakdown.documentation).toLocaleString("en-US")}`,
+        `${calculation.breakdown.documentation}h × ${formatHourlyRate(HOURLY_RATES.documentation, locale)} = ${formatCurrency(Math.round(calculation.costBreakdown.documentation), locale)}`,
         { align: "right" },
       );
       doc.moveDown();
@@ -464,19 +468,19 @@ export async function POST(
       calculation.costBreakdown.documentation,
     );
 
-    doc.fontSize(12).text(`Разработка: ${developmentHours}h  $${developmentCost.toLocaleString("en-US")}`);
+    doc.fontSize(12).text(`Разработка: ${developmentHours}h  ${formatCurrency(developmentCost, locale)}`);
     doc.fontSize(12).text(
-      `Тестирование & QA (15%): ${calculation.breakdown.testing}h  $${Math.round(calculation.costBreakdown.testing).toLocaleString("en-US")}`,
+      `Тестирование & QA (15%): ${calculation.breakdown.testing}h  ${formatCurrency(Math.round(calculation.costBreakdown.testing), locale)}`,
     );
     doc.fontSize(12).text(
-      `Деплой и настройка: ${calculation.breakdown.deployment}h  $${Math.round(calculation.costBreakdown.deployment).toLocaleString("en-US")}`,
+      `Деплой и настройка: ${calculation.breakdown.deployment}h  ${formatCurrency(Math.round(calculation.costBreakdown.deployment), locale)}`,
     );
     doc.fontSize(12).text(
-      `Документация: ${calculation.breakdown.documentation}h  $${Math.round(calculation.costBreakdown.documentation).toLocaleString("en-US")}`,
+      `Документация: ${calculation.breakdown.documentation}h  ${formatCurrency(Math.round(calculation.costBreakdown.documentation), locale)}`,
     );
     doc.moveDown();
     doc.fontSize(14).text(
-      `ОБЩАЯ СТОИМОСТЬ: ${calculation.totalHours}h  $${calculation.totalCost.toLocaleString("en-US")}`,
+      `ОБЩАЯ СТОИМОСТЬ: ${calculation.totalHours}h  ${formatCurrency(calculation.totalCost, locale)}`,
       { underline: true },
     );
 

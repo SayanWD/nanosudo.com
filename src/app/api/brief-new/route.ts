@@ -4,6 +4,8 @@ import { createClient } from "@supabase/supabase-js";
 import { sendBrevoEmail } from "@/server/email/brevo";
 import type { BriefNewFormValues } from "@/features/brief/schemas/brief-new";
 import type { CalculationResult } from "@/features/brief/utils/calculation";
+import { formatCurrency } from "@/lib/currency";
+import type { Locale } from "@/i18n/config";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -22,12 +24,13 @@ const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 type BriefNewSubmissionPayload = {
   readonly formData: BriefNewFormValues;
   readonly calculation: CalculationResult;
+  readonly locale?: Locale; // Optional locale for currency formatting
 };
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
     const body = (await request.json()) as BriefNewSubmissionPayload;
-    const { formData, calculation } = body;
+    const { formData, calculation, locale = 'ru' } = body;
 
     if (!formData || !calculation) {
       return NextResponse.json(
@@ -101,7 +104,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         sendBrevoEmail({
           to: [{ email: adminEmail }],
           subject: `Новая заявка: ${formData.projectInfo.projectName}`,
-          html: buildAdminEmailHtml(formData, calculation, submissionId),
+          html: buildAdminEmailHtml(formData, calculation, submissionId, locale),
           replyTo: {
             email: formData.contact.contactEmail,
             name: formData.contact.contactName,
@@ -116,7 +119,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             },
           ],
           subject: "Заявка получена — спасибо!",
-          html: buildClientEmailHtml(formData, calculation),
+          html: buildClientEmailHtml(formData, calculation, locale),
         }),
       ]);
     }
@@ -140,6 +143,7 @@ function buildAdminEmailHtml(
   formData: BriefNewFormValues,
   calculation: CalculationResult,
   submissionId: string,
+  locale: Locale = 'ru',
 ): string {
   return `
     <!DOCTYPE html>
@@ -180,7 +184,7 @@ function buildAdminEmailHtml(
           <div class="calculation">
             <h3>Расчет стоимости:</h3>
             <p>Часов: ${calculation.totalHours}</p>
-            <p class="total">Стоимость: $${calculation.totalCost.toLocaleString("en-US")}</p>
+            <p class="total">Стоимость: ${formatCurrency(calculation.totalCost, locale)}</p>
           </div>
         </div>
       </div>
@@ -192,6 +196,7 @@ function buildAdminEmailHtml(
 function buildClientEmailHtml(
   formData: BriefNewFormValues,
   calculation: CalculationResult,
+  locale: Locale = 'ru',
 ): string {
   return `
     <!DOCTYPE html>
@@ -225,10 +230,10 @@ function buildClientEmailHtml(
           <div class="calculation">
             <h3>Ориентировочная стоимость:</h3>
             <p>Часов: ${calculation.totalHours}</p>
-            <p class="total">$${calculation.totalCost.toLocaleString("en-US")}</p>
+            <p class="total">${formatCurrency(calculation.totalCost, locale)}</p>
             <p style="font-size: 12px; color: #666; margin-top: 10px;">
-              * Discovery & Планирование — $10/ч<br>
-              * Все тарифы уменьшены на 50% от рыночных
+              * Discovery & Планирование — ${locale === 'kk' ? '2,700 ₸/ч' : '$10/ч'}<br>
+              * ${locale === 'kk' ? 'Все тарифы в тенге на 40% дешевле' : 'Все тарифы уменьшены на 50% от рыночных'}
             </p>
           </div>
           

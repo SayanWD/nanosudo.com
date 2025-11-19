@@ -710,6 +710,1554 @@ Supabase өз серверіңізді жазбай‑ақ қуатты backend 
       },
     },
   },
+  {
+    slug: "nextjs-website-development-guide",
+    image: "/blog/nextjs-website.jpg",
+    publishedAt: "2025-01-20",
+    author: "Sayan Roor",
+    tags: ["Next.js", "Web Development", "React", "TypeScript", "SEO"],
+    readingTime: 12,
+    featured: true,
+    translations: {
+      title: {
+        ru: "Как создать быстрый сайт на Next.js: полное руководство",
+        en: "How to build a fast Next.js website: complete guide",
+        kk: "Next.js-те жылдам сайт қалай құруға болады: толық нұсқаулық",
+      },
+      description: {
+        ru: "Пошаговое руководство по созданию современного сайта на Next.js с нуля. SSR, SSG, оптимизация производительности, SEO и лучшие практики для production.",
+        en: "Step-by-step guide to building a modern Next.js website from scratch. SSR, SSG, performance optimization, SEO and production best practices.",
+        kk: "Next.js-те заманауи сайтты нөлден құру бойынша қадамдық нұсқаулық. SSR, SSG, өнімділікті оңтайландыру, SEO және production үшін үздік тәжірибелер.",
+      },
+      excerpt: {
+        ru: "Подробное руководство по созданию быстрого и SEO-оптимизированного сайта на Next.js. От настройки проекта до деплоя в production с лучшими практиками.",
+        en: "Detailed guide to building a fast, SEO-optimized Next.js website. From project setup to production deployment with best practices.",
+        kk: "Next.js-те жылдам, SEO-оңтайландырылған сайт құру бойынша толық нұсқаулық. Жобаны баптаудан production-ға дейін үздік тәжірибелермен.",
+      },
+      imageAlt: {
+        ru: "Создание сайта на Next.js",
+        en: "Next.js website development",
+        kk: "Next.js-те сайт құру",
+      },
+      category: {
+        ru: "Разработка",
+        en: "Development",
+        kk: "Әзірлеу",
+      },
+      publishedLabel: {
+        ru: "20 января 2025",
+        en: "January 20, 2025",
+        kk: "2025 ж. 20 қаңтар",
+      },
+      content: {
+        ru: `# Как создать быстрый сайт на Next.js: полное руководство
+
+Next.js — один из самых популярных фреймворков для создания современных веб-приложений. В этой статье я расскажу, как создать быстрый, SEO-оптимизированный сайт на Next.js с нуля.
+
+## Почему Next.js?
+
+Next.js предоставляет множество преимуществ:
+
+- **Server-Side Rendering (SSR)** — улучшает SEO и время первой загрузки
+- **Static Site Generation (SSG)** — для максимальной производительности
+- **Автоматическая оптимизация** — изображения, шрифты, код
+- **Встроенный роутинг** — файловая система как маршрутизация
+- **API Routes** — создание backend без отдельного сервера
+
+## Начало работы
+
+### Установка
+
+\`\`\`bash
+npx create-next-app@latest my-website --typescript --tailwind --app
+cd my-website
+\`\`\`
+
+### Структура проекта
+
+\`\`\`
+src/
+├── app/
+│   ├── layout.tsx      # Корневой layout
+│   ├── page.tsx         # Главная страница
+│   ├── about/
+│   │   └── page.tsx     # Страница "О нас"
+│   └── api/
+│       └── route.ts     # API endpoints
+├── components/          # React компоненты
+├── lib/                 # Утилиты
+└── public/              # Статические файлы
+\`\`\`
+
+## Оптимизация производительности
+
+### 1. Использование Image компонента
+
+Next.js автоматически оптимизирует изображения:
+
+\`\`\`tsx
+import Image from 'next/image';
+
+export default function Hero() {
+  return (
+    <Image
+      src="/hero.jpg"
+      alt="Hero image"
+      width={1200}
+      height={600}
+      priority
+      placeholder="blur"
+    />
+  );
+}
+\`\`\`
+
+### 2. Code Splitting
+
+Динамические импорты для разделения кода:
+
+\`\`\`tsx
+import dynamic from 'next/dynamic';
+
+const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
+  loading: () => <div>Загрузка...</div>,
+  ssr: false,
+});
+\`\`\`
+
+### 3. Static Generation для статических страниц
+
+\`\`\`tsx
+export async function generateStaticParams() {
+  return [
+    { slug: 'post-1' },
+    { slug: 'post-2' },
+  ];
+}
+
+export default async function Post({ params }: { params: { slug: string } }) {
+  const post = await getPost(params.slug);
+  return <article>{post.content}</article>;
+}
+\`\`\`
+
+## SEO оптимизация
+
+### Мета-теги
+
+\`\`\`tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Мой сайт | Главная',
+  description: 'Описание сайта для поисковых систем',
+  openGraph: {
+    title: 'Мой сайт',
+    description: 'Описание',
+    images: ['/og-image.jpg'],
+  },
+};
+\`\`\`
+
+### Структурированные данные
+
+\`\`\`tsx
+export default function HomePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Мой сайт',
+    url: 'https://mysite.com',
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* Контент */}
+    </>
+  );
+}
+\`\`\`
+
+## Деплой в production
+
+### Vercel (рекомендуется)
+
+\`\`\`bash
+npm i -g vercel
+vercel
+\`\`\`
+
+Vercel автоматически оптимизирует Next.js приложения и предоставляет:
+- CDN для статических файлов
+- Автоматический SSL
+- Preview deployments
+- Analytics
+
+## Заключение
+
+Next.js — мощный инструмент для создания быстрых и SEO-оптимизированных сайтов. Следуя этим практикам, вы создадите сайт, который будет быстро загружаться и хорошо ранжироваться в поисковых системах.
+
+**Ключевые моменты:**
+- Используйте SSG для статического контента
+- Оптимизируйте изображения через Image компонент
+- Настройте правильные мета-теги
+- Добавьте структурированные данные
+- Используйте code splitting для больших компонентов`,
+        en: `# How to build a fast Next.js website: complete guide
+
+Next.js is one of the most popular frameworks for building modern web applications. In this article, I'll show you how to create a fast, SEO-optimized Next.js website from scratch.
+
+## Why Next.js?
+
+Next.js provides many advantages:
+
+- **Server-Side Rendering (SSR)** — improves SEO and first load time
+- **Static Site Generation (SSG)** — for maximum performance
+- **Automatic optimization** — images, fonts, code
+- **Built-in routing** — file system as routing
+- **API Routes** — create backend without separate server
+
+## Getting started
+
+### Installation
+
+\`\`\`bash
+npx create-next-app@latest my-website --typescript --tailwind --app
+cd my-website
+\`\`\`
+
+### Project structure
+
+\`\`\`
+src/
+├── app/
+│   ├── layout.tsx      # Root layout
+│   ├── page.tsx         # Home page
+│   ├── about/
+│   │   └── page.tsx     # About page
+│   └── api/
+│       └── route.ts     # API endpoints
+├── components/          # React components
+├── lib/                 # Utilities
+└── public/              # Static files
+\`\`\`
+
+## Performance optimization
+
+### 1. Using Image component
+
+Next.js automatically optimizes images:
+
+\`\`\`tsx
+import Image from 'next/image';
+
+export default function Hero() {
+  return (
+    <Image
+      src="/hero.jpg"
+      alt="Hero image"
+      width={1200}
+      height={600}
+      priority
+      placeholder="blur"
+    />
+  );
+}
+\`\`\`
+
+### 2. Code splitting
+
+Dynamic imports for code splitting:
+
+\`\`\`tsx
+import dynamic from 'next/dynamic';
+
+const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
+  loading: () => <div>Loading...</div>,
+  ssr: false,
+});
+\`\`\`
+
+### 3. Static generation for static pages
+
+\`\`\`tsx
+export async function generateStaticParams() {
+  return [
+    { slug: 'post-1' },
+    { slug: 'post-2' },
+  ];
+}
+
+export default async function Post({ params }: { params: { slug: string } }) {
+  const post = await getPost(params.slug);
+  return <article>{post.content}</article>;
+}
+\`\`\`
+
+## SEO optimization
+
+### Meta tags
+
+\`\`\`tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'My Website | Home',
+  description: 'Website description for search engines',
+  openGraph: {
+    title: 'My Website',
+    description: 'Description',
+    images: ['/og-image.jpg'],
+  },
+};
+\`\`\`
+
+### Structured data
+
+\`\`\`tsx
+export default function HomePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'My Website',
+    url: 'https://mysite.com',
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* Content */}
+    </>
+  );
+}
+\`\`\`
+
+## Production deployment
+
+### Vercel (recommended)
+
+\`\`\`bash
+npm i -g vercel
+vercel
+\`\`\`
+
+Vercel automatically optimizes Next.js apps and provides:
+- CDN for static files
+- Automatic SSL
+- Preview deployments
+- Analytics
+
+## Conclusion
+
+Next.js is a powerful tool for building fast, SEO-optimized websites. By following these practices, you'll create a site that loads quickly and ranks well in search engines.
+
+**Key takeaways:**
+- Use SSG for static content
+- Optimize images via Image component
+- Set up proper meta tags
+- Add structured data
+- Use code splitting for large components`,
+        kk: `# Next.js-те жылдам сайт қалай құруға болады: толық нұсқаулық
+
+Next.js — заманауи веб-қосымшалар құру үшін ең танымал фреймворктардың бірі. Бұл мақалада Next.js-те нөлден жылдам, SEO-оңтайландырылған сайт қалай құруға болатынын көрсетемін.
+
+## Неге Next.js?
+
+Next.js көптеген артықшылықтар береді:
+
+- **Server-Side Rendering (SSR)** — SEO мен бірінші жүктеу уақытын жақсартады
+- **Static Site Generation (SSG)** — максималды өнімділік үшін
+- **Автоматты оңтайландыру** — суреттер, қаріптер, код
+- **Кірістірілген роутинг** — файлдық жүйе маршрутизация ретінде
+- **API Routes** — жеке серверсіз backend құру
+
+## Жұмысты бастау
+
+### Орнату
+
+\`\`\`bash
+npx create-next-app@latest my-website --typescript --tailwind --app
+cd my-website
+\`\`\`
+
+### Жоба құрылымы
+
+\`\`\`
+src/
+├── app/
+│   ├── layout.tsx      # Түбірлік layout
+│   ├── page.tsx         # Басты бет
+│   ├── about/
+│   │   └── page.tsx     # "Біз туралы" беті
+│   └── api/
+│       └── route.ts     # API endpoints
+├── components/          # React компоненттері
+├── lib/                 # Утилиттер
+└── public/              # Статикалық файлдар
+\`\`\`
+
+## Өнімділікті оңтайландыру
+
+### 1. Image компонентін қолдану
+
+Next.js суреттерді автоматты түрде оңтайландырады:
+
+\`\`\`tsx
+import Image from 'next/image';
+
+export default function Hero() {
+  return (
+    <Image
+      src="/hero.jpg"
+      alt="Hero image"
+      width={1200}
+      height={600}
+      priority
+      placeholder="blur"
+    />
+  );
+}
+\`\`\`
+
+### 2. Code Splitting
+
+Кодты бөлу үшін динамикалық импорттар:
+
+\`\`\`tsx
+import dynamic from 'next/dynamic';
+
+const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
+  loading: () => <div>Жүктелуде...</div>,
+  ssr: false,
+});
+\`\`\`
+
+### 3. Статикалық беттер үшін Static Generation
+
+\`\`\`tsx
+export async function generateStaticParams() {
+  return [
+    { slug: 'post-1' },
+    { slug: 'post-2' },
+  ];
+}
+
+export default async function Post({ params }: { params: { slug: string } }) {
+  const post = await getPost(params.slug);
+  return <article>{post.content}</article>;
+}
+\`\`\`
+
+## SEO оңтайландыру
+
+### Мета-тегтер
+
+\`\`\`tsx
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Менің сайтым | Басты',
+  description: 'Іздеу жүйелері үшін сайт сипаттамасы',
+  openGraph: {
+    title: 'Менің сайтым',
+    description: 'Сипаттама',
+    images: ['/og-image.jpg'],
+  },
+};
+\`\`\`
+
+### Құрылымдалған деректер
+
+\`\`\`tsx
+export default function HomePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Менің сайтым',
+    url: 'https://mysite.com',
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* Контент */}
+    </>
+  );
+}
+\`\`\`
+
+## Production-ға деплой
+
+### Vercel (ұсынылады)
+
+\`\`\`bash
+npm i -g vercel
+vercel
+\`\`\`
+
+Vercel Next.js қосымшаларын автоматты түрде оңтайландырады және ұсынады:
+- Статикалық файлдар үшін CDN
+- Автоматты SSL
+- Preview deployments
+- Analytics
+
+## Қорытынды
+
+Next.js — жылдам, SEO-оңтайландырылған сайттар құру үшін қуатты құрал. Осы тәжірибелерді ұстансаңыз, жылдам жүктелетін және іздеу жүйелерінде жақсы рейтингте болатын сайт құрасыз.
+
+**Негізгі нүктелер:**
+- Статикалық контент үшін SSG қолданыңыз
+- Image компоненті арқылы суреттерді оңтайландырыңыз
+- Дұрыс мета-тегтерді баптаңыз
+- Құрылымдалған деректерді қосыңыз
+- Үлкен компоненттер үшін code splitting қолданыңыз`,
+      },
+    },
+  },
+  {
+    slug: "1c-integration-web-application",
+    image: "/blog/1c-integration.jpg",
+    publishedAt: "2025-01-18",
+    author: "Sayan Roor",
+    tags: ["1С", "Integration", "API", "Backend", "ERP"],
+    readingTime: 15,
+    featured: true,
+    translations: {
+      title: {
+        ru: "Интеграция 1С с веб-приложением: практическое руководство",
+        en: "1C integration with web application: practical guide",
+        kk: "1С-ті веб-қосымшамен интеграциялау: практикалық нұсқаулық",
+      },
+      description: {
+        ru: "Подробное руководство по интеграции 1С:Предприятие с веб-приложением через REST API, COM-соединение и веб-сервисы. Примеры кода, лучшие практики и решение типичных проблем.",
+        en: "Detailed guide to integrating 1C:Enterprise with web applications via REST API, COM connection and web services. Code examples, best practices and common issues solutions.",
+        kk: "1С:Кәсіпорынды REST API, COM байланысы және веб-сервистер арқылы веб-қосымшалармен интеграциялау бойынша толық нұсқаулық. Код мысалдары, үздік тәжірибелер және жиі кездесетін мәселелерді шешу.",
+      },
+      excerpt: {
+        ru: "Как интегрировать 1С с веб-приложением на Next.js. REST API, COM-соединение, обмен данными, синхронизация и решение проблем интеграции.",
+        en: "How to integrate 1C with Next.js web application. REST API, COM connection, data exchange, synchronization and integration issues resolution.",
+        kk: "1С-ті Next.js веб-қосымшасымен қалай интеграциялауға болады. REST API, COM байланысы, деректер алмасуы, синхронизация және интеграция мәселелерін шешу.",
+      },
+      imageAlt: {
+        ru: "Интеграция 1С с веб-приложением",
+        en: "1C integration with web application",
+        kk: "1С-ті веб-қосымшамен интеграциялау",
+      },
+      category: {
+        ru: "Интеграции",
+        en: "Integrations",
+        kk: "Интеграциялар",
+      },
+      publishedLabel: {
+        ru: "18 января 2025",
+        en: "January 18, 2025",
+        kk: "2025 ж. 18 қаңтар",
+      },
+      content: {
+        ru: `# Интеграция 1С с веб-приложением: практическое руководство
+
+Интеграция 1С:Предприятие с веб-приложениями — частая задача в бизнесе. В этой статье я расскажу о различных способах интеграции и покажу практические примеры.
+
+## Способы интеграции 1С
+
+### 1. REST API (HTTP-сервисы)
+
+Самый современный и рекомендуемый способ. 1С предоставляет HTTP-сервисы для обмена данными.
+
+**Настройка в 1С:**
+
+\`\`\`bsl
+// В конфигураторе создаем HTTP-сервис
+// Обработчик запроса
+Функция ОбработатьЗапрос(Запрос) Экспорт
+    ПараметрыЗапроса = Запрос.ПараметрыЗапроса;
+    
+    Если Запрос.Метод = "GET" Тогда
+        // Получение данных
+        Возврат ПолучитьДанные(ПараметрыЗапроса);
+    ИначеЕсли Запрос.Метод = "POST" Тогда
+        // Создание/обновление данных
+        Возврат СоздатьДанные(Запрос.ТелоКакСтроку());
+    КонецЕсли;
+КонецФункции
+\`\`\`
+
+**Интеграция в Next.js:**
+
+\`\`\`typescript
+// lib/1c-client.ts
+export class OneCClient {
+  private baseUrl: string;
+  private credentials: string;
+
+  constructor(baseUrl: string, username: string, password: string) {
+    this.baseUrl = baseUrl;
+    this.credentials = Buffer.from(\`\${username}:\${password}\`).toString('base64');
+  }
+
+  async getData(endpoint: string): Promise<unknown> {
+    const response = await fetch(\`\${this.baseUrl}/\${endpoint}\`, {
+      headers: {
+        'Authorization': \`Basic \${this.credentials}\`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(\`1C API error: \${response.statusText}\`);
+    }
+
+    return response.json();
+  }
+
+  async postData(endpoint: string, data: unknown): Promise<unknown> {
+    const response = await fetch(\`\${this.baseUrl}/\${endpoint}\`, {
+      method: 'POST',
+      headers: {
+        'Authorization': \`Basic \${this.credentials}\`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(\`1C API error: \${response.statusText}\`);
+    }
+
+    return response.json();
+  }
+}
+\`\`\`
+
+### 2. COM-соединение
+
+Для локальных интеграций можно использовать COM-соединение (только Windows).
+
+\`\`\`typescript
+// Требует Node.js на Windows
+import { exec } from 'child_process';
+
+// Использование через внешнюю программу или COM-объект
+// Не рекомендуется для production
+\`\`\`
+
+### 3. Файловый обмен
+
+Простой способ через обмен XML/JSON файлами.
+
+\`\`\`typescript
+// lib/1c-file-exchange.ts
+import fs from 'fs';
+import path from 'path';
+
+export async function read1CExport(filePath: string): Promise<unknown> {
+  const content = await fs.promises.readFile(filePath, 'utf-8');
+  return JSON.parse(content);
+}
+
+export async function write1CImport(data: unknown, filePath: string): Promise<void> {
+  await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
+}
+\`\`\`
+
+## Практический пример: синхронизация товаров
+
+### API Route в Next.js
+
+\`\`\`typescript
+// app/api/1c/sync-products/route.ts
+import { NextResponse } from 'next/server';
+import { OneCClient } from '@/lib/1c-client';
+
+const oneC = new OneCClient(
+  process.env.ONE_C_BASE_URL!,
+  process.env.ONE_C_USERNAME!,
+  process.env.ONE_C_PASSWORD!,
+);
+
+export async function POST() {
+  try {
+    // Получаем товары из 1С
+    const products = await oneC.getData('catalog/products');
+    
+    // Синхронизируем с базой данных
+    // ... логика синхронизации
+    
+    return NextResponse.json({ 
+      success: true, 
+      synced: products.length 
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Sync failed' },
+      { status: 500 }
+    );
+  }
+}
+\`\`\`
+
+## Обработка ошибок и повторные попытки
+
+\`\`\`typescript
+async function syncWithRetry(
+  fn: () => Promise<unknown>,
+  maxRetries = 3
+): Promise<unknown> {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+    }
+  }
+  throw new Error('Max retries exceeded');
+}
+\`\`\`
+
+## Безопасность
+
+- Используйте HTTPS для всех запросов
+- Храните credentials в переменных окружения
+- Ограничьте доступ по IP
+- Используйте токены вместо базовой аутентификации
+- Логируйте все операции
+
+## Заключение
+
+Интеграция 1С с веб-приложением требует понимания архитектуры обеих систем. REST API — наиболее надежный и масштабируемый способ. Правильная обработка ошибок и безопасность критичны для production.`,
+        en: `# 1C integration with web application: practical guide
+
+Integrating 1C:Enterprise with web applications is a common business task. In this article, I'll cover different integration methods and show practical examples.
+
+## 1C integration methods
+
+### 1. REST API (HTTP services)
+
+The most modern and recommended approach. 1C provides HTTP services for data exchange.
+
+**Setup in 1C:**
+
+\`\`\`bsl
+// Create HTTP service in configurator
+// Request handler
+Function ProcessRequest(Request) Export
+    RequestParams = Request.RequestParams;
+    
+    If Request.Method = "GET" Then
+        // Get data
+        Return GetData(RequestParams);
+    ElseIf Request.Method = "POST" Then
+        // Create/update data
+        Return CreateData(Request.BodyAsString());
+    EndIf;
+EndFunction
+\`\`\`
+
+**Integration in Next.js:**
+
+\`\`\`typescript
+// lib/1c-client.ts
+export class OneCClient {
+  private baseUrl: string;
+  private credentials: string;
+
+  constructor(baseUrl: string, username: string, password: string) {
+    this.baseUrl = baseUrl;
+    this.credentials = Buffer.from(\`\${username}:\${password}\`).toString('base64');
+  }
+
+  async getData(endpoint: string): Promise<unknown> {
+    const response = await fetch(\`\${this.baseUrl}/\${endpoint}\`, {
+      headers: {
+        'Authorization': \`Basic \${this.credentials}\`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(\`1C API error: \${response.statusText}\`);
+    }
+
+    return response.json();
+  }
+
+  async postData(endpoint: string, data: unknown): Promise<unknown> {
+    const response = await fetch(\`\${this.baseUrl}/\${endpoint}\`, {
+      method: 'POST',
+      headers: {
+        'Authorization': \`Basic \${this.credentials}\`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(\`1C API error: \${response.statusText}\`);
+    }
+
+    return response.json();
+  }
+}
+\`\`\`
+
+### 2. COM connection
+
+For local integrations, COM connection can be used (Windows only).
+
+\`\`\`typescript
+// Requires Node.js on Windows
+import { exec } from 'child_process';
+
+// Usage via external program or COM object
+// Not recommended for production
+\`\`\`
+
+### 3. File exchange
+
+Simple method via XML/JSON file exchange.
+
+\`\`\`typescript
+// lib/1c-file-exchange.ts
+import fs from 'fs';
+import path from 'path';
+
+export async function read1CExport(filePath: string): Promise<unknown> {
+  const content = await fs.promises.readFile(filePath, 'utf-8');
+  return JSON.parse(content);
+}
+
+export async function write1CImport(data: unknown, filePath: string): Promise<void> {
+  await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
+}
+\`\`\`
+
+## Practical example: product synchronization
+
+### API Route in Next.js
+
+\`\`\`typescript
+// app/api/1c/sync-products/route.ts
+import { NextResponse } from 'next/server';
+import { OneCClient } from '@/lib/1c-client';
+
+const oneC = new OneCClient(
+  process.env.ONE_C_BASE_URL!,
+  process.env.ONE_C_USERNAME!,
+  process.env.ONE_C_PASSWORD!,
+);
+
+export async function POST() {
+  try {
+    // Get products from 1C
+    const products = await oneC.getData('catalog/products');
+    
+    // Sync with database
+    // ... sync logic
+    
+    return NextResponse.json({ 
+      success: true, 
+      synced: products.length 
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Sync failed' },
+      { status: 500 }
+    );
+  }
+}
+\`\`\`
+
+## Error handling and retries
+
+\`\`\`typescript
+async function syncWithRetry(
+  fn: () => Promise<unknown>,
+  maxRetries = 3
+): Promise<unknown> {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+    }
+  }
+  throw new Error('Max retries exceeded');
+}
+\`\`\`
+
+## Security
+
+- Use HTTPS for all requests
+- Store credentials in environment variables
+- Limit access by IP
+- Use tokens instead of basic authentication
+- Log all operations
+
+## Conclusion
+
+Integrating 1C with web applications requires understanding both systems' architecture. REST API is the most reliable and scalable approach. Proper error handling and security are critical for production.`,
+        kk: `# 1С-ті веб-қосымшамен интеграциялау: практикалық нұсқаулық
+
+1С:Кәсіпорынды веб-қосымшалармен интеграциялау — бизнесте жиі кездесетін тапсырма. Бұл мақалада әртүрлі интеграция әдістерін қарастырып, практикалық мысалдар көрсетемін.
+
+## 1С интеграция әдістері
+
+### 1. REST API (HTTP-сервистер)
+
+Ең заманауи және ұсынылатын әдіс. 1С деректер алмасуы үшін HTTP-сервистер ұсынады.
+
+**1С-те баптау:**
+
+\`\`\`bsl
+// Конфигураторда HTTP-сервис құру
+// Сұрау өңдеушісі
+Функция СұраудыӨңдеу(Сұрау) Экспорт
+    СұрауПараметрлері = Сұрау.СұрауПараметрлері;
+    
+    Егер Сұрау.Әдіс = "GET" Онда
+        // Деректерді алу
+        Қайтару ДеректердіАлу(СұрауПараметрлері);
+    Ал Егер Сұрау.Әдіс = "POST" Онда
+        // Деректерді құру/жаңарту
+        Қайтару ДеректердіҚұру(Сұрау.ДенесіСызықТүрінде());
+    СоңыЕгер;
+СоңыФункция
+\`\`\`
+
+**Next.js-те интеграция:**
+
+\`\`\`typescript
+// lib/1c-client.ts
+export class OneCClient {
+  private baseUrl: string;
+  private credentials: string;
+
+  constructor(baseUrl: string, username: string, password: string) {
+    this.baseUrl = baseUrl;
+    this.credentials = Buffer.from(\`\${username}:\${password}\`).toString('base64');
+  }
+
+  async getData(endpoint: string): Promise<unknown> {
+    const response = await fetch(\`\${this.baseUrl}/\${endpoint}\`, {
+      headers: {
+        'Authorization': \`Basic \${this.credentials}\`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(\`1C API error: \${response.statusText}\`);
+    }
+
+    return response.json();
+  }
+
+  async postData(endpoint: string, data: unknown): Promise<unknown> {
+    const response = await fetch(\`\${this.baseUrl}/\${endpoint}\`, {
+      method: 'POST',
+      headers: {
+        'Authorization': \`Basic \${this.credentials}\`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(\`1C API error: \${response.statusText}\`);
+    }
+
+    return response.json();
+  }
+}
+\`\`\`
+
+### 2. COM байланысы
+
+Жергілікті интеграциялар үшін COM байланысын қолдануға болады (тек Windows).
+
+\`\`\`typescript
+// Windows-та Node.js қажет
+import { exec } from 'child_process';
+
+// Сыртқы бағдарлама немесе COM-объект арқылы қолдану
+// Production үшін ұсынылмайды
+\`\`\`
+
+### 3. Файлдық алмасу
+
+XML/JSON файлдары арқылы қарапайым әдіс.
+
+\`\`\`typescript
+// lib/1c-file-exchange.ts
+import fs from 'fs';
+import path from 'path';
+
+export async function read1CExport(filePath: string): Promise<unknown> {
+  const content = await fs.promises.readFile(filePath, 'utf-8');
+  return JSON.parse(content);
+}
+
+export async function write1CImport(data: unknown, filePath: string): Promise<void> {
+  await fs.promises.writeFile(filePath, JSON.stringify(data, null, 2), 'utf-8');
+}
+\`\`\`
+
+## Практикалық мысал: тауарларды синхронизациялау
+
+### Next.js-те API Route
+
+\`\`\`typescript
+// app/api/1c/sync-products/route.ts
+import { NextResponse } from 'next/server';
+import { OneCClient } from '@/lib/1c-client';
+
+const oneC = new OneCClient(
+  process.env.ONE_C_BASE_URL!,
+  process.env.ONE_C_USERNAME!,
+  process.env.ONE_C_PASSWORD!,
+);
+
+export async function POST() {
+  try {
+    // 1С-тен тауарларды алу
+    const products = await oneC.getData('catalog/products');
+    
+    // Дерекқормен синхронизациялау
+    // ... синхронизация логикасы
+    
+    return NextResponse.json({ 
+      success: true, 
+      synced: products.length 
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Sync failed' },
+      { status: 500 }
+    );
+  }
+}
+\`\`\`
+
+## Қателерді өңдеу және қайталау
+
+\`\`\`typescript
+async function syncWithRetry(
+  fn: () => Promise<unknown>,
+  maxRetries = 3
+): Promise<unknown> {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+      await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+    }
+  }
+  throw new Error('Max retries exceeded');
+}
+\`\`\`
+
+## Қауіпсіздік
+
+- Барлық сұраулар үшін HTTPS қолданыңыз
+- Credentials-терді орта айнымалыларында сақтаңыз
+- IP бойынша қолжетімділікті шектеңіз
+- Негізгі аутентификация орнына токендерді қолданыңыз
+- Барлық операцияларды журналдаңыз
+
+## Қорытынды
+
+1С-ті веб-қосымшалармен интеграциялау екі жүйенің де архитектурасын түсінуді қажет етеді. REST API — ең сенімді және масштабталатын әдіс. Дұрыс қателерді өңдеу және қауіпсіздік production үшін маңызды.`,
+      },
+    },
+  },
+  {
+    slug: "website-conversion-optimization",
+    image: "/blog/conversion-optimization.jpg",
+    publishedAt: "2025-01-15",
+    author: "Sayan Roor",
+    tags: ["Conversion", "UX", "Marketing", "Analytics", "A/B Testing"],
+    readingTime: 14,
+    featured: true,
+    translations: {
+      title: {
+        ru: "Оптимизация конверсии веб-сайта: практические методы",
+        en: "Website conversion optimization: practical methods",
+        kk: "Веб-сайт конверсиясын оңтайландыру: практикалық әдістер",
+      },
+      description: {
+        ru: "Практическое руководство по увеличению конверсии веб-сайта. A/B тестирование, UX оптимизация, работа с формами, психология продаж и аналитика.",
+        en: "Practical guide to increasing website conversion. A/B testing, UX optimization, form handling, sales psychology and analytics.",
+        kk: "Веб-сайт конверсиясын арттыру бойынша практикалық нұсқаулық. A/B тестілеу, UX оңтайландыру, формалармен жұмыс, сату психологиясы және аналитика.",
+      },
+      excerpt: {
+        ru: "Как увеличить конверсию сайта на 30-50%. Практические методы оптимизации: формы, CTA, UX, A/B тестирование и работа с возражениями.",
+        en: "How to increase website conversion by 30-50%. Practical optimization methods: forms, CTAs, UX, A/B testing and objection handling.",
+        kk: "Сайт конверсиясын 30-50% қалай арттыруға болады. Практикалық оңтайландыру әдістері: формалар, CTA, UX, A/B тестілеу және наразылықтармен жұмыс.",
+      },
+      imageAlt: {
+        ru: "Оптимизация конверсии веб-сайта",
+        en: "Website conversion optimization",
+        kk: "Веб-сайт конверсиясын оңтайландыру",
+      },
+      category: {
+        ru: "Разработка",
+        en: "Development",
+        kk: "Әзірлеу",
+      },
+      publishedLabel: {
+        ru: "15 января 2025",
+        en: "January 15, 2025",
+        kk: "2025 ж. 15 қаңтар",
+      },
+      content: {
+        ru: `# Оптимизация конверсии веб-сайта: практические методы
+
+Конверсия — ключевой показатель эффективности веб-сайта. В этой статье я расскажу о практических методах увеличения конверсии на основе реального опыта.
+
+## Что такое конверсия?
+
+Конверсия — это процент посетителей, которые выполнили целевое действие (покупка, заявка, регистрация).
+
+**Формула:** Конверсия = (Целевые действия / Всего посетителей) × 100%
+
+## Методы оптимизации
+
+### 1. Оптимизация форм
+
+**Проблемы типичных форм:**
+- Слишком много полей
+- Неясные инструкции
+- Отсутствие социального доказательства
+- Нет прогресс-индикатора
+
+**Решения:**
+
+\`\`\`tsx
+// Оптимизированная форма
+export function ContactForm() {
+  return (
+    <form className="space-y-4">
+      {/* Минимум полей */}
+      <input 
+        type="text" 
+        placeholder="Ваше имя" 
+        required 
+        aria-label="Имя"
+      />
+      <input 
+        type="email" 
+        placeholder="Email" 
+        required 
+        aria-label="Email"
+      />
+      
+      {/* Социальное доказательство */}
+      <p className="text-sm text-muted-foreground">
+        ✓ Более 100 довольных клиентов
+      </p>
+      
+      {/* Четкий CTA */}
+      <button type="submit" className="w-full">
+        Получить консультацию бесплатно
+      </button>
+      
+      {/* Гарантия конфиденциальности */}
+      <p className="text-xs text-muted-foreground">
+        Ваши данные защищены
+      </p>
+    </form>
+  );
+}
+\`\`\`
+
+### 2. Оптимизация CTA (Call-to-Action)
+
+**Принципы эффективных CTA:**
+
+- **Конкретность:** "Получить расчет" вместо "Узнать больше"
+- **Срочность:** "Заказать сегодня" вместо "Заказать"
+- **Выгода:** "Сэкономить 30%" вместо "Купить"
+- **Визуальное выделение:** Контрастный цвет, достаточный размер
+
+### 3. A/B тестирование
+
+\`\`\`typescript
+// Пример A/B теста заголовка
+export function HeroSection() {
+  const variant = useABTest('hero-title', ['A', 'B']);
+  
+  const titles = {
+    A: 'Создаем сайты, которые продают',
+    B: 'Веб-сайты с гарантией конверсии',
+  };
+  
+  return (
+    <h1>{titles[variant]}</h1>
+  );
+}
+\`\`\`
+
+### 4. Улучшение UX
+
+**Ключевые принципы:**
+
+- **Скорость загрузки:** Оптимизация изображений, code splitting
+- **Мобильная адаптация:** Mobile-first подход
+- **Простота навигации:** Понятная структура, хлебные крошки
+- **Обратная связь:** Индикаторы загрузки, сообщения об успехе
+
+### 5. Работа с возражениями
+
+**Типичные возражения и ответы:**
+
+- "Дорого" → Показать ROI, рассрочку, сравнение с конкурентами
+- "Не уверен" → Отзывы, кейсы, гарантии
+- "Нет времени" → Подчеркнуть экономию времени в будущем
+
+## Аналитика и метрики
+
+### Ключевые метрики:
+
+- **Conversion Rate** — основной показатель
+- **Bounce Rate** — процент ушедших без действий
+- **Time on Page** — время на сайте
+- **Click-Through Rate** — процент кликов по CTA
+
+### Инструменты:
+
+- Google Analytics
+- Hotjar (heatmaps)
+- Google Optimize (A/B тесты)
+- Vercel Analytics
+
+## Практический пример
+
+**До оптимизации:**
+- Конверсия: 2.1%
+- Средний чек: 50,000₸
+- Заявок в месяц: 21
+
+**После оптимизации:**
+- Конверсия: 3.5% (+67%)
+- Средний чек: 50,000₸
+- Заявок в месяц: 35 (+67%)
+
+**Результат:** Увеличение выручки на 67% без изменения трафика.
+
+## Заключение
+
+Оптимизация конверсии — итеративный процесс. Начните с анализа текущих показателей, проведите A/B тесты, улучшите UX и постоянно измеряйте результаты.
+
+**Ключевые принципы:**
+- Минимизируйте трение (friction)
+- Максимизируйте ценность предложения
+- Используйте социальное доказательство
+- Тестируйте гипотезы
+- Измеряйте все изменения`,
+        en: `# Website conversion optimization: practical methods
+
+Conversion is the key metric for website effectiveness. In this article, I'll share practical methods to increase conversion based on real experience.
+
+## What is conversion?
+
+Conversion is the percentage of visitors who completed a target action (purchase, form submission, registration).
+
+**Formula:** Conversion = (Target actions / Total visitors) × 100%
+
+## Optimization methods
+
+### 1. Form optimization
+
+**Common form problems:**
+- Too many fields
+- Unclear instructions
+- Lack of social proof
+- No progress indicator
+
+**Solutions:**
+
+\`\`\`tsx
+// Optimized form
+export function ContactForm() {
+  return (
+    <form className="space-y-4">
+      {/* Minimum fields */}
+      <input 
+        type="text" 
+        placeholder="Your name" 
+        required 
+        aria-label="Name"
+      />
+      <input 
+        type="email" 
+        placeholder="Email" 
+        required 
+        aria-label="Email"
+      />
+      
+      {/* Social proof */}
+      <p className="text-sm text-muted-foreground">
+        ✓ Over 100 satisfied clients
+      </p>
+      
+      {/* Clear CTA */}
+      <button type="submit" className="w-full">
+        Get free consultation
+      </button>
+      
+      {/* Privacy guarantee */}
+      <p className="text-xs text-muted-foreground">
+        Your data is protected
+      </p>
+    </form>
+  );
+}
+\`\`\`
+
+### 2. CTA optimization
+
+**Effective CTA principles:**
+
+- **Specificity:** "Get quote" instead of "Learn more"
+- **Urgency:** "Order today" instead of "Order"
+- **Benefit:** "Save 30%" instead of "Buy"
+- **Visual prominence:** Contrasting color, sufficient size
+
+### 3. A/B testing
+
+\`\`\`typescript
+// Example A/B test for headline
+export function HeroSection() {
+  const variant = useABTest('hero-title', ['A', 'B']);
+  
+  const titles = {
+    A: 'We build websites that sell',
+    B: 'Websites with conversion guarantee',
+  };
+  
+  return (
+    <h1>{titles[variant]}</h1>
+  );
+}
+\`\`\`
+
+### 4. UX improvements
+
+**Key principles:**
+
+- **Load speed:** Image optimization, code splitting
+- **Mobile adaptation:** Mobile-first approach
+- **Simple navigation:** Clear structure, breadcrumbs
+- **Feedback:** Loading indicators, success messages
+
+### 5. Handling objections
+
+**Common objections and responses:**
+
+- "Too expensive" → Show ROI, payment plans, competitor comparison
+- "Not sure" → Reviews, case studies, guarantees
+- "No time" → Emphasize future time savings
+
+## Analytics and metrics
+
+### Key metrics:
+
+- **Conversion Rate** — primary metric
+- **Bounce Rate** — percentage leaving without action
+- **Time on Page** — time spent on site
+- **Click-Through Rate** — CTA click percentage
+
+### Tools:
+
+- Google Analytics
+- Hotjar (heatmaps)
+- Google Optimize (A/B tests)
+- Vercel Analytics
+
+## Practical example
+
+**Before optimization:**
+- Conversion: 2.1%
+- Average order: $500
+- Monthly leads: 21
+
+**After optimization:**
+- Conversion: 3.5% (+67%)
+- Average order: $500
+- Monthly leads: 35 (+67%)
+
+**Result:** 67% revenue increase without traffic changes.
+
+## Conclusion
+
+Conversion optimization is an iterative process. Start by analyzing current metrics, run A/B tests, improve UX and constantly measure results.
+
+**Key principles:**
+- Minimize friction
+- Maximize offer value
+- Use social proof
+- Test hypotheses
+- Measure all changes`,
+        kk: `# Веб-сайт конверсиясын оңтайландыру: практикалық әдістер
+
+Конверсия — веб-сайт тиімділігінің негізгі көрсеткіші. Бұл мақалада нақты тәжірибеге негізделген конверсияны арттырудың практикалық әдістерін бөлісемін.
+
+## Конверсия дегеніміз не?
+
+Конверсия — мақсатты әрекетті орындаған қонақтардың пайызы (сатып алу, форма толтыру, тіркелу).
+
+**Формула:** Конверсия = (Мақсатты әрекеттер / Барлық қонақтар) × 100%
+
+## Оңтайландыру әдістері
+
+### 1. Формаларды оңтайландыру
+
+**Типтік формалардың мәселелері:**
+- Тым көп өрістер
+- Түсініксіз нұсқаулар
+- Әлеуметтік дәлелдердің жоқтығы
+- Прогресс көрсеткішінің жоқтығы
+
+**Шешімдер:**
+
+\`\`\`tsx
+// Оңтайландырылған форма
+export function ContactForm() {
+  return (
+    <form className="space-y-4">
+      {/* Минималды өрістер */}
+      <input 
+        type="text" 
+        placeholder="Сіздің атыңыз" 
+        required 
+        aria-label="Аты"
+      />
+      <input 
+        type="email" 
+        placeholder="Email" 
+        required 
+        aria-label="Email"
+      />
+      
+      {/* Әлеуметтік дәлел */}
+      <p className="text-sm text-muted-foreground">
+        ✓ 100-ден астам қанағаттанған клиенттер
+      </p>
+      
+      {/* Анық CTA */}
+      <button type="submit" className="w-full">
+        Тегін консультация алу
+      </button>
+      
+      {/* Құпиялылық кепілдігі */}
+      <p className="text-xs text-muted-foreground">
+        Сіздің деректеріңіз қорғалған
+      </p>
+    </form>
+  );
+}
+\`\`\`
+
+### 2. CTA оңтайландыру
+
+**Тиімді CTA принциптері:**
+
+- **Нақтылық:** "Есептеу алу" орнына "Көбірек білу"
+- **Шұғылдық:** "Бүгін тапсырыс беру" орнына "Тапсырыс беру"
+- **Пайда:** "30% үнемдеу" орнына "Сатып алу"
+- **Көрнекі ерекшелену:** Контрастты түс, жеткілікті өлшем
+
+### 3. A/B тестілеу
+
+\`\`\`typescript
+// Тақырыптың A/B тестінің мысалы
+export function HeroSection() {
+  const variant = useABTest('hero-title', ['A', 'B']);
+  
+  const titles = {
+    A: 'Сататын сайттар құрамыз',
+    B: 'Конверсия кепілдігімен веб-сайттар',
+  };
+  
+  return (
+    <h1>{titles[variant]}</h1>
+  );
+}
+\`\`\`
+
+### 4. UX жақсарту
+
+**Негізгі принциптер:**
+
+- **Жүктеу жылдамдығы:** Суреттерді оңтайландыру, code splitting
+- **Мобильді бейімдеу:** Mobile-first тәсіл
+- **Қарапайым навигация:** Түсінікті құрылым, breadcrumbs
+- **Кері байланыс:** Жүктеу көрсеткіштері, сәттілік хабарламалары
+
+### 5. Наразылықтармен жұмыс
+
+**Типтік наразылықтар және жауаптар:**
+
+- "Қымбат" → ROI көрсету, бөліп төлеу, бәсекелестермен салыстыру
+- "Сенімсіз" → Пікірлер, кейстер, кепілдіктер
+- "Уақыт жоқ" → Болашақта уақыт үнемдеуін атап өту
+
+## Аналитика және метрикалар
+
+### Негізгі метрикалар:
+
+- **Conversion Rate** — негізгі көрсеткіш
+- **Bounce Rate** — әрекетсіз кеткендердің пайызы
+- **Time on Page** — сайттағы уақыт
+- **Click-Through Rate** — CTA бойынша кликтердің пайызы
+
+### Құралдар:
+
+- Google Analytics
+- Hotjar (heatmaps)
+- Google Optimize (A/B тесттер)
+- Vercel Analytics
+
+## Практикалық мысал
+
+**Оңтайландыруға дейін:**
+- Конверсия: 2.1%
+- Орташа чек: 50,000₸
+- Айына өтініштер: 21
+
+**Оңтайландырудан кейін:**
+- Конверсия: 3.5% (+67%)
+- Орташа чек: 50,000₸
+- Айына өтініштер: 35 (+67%)
+
+**Нәтиже:** Трафикті өзгертпей, кірісті 67% арттыру.
+
+## Қорытынды
+
+Конверсияны оңтайландыру — итеративті процесс. Ағымдағы көрсеткіштерді талдаудан бастаңыз, A/B тесттерін өткізіңіз, UX-ті жақсартыңыз және нәтижелерді үнемі өлшеңіз.
+
+**Негізгі принциптер:**
+- Тығырықты минимизациялау (friction)
+- Ұсыныс құндылығын максимизациялау
+- Әлеуметтік дәлелдерді қолдану
+- Гипотезаларды тестілеу
+- Барлық өзгерістерді өлшеу`,
+      },
+    },
+  },
 ] as const;
 
 /**

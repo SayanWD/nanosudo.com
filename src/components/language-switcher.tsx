@@ -5,7 +5,12 @@ import { useState } from "react";
 import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { locales, localeNames, type Locale } from '@/i18n/config';
-import { Globe } from 'lucide-react';
+
+const localeFlags: Record<Locale, string> = {
+  ru: '🇷🇺',
+  en: '🇺🇸',
+  kk: '🇰🇿',
+};
 
 export function LanguageSwitcher(): ReactElement {
   const locale = useLocale() as Locale;
@@ -27,7 +32,9 @@ export function LanguageSwitcher(): ReactElement {
         aria-label="Выбрать язык"
         aria-expanded={isOpen}
       >
-        <Globe className="w-4 h-4" />
+        <span className="text-lg leading-none" aria-hidden="true">
+          {localeFlags[locale]}
+        </span>
         <span className="hidden md:inline">{localeNames[locale]}</span>
       </button>
       {isOpen && (
@@ -45,13 +52,16 @@ export function LanguageSwitcher(): ReactElement {
                   key={loc}
                   type="button"
                   onClick={() => handleLanguageChange(loc)}
-                  className={`w-full text-left px-4 py-2 text-sm transition-colors ${
+                  className={`w-full text-left px-4 py-2 text-sm transition-colors flex items-center gap-2 ${
                     locale === loc
                       ? 'bg-accent/10 text-accent font-medium'
                       : 'text-muted-foreground hover:bg-surface hover:text-foreground'
                   }`}
                 >
-                  {localeNames[loc]}
+                  <span className="text-base leading-none" aria-hidden="true">
+                    {localeFlags[loc]}
+                  </span>
+                  <span>{localeNames[loc]}</span>
                 </button>
               ))}
             </div>

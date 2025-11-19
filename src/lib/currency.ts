@@ -1,16 +1,26 @@
 /**
  * Currency formatting utilities
- * Supports USD for ru/en locales and KZT for kk locale
- * KZT prices are 40% cheaper (60% of USD price)
+ * Supports:
+ * - RUB for ru locale (1 USD = 90 RUB)
+ * - USD for en locale
+ * - KZT for kk locale (1 USD = 450 KZT, 40% cheaper = 60% of USD price)
  */
 
 import type { Locale } from '@/i18n/config';
 
-// Fixed exchange rate: 1 USD = 450 KZT (approximate rate for 2025)
+// Fixed exchange rates (approximate rates for 2025)
+const USD_TO_RUB_RATE = 90;
 const USD_TO_KZT_RATE = 450;
 
 // Discount coefficient for KZT: 40% cheaper = 60% of USD price
 const KZT_DISCOUNT_COEFFICIENT = 0.6;
+
+/**
+ * Converts USD amount to RUB
+ */
+export function usdToRub(usdAmount: number): number {
+  return Math.round(usdAmount * USD_TO_RUB_RATE);
+}
 
 /**
  * Converts USD amount to KZT with discount
@@ -26,12 +36,17 @@ export function formatCurrency(
   usdAmount: number,
   locale: Locale,
 ): string {
+  if (locale === 'ru') {
+    const rubAmount = usdToRub(usdAmount);
+    return `${rubAmount.toLocaleString('ru-RU')} ₽`;
+  }
+  
   if (locale === 'kk') {
     const kztAmount = usdToKzt(usdAmount);
     return `${kztAmount.toLocaleString('kk-KZ')} ₸`;
   }
   
-  // ru and en use USD
+  // en uses USD
   return `$${usdAmount.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 }
 
@@ -39,7 +54,9 @@ export function formatCurrency(
  * Formats currency with symbol only (for inline use)
  */
 export function formatCurrencySymbol(locale: Locale): string {
-  return locale === 'kk' ? '₸' : '$';
+  if (locale === 'ru') return '₽';
+  if (locale === 'kk') return '₸';
+  return '$';
 }
 
 /**
@@ -49,6 +66,11 @@ export function formatHourlyRate(
   usdRate: number,
   locale: Locale,
 ): string {
+  if (locale === 'ru') {
+    const rubRate = usdToRub(usdRate);
+    return `${rubRate.toLocaleString('ru-RU')} ₽/ч`;
+  }
+  
   if (locale === 'kk') {
     const kztRate = usdToKzt(usdRate);
     return `${kztRate.toLocaleString('kk-KZ')} ₸/ч`;
@@ -61,6 +83,8 @@ export function formatHourlyRate(
  * Gets currency name for display
  */
 export function getCurrencyName(locale: Locale): string {
-  return locale === 'kk' ? 'тенге' : 'долларов';
+  if (locale === 'ru') return 'рублей';
+  if (locale === 'kk') return 'тенге';
+  return 'долларов';
 }
 

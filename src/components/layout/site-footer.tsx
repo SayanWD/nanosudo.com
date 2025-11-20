@@ -1,7 +1,7 @@
 'use client';
 
 // Footer with contact info and quick links.
-import { useEffect, useState, type ReactElement } from "react";
+import { type ReactElement } from "react";
 import Image from "next/image";
 import { useTranslations } from 'next-intl';
 import { Link } from "@/i18n/routing";
@@ -24,13 +24,7 @@ import { useTheme } from "@/components/theme/theme-provider";
 
 function FooterBrandColumn(): ReactElement {
   const { theme } = useTheme();
-  const [isMounted, setIsMounted] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  const resolvedTheme = isMounted ? theme : "dark";
+  const resolvedTheme = theme ?? "dark";
   const logoSrc =
     resolvedTheme === "light"
       ? "/Nano_sudo_logo_dark.png"

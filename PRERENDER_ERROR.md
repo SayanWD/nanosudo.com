@@ -69,8 +69,13 @@ Export encountered an error on /brief/page: /brief, exiting the build.
 ## Текущее решение
 
 Используется комбинация:
-- Route segment config (`dynamic = 'force-dynamic'`)
-- Клиентский компонент
-- Динамический импорт с `ssr: false`
+- **Server Component wrapper** с route segment config (`dynamic = 'force-dynamic'`)
+- **Client Component** внутри для UI (`BriefPageClientWrapper`)
+- **Динамический импорт с `ssr: false`** в `BriefPageClientWrapper`
+
+### Важно:
+- Route segment config (`export const dynamic`, `export const revalidate`, etc.) **НЕ МОЖЕТ** быть экспортирован из Client Components
+- Поэтому используется Server Component wrapper, который экспортирует route segment config
+- Внутри Server Component рендерится Client Component для UI
 
 Это должно предотвратить все попытки prerendering страницы `/brief`.

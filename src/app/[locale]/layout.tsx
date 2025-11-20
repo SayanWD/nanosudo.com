@@ -10,6 +10,7 @@ import {
 } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { CookieConsent } from "@/components/cookie-consent";
 import { routing } from "@/i18n/routing";
 import { generateMetadata as generateBaseMetadata } from "@/lib/metadata";
 
@@ -79,6 +80,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
             {t("common.skipToContent")}
           </a>
           {children}
+          <CookieConsent />
         </NextIntlClientProvider>
       </ThemeProvider>
     </div>

@@ -44,6 +44,7 @@ const QUICK_LINKS: Array<{
   { labelKey: "common.nav.about", route: "/about", icon: User },
   { labelKey: "common.nav.blog", route: "/blog", icon: BookOpen },
   { labelKey: "common.nav.contact", route: "/contact", icon: MessageSquare },
+  { labelKey: "common.footer.privacyPolicy", route: "/privacy-policy", icon: FileText },
 ];
 
 const currentYear = new Date().getFullYear();

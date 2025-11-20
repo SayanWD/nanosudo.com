@@ -18,6 +18,7 @@
       "linkedin": "LinkedIn",
       "github": "GitHub",
       "fillBrief": "Fill Brief",
+      "privacyPolicy": "Privacy Policy",
       "process": "Process",
       "status": {
         "online": "online"
@@ -654,6 +655,99 @@
       "next": "Next",
       "saving": "Saving...",
       "generateProposal": "Save Draft"
+    }
+  },
+  "cookieConsent": {
+    "title": "We use cookies",
+    "description": "We use cookies to improve site performance, analytics, and content personalization.",
+    "privacyPolicyLink": "Privacy Policy",
+    "acceptAll": "Accept All",
+    "decline": "Decline",
+    "declineAll": "Decline All",
+    "customize": "Customize",
+    "close": "Close",
+    "savePreferences": "Save Preferences",
+    "preferences": {
+      "title": "Cookie Preferences",
+      "required": "Required",
+      "necessary": {
+        "title": "Necessary Cookies",
+        "description": "These cookies are essential for the website to function and cannot be disabled. They are usually set in response to your actions, such as setting privacy preferences, logging in, or filling out forms."
+      },
+      "analytics": {
+        "title": "Analytics Cookies",
+        "description": "These cookies help us understand how visitors interact with the website by collecting and reporting information anonymously. This allows us to improve site performance."
+      },
+      "marketing": {
+        "title": "Marketing Cookies",
+        "description": "These cookies are used to track visitors across different websites. The goal is to display relevant ads and encourage interest in products and services."
+      }
+    }
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "description": "Privacy Policy for nanosudo.com",
+    "lastUpdated": "Last updated",
+    "sections": {
+      "introduction": {
+        "title": "Introduction",
+        "content": "This Privacy Policy describes how we collect, use, and protect your personal information when using our website. We are committed to protecting your privacy and complying with applicable data protection laws."
+      },
+      "dataCollection": {
+        "title": "Data Collection",
+        "content": "We collect the following types of information:",
+        "items": {
+          "name": "Name and contact information (when filling out forms)",
+          "email": "Email address",
+          "phone": "Phone number (optional)",
+          "usage": "Website usage data (through cookies and analytics)"
+        }
+      },
+      "cookies": {
+        "title": "Cookie Usage",
+        "content": "We use cookies to improve website functionality. You can manage cookie settings through the consent panel.",
+        "necessary": {
+          "title": "Necessary Cookies",
+          "description": "These cookies are essential for the website to function and cannot be disabled. They provide basic functionality and security."
+        },
+        "analytics": {
+          "title": "Analytics Cookies",
+          "description": "These cookies help us understand how visitors use the website by collecting information anonymously. This allows us to improve user experience."
+        },
+        "marketing": {
+          "title": "Marketing Cookies",
+          "description": "These cookies are used to track the effectiveness of advertising campaigns and personalize content."
+        }
+      },
+      "dataUsage": {
+        "title": "Data Usage",
+        "content": "We use collected data for the following purposes:",
+        "items": {
+          "processing": "Processing and fulfilling your requests",
+          "communication": "Communicating with you regarding your project",
+          "analytics": "Analyzing website usage to improve service",
+          "improvements": "Improving functionality and user experience"
+        }
+      },
+      "dataProtection": {
+        "title": "Data Protection",
+        "content": "We implement appropriate technical and organizational measures to protect your personal data from unauthorized access, alteration, disclosure, or destruction. Data is stored on secure servers and transmitted through encrypted channels."
+      },
+      "userRights": {
+        "title": "Your Rights",
+        "content": "In accordance with GDPR and other applicable laws, you have the right to:",
+        "items": {
+          "access": "Access your personal data",
+          "correction": "Correct inaccurate data",
+          "deletion": "Request deletion of your data",
+          "objection": "Object to data processing",
+          "portability": "Receive a copy of your data in a structured format"
+        }
+      },
+      "contact": {
+        "title": "Contact",
+        "content": "If you have questions about this Privacy Policy or wish to exercise your rights, please contact us at:"
+      }
     }
   }
 }

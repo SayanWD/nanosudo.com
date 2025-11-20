@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import client component with SSR disabled
@@ -21,9 +22,29 @@ const BriefPageClient = dynamic(
 );
 
 export function BriefPageClientWrapper(): ReactElement {
-  // With ssr: false, this component will never render on the server
-  // It will only render on the client after hydration
-  // The loading state from dynamic() will be shown during client-side loading
+  // Ensure this component only renders on the client
+  // This prevents any server-side rendering attempts
+  const [isClient, setIsClient] = useState(false);
+
+  // Only set to true after component mounts on client
+  // This ensures the component never renders on the server
+  /* eslint-disable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
+
+  // Return loading state during SSR to prevent any server-side rendering
+  // This is safe because ssr: false in dynamic() already prevents server rendering
+  // but we add this extra check to be absolutely sure
+  if (!isClient) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
+
   return <BriefPageClient />;
 }
 

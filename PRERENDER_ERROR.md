@@ -68,14 +68,29 @@ Export encountered an error on /brief/page: /brief, exiting the build.
 
 ## Текущее решение
 
-Используется комбинация:
-- **Server Component wrapper** с route segment config (`dynamic = 'force-dynamic'`)
-- **Client Component** внутри для UI (`BriefPageClientWrapper`)
-- **Динамический импорт с `ssr: false`** в `BriefPageClientWrapper`
+Используется комбинация нескольких подходов:
+
+### 1. Server Component wrapper с route segment config:
+- `export const dynamic = 'force-dynamic'` - принудительный динамический рендеринг
+- `export const dynamicParams = false` - не генерировать статические параметры
+- `export const revalidate = 0` - без кеширования
+- `export const fetchCache = 'force-no-store'` - без кеширования fetch
+- `export const runtime = 'nodejs'` - runtime на Node.js
+- `headers()` и `cookies()` в try-catch - принудительный динамический рендеринг
+
+### 2. Client Component с проверками:
+- `BriefPageClientWrapper` проверяет `isClient` перед рендерингом
+- Возвращает loading state во время SSR
+- Использует `useEffect` для установки `isClient = true` только после монтирования
+
+### 3. Динамический импорт с `ssr: false`:
+- `BriefPageClient` загружается динамически с `ssr: false`
+- Это гарантирует, что компонент не рендерится на сервере
 
 ### Важно:
 - Route segment config (`export const dynamic`, `export const revalidate`, etc.) **НЕ МОЖЕТ** быть экспортирован из Client Components
 - Поэтому используется Server Component wrapper, который экспортирует route segment config
 - Внутри Server Component рендерится Client Component для UI
+- Дополнительные проверки в Client Component предотвращают любые попытки SSR
 
 Это должно предотвратить все попытки prerendering страницы `/brief`.

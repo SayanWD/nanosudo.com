@@ -71,12 +71,12 @@ Export encountered an error on /brief/page: /brief, exiting the build.
 Используется комбинация нескольких подходов:
 
 ### 1. Server Component wrapper с route segment config:
-- `export const dynamic = 'force-dynamic'` - принудительный динамический рендеринг
+- `export const dynamic = 'error'` - выбрасывает ошибку при попытке статической генерации
 - `export const dynamicParams = false` - не генерировать статические параметры
 - `export const revalidate = 0` - без кеширования
 - `export const fetchCache = 'force-no-store'` - без кеширования fetch
 - `export const runtime = 'nodejs'` - runtime на Node.js
-- `headers()` и `cookies()` в try-catch - принудительный динамический рендеринг
+- `headers()` БЕЗ try-catch - принудительный динамический рендеринг, ошибка во время build ожидаема
 
 ### 2. Client Component с проверками:
 - `BriefPageClientWrapper` проверяет `isClient` перед рендерингом
@@ -87,10 +87,17 @@ Export encountered an error on /brief/page: /brief, exiting the build.
 - `BriefPageClient` загружается динамически с `ssr: false`
 - Это гарантирует, что компонент не рендерится на сервере
 
+### Почему `dynamic = 'error'`:
+- Когда Next.js пытается prerender страницу, `headers()` выбрасывает ошибку
+- `dynamic = 'error'` говорит Next.js, что это ожидаемо, и страница должна быть пропущена из статической генерации
+- Ошибка обрабатывается Next.js и не останавливает build для других страниц
+- Это единственный надежный способ предотвратить prerendering, когда `generateStaticParams` определен в layout
+
 ### Важно:
 - Route segment config (`export const dynamic`, `export const revalidate`, etc.) **НЕ МОЖЕТ** быть экспортирован из Client Components
 - Поэтому используется Server Component wrapper, который экспортирует route segment config
 - Внутри Server Component рендерится Client Component для UI
-- Дополнительные проверки в Client Component предотвращают любые попытки SSR
+- `headers()` вызывается БЕЗ try-catch, чтобы ошибка была выброшена во время build
+- Next.js обработает ошибку и пропустит страницу из статической генерации
 
 Это должно предотвратить все попытки prerendering страницы `/brief`.

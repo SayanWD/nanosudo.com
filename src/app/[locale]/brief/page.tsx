@@ -1,12 +1,12 @@
 import type { ReactElement } from "react";
 import { unstable_noStore as noStore } from "next/cache";
-import { headers, cookies } from "next/headers";
+import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 import { BriefPageClientWrapper } from "./brief-page-client-wrapper";
 
-// Route segment config to prevent prerendering
-// These exports MUST be in a Server Component, not a Client Component
-// Route segment config cannot be exported from Client Components
-export const dynamic = 'force-dynamic';
+// Use 'error' to prevent static generation - Next.js will skip this page during build
+// if it tries to prerender it, which is exactly what we want
+export const dynamic = 'error';
 export const dynamicParams = false;
 export const revalidate = 0;
 export const fetchCache = 'force-no-store';
@@ -21,17 +21,12 @@ export default async function BriefPage(): Promise<ReactElement> {
   // Prevent caching and static generation
   noStore();
   
-  // Force dynamic rendering by accessing request-specific APIs
-  // These calls will throw an error during build/prerender, which is what we want
-  // Next.js will catch the error and skip this page from static generation
-  // We wrap in try-catch to handle the error gracefully
-  try {
-    await headers();
-    await cookies();
-  } catch {
-    // Error is expected during build/prerender - Next.js will handle it and skip this page
-    // This is the desired behavior to prevent prerendering
-  }
+  // Force dynamic rendering by accessing request-specific API
+  // This will throw an error during build/prerender, causing Next.js to skip this page
+  // The error is expected and handled by Next.js - it will skip the page from static generation
+  // We don't wrap in try-catch because we WANT the error to be thrown during build
+  // This is the only reliable way to prevent prerendering when generateStaticParams is in layout
+  await headers();
   
   return <BriefPageClientWrapper />;
 }

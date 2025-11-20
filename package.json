@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "pnpm typecheck && pnpm lint && next build",
+    "build:test": "pnpm typecheck && pnpm lint && next build && pnpm test:build",
     "start": "next start",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:build": "vitest run tests/build",
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
     "format": "prettier --write .",

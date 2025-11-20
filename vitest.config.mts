@@ -18,7 +18,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
     environmentMatchGlobs: [["src/app/api/**", "node"]],
-    include: ["src/**/*.test.ts"],
+    include: ["src/**/*.test.ts", "tests/**/*.test.ts"],
     exclude: ["tests/e2e/**"],
     coverage: {
       reporter: ["text", "json", "html"],

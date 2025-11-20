@@ -38,14 +38,9 @@ function FooterBrandColumn(): ReactElement {
 
   return (
     <div className="space-y-4 text-center">
-      <div className="space-y-1">
-        <p className="font-heading text-xl tracking-tight text-foreground">
-          Sayan Roor
-        </p>
-        <p className="text-sm font-semibold uppercase tracking-[0.55em] text-muted-foreground">
-          NANOSUDO
-        </p>
-      </div>
+      <p className="text-sm font-semibold uppercase tracking-[0.55em] text-muted-foreground">
+        NANOSUDO
+      </p>
       <Link
         href="/"
         className="group inline-block rounded-2xl border border-border/40 bg-surface/60 p-4 transition hover:border-accent/50 hover:bg-surface/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"

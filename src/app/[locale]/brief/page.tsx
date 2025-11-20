@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { Suspense } from "react";
 import { unstable_noStore as noStore } from "next/cache";
 import { cookies, headers } from "next/headers";
 import { BriefPageClientWrapper } from "./brief-page-client-wrapper";
@@ -26,5 +27,9 @@ export default async function BriefPage(): Promise<ReactElement> {
   await cookies();
   await headers();
   
-  return <BriefPageClientWrapper />;
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+      <BriefPageClientWrapper />
+    </Suspense>
+  );
 }

@@ -16,7 +16,6 @@ import {
   User,
   BookOpen,
   MessageSquare,
-  Settings
 } from "lucide-react";
 
 import { Container } from "./container";
@@ -41,7 +40,6 @@ const QUICK_LINKS: Array<{
   readonly icon: typeof FileText;
 }> = [
   { labelKey: "common.footer.fillBrief", href: "/brief", icon: FileText },
-  { labelKey: "common.footer.process", href: "#process", icon: Settings },
   { labelKey: "common.nav.cases", route: "/cases", icon: Briefcase },
   { labelKey: "common.nav.about", route: "/about", icon: User },
   { labelKey: "common.nav.blog", route: "/blog", icon: BookOpen },

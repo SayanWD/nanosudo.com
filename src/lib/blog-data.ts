@@ -49,7 +49,7 @@ type BlogPostSource = {
 export const BLOG_POSTS: readonly BlogPostSource[] = [
   {
     slug: "nextjs-performance-optimization",
-    image: "/blog/nextjs-optimization.jpg",
+    image: "/nextjs-optimization.jpg",
     publishedAt: "2024-11-15",
     author: "Sayan Roor",
     tags: ["Next.js", "Performance", "Optimization", "TypeScript"],
@@ -281,7 +281,7 @@ export async function getStaticProps() {
   },
   {
     slug: "typescript-best-practices",
-    image: "/blog/typescript-practices.jpg",
+    image: "/typescript-practices.jpg",
     publishedAt: "2024-11-10",
     author: "Sayan Roor",
     tags: ["TypeScript", "Best Practices"],
@@ -501,7 +501,7 @@ TypeScript қауіпсіз код жазуға көмектеседі, біра
   },
   {
     slug: "supabase-integration-guide",
-    image: "/blog/supabase-integration.jpg",
+    image: "/supabase-integration.jpg",
     publishedAt: "2024-11-05",
     author: "Sayan Roor",
     tags: ["Supabase", "Next.js", "Backend", "Database"],
@@ -712,7 +712,7 @@ Supabase өз серверіңізді жазбай‑ақ қуатты backend 
   },
   {
     slug: "nextjs-website-development-guide",
-    image: "/blog/nextjs-website.jpg",
+    image: "/nextjs-website.jpg",
     publishedAt: "2025-01-20",
     author: "Sayan Roor",
     tags: ["Next.js", "Web Development", "React", "TypeScript", "SEO"],
@@ -1226,7 +1226,7 @@ Next.js — жылдам, SEO-оңтайландырылған сайттар қ
   },
   {
     slug: "1c-integration-web-application",
-    image: "/blog/1c-integration.jpg",
+    image: "/1c-integration.jpg",
     publishedAt: "2025-01-18",
     author: "Sayan Roor",
     tags: ["1С", "Integration", "API", "Backend", "ERP"],
@@ -1785,7 +1785,7 @@ async function syncWithRetry(
   },
   {
     slug: "website-conversion-optimization",
-    image: "/blog/conversion-optimization.jpg",
+    image: "/conversion-optimization.jpg",
     publishedAt: "2025-01-15",
     author: "Sayan Roor",
     tags: ["Conversion", "UX", "Marketing", "Analytics", "A/B Testing"],

@@ -168,51 +168,76 @@ function HeroSection(): ReactElement {
 
             {/* Social media icons */}
             <div className="flex items-center justify-center gap-4">
-              <a
+              <motion.a
                 href="https://www.linkedin.com/in/sayan-roor/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="social-icon-link"
                 aria-label="LinkedIn"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <Linkedin className="w-5 h-5" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="https://instagram.com/satoshi_iam"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="social-icon-link"
                 aria-label="Instagram"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="https://t.me/satoshi_iam"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="social-icon-link"
                 aria-label="Telegram"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <Send className="w-5 h-5" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="https://wa.me/77478277485"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="social-icon-link"
                 aria-label="WhatsApp"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.7, ease: [0.4, 0, 0.2, 1] }}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <MessageCircle className="w-5 h-5" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="https://github.com/SayanWD"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition hover:border-accent hover:text-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                className="social-icon-link"
                 aria-label="GitHub"
+                initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.8, ease: [0.4, 0, 0.2, 1] }}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <Github className="w-5 h-5" />
-              </a>
+              </motion.a>
             </div>
           </motion.div>
         </div>

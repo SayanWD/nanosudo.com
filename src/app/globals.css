@@ -935,4 +935,45 @@
       animation: none;
     }
   }
+
+  /* Social media icons animation */
+  .social-icon-link {
+    @apply inline-flex items-center justify-center w-10 h-10 rounded-lg border border-border/60 bg-surface/80 text-muted-foreground transition-all duration-300;
+    @apply hover:border-accent hover:text-accent hover:bg-accent/10;
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent;
+    position: relative;
+  }
+
+  .social-icon-link::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 0.5rem;
+    background: radial-gradient(circle, rgba(153, 185, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .social-icon-link:hover::before {
+    opacity: 1;
+    animation: social-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes social-pulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.8;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .social-icon-link::before {
+      animation: none !important;
+    }
+  }
 }

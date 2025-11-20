@@ -6,6 +6,7 @@ import type { Route } from "next";
 import { Calendar, Tag, ArrowLeft, ArrowRight, User } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { SiteShell } from "@/components/layout/site-shell";
 import { getPostBySlug, getAllPosts, type AppLocale } from "@/lib/blog-data";
@@ -126,12 +127,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps): Promi
         <section className="border-b border-border/60 py-section bg-gradient-to-b from-surface/20 to-background">
           <Container className="max-w-5xl">
             <div className="relative aspect-video overflow-hidden rounded-3xl border border-border/60 bg-gradient-to-br from-accent/20 to-accent/5 shadow-soft">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-sm text-muted-foreground text-center px-4">
-                  {post.imageAlt}
-                </p>
-              </div>
-              {/* Placeholder for actual image - uncomment when images are available:
               <Image
                 src={post.image}
                 alt={post.imageAlt}
@@ -140,7 +135,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps): Promi
                 priority
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
               />
-              */}
             </div>
           </Container>
         </section>

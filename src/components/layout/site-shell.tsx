@@ -23,13 +23,10 @@ export function SiteShell({
   footer,
 }: SiteShellProps): ReactElement {
   const pathname = usePathname();
-  // Show header only on home page (root or locale root)
-  const isHomePage = pathname === '/' || pathname.match(/^\/[a-z]{2}\/?$/);
+  // Show header on all pages
   const resolvedHeader = header !== undefined 
     ? header 
-    : isHomePage 
-      ? <SiteHeader /> 
-      : null;
+    : <SiteHeader />;
   const resolvedFooter = footer ?? <SiteFooter />;
 
   return (

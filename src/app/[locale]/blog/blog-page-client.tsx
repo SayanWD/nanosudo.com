@@ -7,6 +7,7 @@ import type { Route } from "next";
 import { Calendar, ArrowRight, Tag } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 
+import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { SiteShell } from "@/components/layout/site-shell";
 import { getAllPosts, getExcerpt, type BlogPost, type AppLocale } from "@/lib/blog-data";
@@ -45,12 +46,6 @@ function PostCard({ post }: { readonly post: BlogPost }): ReactElement {
       >
         {/* Image */}
         <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-accent/20 to-accent/5">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <p className="text-sm text-muted-foreground text-center px-4">
-              {post.imageAlt}
-            </p>
-          </div>
-          {/* Placeholder for actual image - uncomment when images are available:
           <Image
             src={post.image}
             alt={post.imageAlt}
@@ -58,7 +53,6 @@ function PostCard({ post }: { readonly post: BlogPost }): ReactElement {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          */}
         </div>
 
         {/* Content */}

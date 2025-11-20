@@ -1,6 +1,11 @@
 import type { ReactElement } from "react";
 import { unstable_noStore as noStore } from "next/cache";
-import { BriefPageClient } from "./brief-page-client";
+import nextDynamic from "next/dynamic";
+
+// Dynamically import client component with SSR disabled
+const BriefPageClient = nextDynamic(() => import("./brief-page-client").then((mod) => ({ default: mod.BriefPageClient })), {
+  ssr: false,
+});
 
 // Force dynamic rendering to prevent static generation
 export const dynamic = 'force-dynamic';

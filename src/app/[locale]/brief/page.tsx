@@ -1,7 +1,5 @@
 import type { ReactElement } from "react";
-import { unstable_noStore as noStore } from "next/cache";
-import { cookies, headers } from "next/headers";
-import { BriefPageClientWrapper } from "./brief-page-client-wrapper";
+import nextDynamic from "next/dynamic";
 
 // Force dynamic rendering to prevent static generation
 export const dynamic = 'force-dynamic';
@@ -16,19 +14,22 @@ export function generateStaticParams(): Array<never> {
   return [];
 }
 
-// This page must be rendered dynamically, never statically
-export default async function BriefPage(): Promise<ReactElement> {
-  // Prevent caching and static generation
-  noStore();
-  
-  // Force dynamic rendering by accessing request-specific APIs
-  // This ensures Next.js treats this as a dynamic route
-  try {
-    await cookies();
-    await headers();
-  } catch {
-    // Ignore errors during build/prerender
+// Dynamically import client component with SSR disabled
+// According to Next.js docs: https://nextjs.org/docs/messages/prerender-error
+// This prevents the component from being rendered on the server during prerender
+const BriefPageClient = nextDynamic(
+  () => import("./brief-page-client").then((mod) => ({ default: mod.BriefPageClient })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-muted-foreground">Loading...</div>
+      </div>
+    ),
   }
-  
-  return <BriefPageClientWrapper />;
+);
+
+// This page must be rendered dynamically, never statically
+export default function BriefPage(): ReactElement {
+  return <BriefPageClient />;
 }

@@ -67,8 +67,8 @@ export function BriefNewFormProvider({
 }: BriefNewFormProviderProps): ReactElement {
   const [currentStep, setCurrentStep] = useState<BriefNewStepId>(initialStep);
 
-  // Load from localStorage
-  const storedValues = useMemo(() => {
+  // Load from localStorage - use useState with lazy initialization to ensure it only runs on client
+  const [storedValues] = useState<Partial<BriefNewFormValues> | null>(() => {
     if (typeof window === "undefined" || !enableAutosave) {
       return null;
     }
@@ -81,7 +81,7 @@ export function BriefNewFormProvider({
       // Ignore parse errors
     }
     return null;
-  }, [enableAutosave]);
+  });
 
   const mergedDefaultValues: BriefNewFormValues = useMemo(() => {
     const defaults = BRIEF_NEW_DEFAULT_VALUES;

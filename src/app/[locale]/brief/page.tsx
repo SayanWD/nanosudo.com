@@ -1,11 +1,6 @@
 import type { ReactElement } from "react";
 import { unstable_noStore as noStore } from "next/cache";
-import nextDynamic from "next/dynamic";
-
-// Dynamically import client component with SSR disabled
-const BriefPageClient = nextDynamic(() => import("./brief-page-client").then((mod) => ({ default: mod.BriefPageClient })), {
-  ssr: false,
-});
+import { BriefPageClientWrapper } from "./brief-page-client-wrapper";
 
 // Force dynamic rendering to prevent static generation
 export const dynamic = 'force-dynamic';
@@ -29,5 +24,5 @@ export default async function BriefPage(): Promise<ReactElement> {
   // This ensures Next.js treats this as a dynamic route
   await Promise.resolve();
   
-  return <BriefPageClient />;
+  return <BriefPageClientWrapper />;
 }

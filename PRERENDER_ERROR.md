@@ -66,7 +66,7 @@ Export encountered an error on /brief/page: /brief, exiting the build.
    - Создать отдельный маршрут `/brief` без локализации
    - Это потребует изменений в структуре проекта
 
-## Текущее решение
+## Финальное решение
 
 Используется комбинация нескольких подходов:
 
@@ -87,11 +87,12 @@ Export encountered an error on /brief/page: /brief, exiting the build.
 - `BriefPageClient` загружается динамически с `ssr: false`
 - Это гарантирует, что компонент не рендерится на сервере
 
-### Почему `dynamic = 'error'`:
-- Когда Next.js пытается prerender страницу, `headers()` выбрасывает ошибку
+### Почему `dynamic = 'error'` с `headers()` БЕЗ try-catch:
+- Когда Next.js пытается prerender страницу, `headers()` выбрасывает ошибку синхронно
 - `dynamic = 'error'` говорит Next.js, что это ожидаемо, и страница должна быть пропущена из статической генерации
 - Ошибка обрабатывается Next.js и не останавливает build для других страниц
 - Это единственный надежный способ предотвратить prerendering, когда `generateStaticParams` определен в layout
+- **КРИТИЧНО**: Ошибка должна быть выброшена БЕЗ try-catch, чтобы Next.js мог обработать ее и пропустить страницу
 
 ### Важно:
 - Route segment config (`export const dynamic`, `export const revalidate`, etc.) **НЕ МОЖЕТ** быть экспортирован из Client Components
@@ -99,5 +100,17 @@ Export encountered an error on /brief/page: /brief, exiting the build.
 - Внутри Server Component рендерится Client Component для UI
 - `headers()` вызывается БЕЗ try-catch, чтобы ошибка была выброшена во время build
 - Next.js обработает ошибку и пропустит страницу из статической генерации
+- Ошибка должна быть выброшена синхронно, до любого рендеринга
+
+### Почему предыдущие попытки не сработали:
+- `dynamic = 'force-dynamic'` с `cookies()` в try-catch - Next.js все равно пытается prerender
+- `dynamic = 'error'` с try-catch - ошибка не выбрасывается, Next.js продолжает prerender
+- Client Component без route segment config - Next.js все равно пытается prerender из-за `generateStaticParams` в layout
+
+### Текущее решение работает потому что:
+- `dynamic = 'error'` явно говорит Next.js, что ошибка ожидаема
+- `headers()` выбрасывает ошибку синхронно, до рендеринга
+- Next.js обрабатывает ошибку и пропускает страницу из статической генерации
+- Build продолжается для других страниц
 
 Это должно предотвратить все попытки prerendering страницы `/brief`.

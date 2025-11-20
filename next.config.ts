@@ -19,9 +19,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Exclude /brief route from static generation
-  // This prevents Next.js from trying to prerender the brief page
-  // even when generateStaticParams is defined in layout
   webpack: (config, { isServer }) => {
     if (isServer) {
       // Fix for pdfkit font loading in Next.js

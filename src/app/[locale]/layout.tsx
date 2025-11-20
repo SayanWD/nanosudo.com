@@ -46,12 +46,28 @@ export async function generateMetadata({ params }: LocaleLayoutMetadataProps): P
   const { locale } = await params;
   
   if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
-    return generateBaseMetadata();
+    return {
+      ...generateBaseMetadata(),
+      icons: {
+        icon: "/Nano_sudo_logo_dark.png",
+        shortcut: "/Nano_sudo_logo_dark.png",
+        apple: "/Nano_sudo_logo_dark.png",
+      },
+    };
   }
 
-  return generateBaseMetadata({
+  const baseMetadata = generateBaseMetadata({
     locale,
   });
+
+  return {
+    ...baseMetadata,
+    icons: {
+      icon: "/Nano_sudo_logo_dark.png",
+      shortcut: "/Nano_sudo_logo_dark.png",
+      apple: "/Nano_sudo_logo_dark.png",
+    },
+  };
 }
 
 type LocaleLayoutProps = {

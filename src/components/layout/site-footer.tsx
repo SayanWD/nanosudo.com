@@ -1,7 +1,8 @@
 'use client';
 
 // Footer with contact info and quick links.
-import type { ReactElement } from "react";
+import { useEffect, useState, type ReactElement } from "react";
+import Image from "next/image";
 import { useTranslations } from 'next-intl';
 import { Link } from "@/i18n/routing";
 import { 
@@ -19,6 +20,50 @@ import {
 } from "lucide-react";
 
 import { Container } from "./container";
+import { useTheme } from "@/components/theme/theme-provider";
+
+function FooterBrandColumn(): ReactElement {
+  const { theme } = useTheme();
+  const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const resolvedTheme = isMounted ? theme : "dark";
+  const logoSrc =
+    resolvedTheme === "light"
+      ? "/Nano_sudo_logo_dark.png"
+      : "/Nano_sudo_logo_light.png";
+
+  return (
+    <div className="space-y-4 text-center">
+      <div className="space-y-1">
+        <p className="font-heading text-xl tracking-tight text-foreground">
+          Sayan Roor
+        </p>
+        <p className="text-sm font-semibold uppercase tracking-[0.55em] text-muted-foreground">
+          NANOSUDO
+        </p>
+      </div>
+      <Link
+        href="/"
+        className="group inline-block rounded-2xl border border-border/40 bg-surface/60 p-4 transition hover:border-accent/50 hover:bg-surface/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+        aria-label="Перейти на главную"
+      >
+        <Image
+          src={logoSrc}
+          alt="NanoSudo логотип"
+          width={320}
+          height={120}
+          priority
+          className="h-16 w-auto object-contain md:h-20"
+          sizes="(max-width: 768px) 220px, 320px"
+        />
+      </Link>
+    </div>
+  );
+}
 
 const CONTACT_LINKS: Array<{ 
   readonly labelKey: string; 
@@ -44,7 +89,6 @@ const QUICK_LINKS: Array<{
   { labelKey: "common.nav.about", route: "/about", icon: User },
   { labelKey: "common.nav.blog", route: "/blog", icon: BookOpen },
   { labelKey: "common.nav.contact", route: "/contact", icon: MessageSquare },
-  { labelKey: "common.footer.privacyPolicy", route: "/privacy-policy", icon: FileText },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -54,15 +98,8 @@ export function SiteFooter(): ReactElement {
   
   return (
     <div className="bg-surface/80 text-sm text-muted-foreground">
-      <Container className="grid gap-10 py-12 md:grid-cols-[2fr_1fr_1fr]">
-        <div className="space-y-4">
-          <p className="text-lg font-heading text-foreground">
-            {t("footer.pitch.title")}
-          </p>
-          <p className="max-w-md leading-relaxed">
-            {t("footer.pitch.description")}
-          </p>
-        </div>
+      <Container className="grid gap-10 py-12 md:grid-cols-[1.2fr_1fr_1fr]">
+        <FooterBrandColumn />
         <div>
           <h3 className="text-xs font-semibold tracking-[0.28em] text-muted-foreground normal-case">
             {t("common.footer.quickLinks")}
@@ -104,6 +141,9 @@ export function SiteFooter(): ReactElement {
           <ul className="mt-4 grid gap-2">
             {CONTACT_LINKS.map((link) => {
               const Icon = link.icon;
+              if (link.labelKey === "common.footer.github") {
+                return null;
+              }
               return (
                 <li key={link.href}>
                   <a
@@ -114,12 +154,6 @@ export function SiteFooter(): ReactElement {
                   >
                     <Icon className="w-4 h-4" />
                     <span>{t(link.labelKey)}</span>
-                    {link.href.includes("github.com") && link.href.includes("SayanWD") && (
-                      <span className="ml-1 inline-flex items-center gap-1 rounded-full border border-border/60 bg-surface/80 px-2 py-0.5 text-[11px] leading-none">
-                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
-                        {t("common.footer.status.online")}
-                      </span>
-                    )}
                   </a>
                 </li>
               );
@@ -128,11 +162,30 @@ export function SiteFooter(): ReactElement {
         </div>
       </Container>
       <div className="border-t border-border/70">
-        <Container className="flex flex-col gap-2 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <span>© {currentYear} Sayan Roor. Все права защищены.</span>
-          <span>
-            Core Web Vitals · Lighthouse 95/100 · Accessibility 100/100
-          </span>
+        <Container className="flex flex-col gap-3 py-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap items-center gap-1">
+            <span>© {currentYear} Sayan Roor. Все права защищены.</span>
+            <span>—</span>
+            <Link
+              href="/privacy-policy"
+              className="inline-flex items-center gap-1 normal-case text-muted-foreground transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              Политика конфиденциальности
+            </Link>
+          </div>
+          <a
+            href="https://github.com/SayanWD"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 normal-case text-muted-foreground transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            <Github className="h-4 w-4" />
+            <span>GitHub</span>
+            <span className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-surface/80 px-2 py-0.5 text-[11px] leading-none">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-500" />
+              Online
+            </span>
+          </a>
         </Container>
       </div>
     </div>

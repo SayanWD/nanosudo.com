@@ -1,5 +1,6 @@
 import type { ReactElement } from "react";
 import { unstable_noStore as noStore } from "next/cache";
+import { cookies, headers } from "next/headers";
 import { BriefPageClientWrapper } from "./brief-page-client-wrapper";
 
 // Force dynamic rendering to prevent static generation
@@ -20,9 +21,10 @@ export default async function BriefPage(): Promise<ReactElement> {
   // Prevent caching and static generation
   noStore();
   
-  // Force dynamic rendering by making this an async function
+  // Force dynamic rendering by accessing request-specific APIs
   // This ensures Next.js treats this as a dynamic route
-  await Promise.resolve();
+  await cookies();
+  await headers();
   
   return <BriefPageClientWrapper />;
 }

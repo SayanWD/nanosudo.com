@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { X, Settings, Check } from "lucide-react";
@@ -54,15 +54,21 @@ export function CookieConsent(): ReactElement | null {
   });
   
   // Check if consent banner should be visible
-  const [isVisible, setIsVisible] = useState(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
-    const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
-    return !consent;
-  });
-  
+  // Start with false to avoid hydration mismatch, then check on client
+  const [isVisible, setIsVisible] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
+  
+  // Check consent status after component mounts on client
+  // Use setTimeout to avoid synchronous setState in effect
+  useEffect(() => {
+    const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+    if (!consent) {
+      // Use setTimeout to make setState asynchronous and avoid hydration mismatch
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 0);
+    }
+  }, []);
 
   const saveConsent = (status: CookieConsentStatus, prefs?: CookiePreferences): void => {
     const data = {
@@ -116,12 +122,14 @@ export function CookieConsent(): ReactElement | null {
 
   return (
     <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity"
-        onClick={() => setShowPreferences(false)}
-        aria-hidden="true"
-      />
+      {/* Backdrop - only show when preferences modal is open */}
+      {showPreferences && (
+        <div
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity"
+          onClick={() => setShowPreferences(false)}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Cookie Consent Banner */}
       <div

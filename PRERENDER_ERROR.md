@@ -68,49 +68,65 @@ Export encountered an error on /brief/page: /brief, exiting the build.
 
 ## Финальное решение
 
-Используется комбинация нескольких подходов:
+**Ключевое решение: Переопределение `generateStaticParams` в странице**
 
-### 1. Server Component wrapper с route segment config:
-- `export const dynamic = 'error'` - выбрасывает ошибку при попытке статической генерации
-- `export const dynamicParams = false` - не генерировать статические параметры
-- `export const revalidate = 0` - без кеширования
-- `export const fetchCache = 'force-no-store'` - без кеширования fetch
-- `export const runtime = 'nodejs'` - runtime на Node.js
-- `headers()` БЕЗ try-catch - принудительный динамический рендеринг, ошибка во время build ожидаема
+### 1. Переопределение `generateStaticParams`:
+```typescript
+export function generateStaticParams(): Array<{ locale: string }> {
+  // Return empty array to prevent prerendering
+  // This overrides the generateStaticParams from layout.tsx for this specific page
+  return [];
+}
+```
 
-### 2. Client Component с проверками:
-- `BriefPageClientWrapper` проверяет `isClient` перед рендерингом
-- Возвращает loading state во время SSR
-- Использует `useEffect` для установки `isClient = true` только после монтирования
+**Почему это работает:**
+- `generateStaticParams` в layout (`src/app/[locale]/layout.tsx`) генерирует параметры для всех локалей
+- Когда страница экспортирует свой собственный `generateStaticParams`, он **переопределяет** поведение из layout для этого конкретного сегмента
+- Пустой массив означает, что Next.js не будет пытаться prerender эту страницу для каких-либо локалей
+- Это правильный способ исключить конкретную страницу из статической генерации, когда `generateStaticParams` определен в родительском layout
 
-### 3. Динамический импорт с `ssr: false`:
-- `BriefPageClient` загружается динамически с `ssr: false`
-- Это гарантирует, что компонент не рендерится на сервере
+### 2. Route Segment Config:
+```typescript
+export const dynamic = 'force-dynamic';
+export const dynamicParams = false;
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+export const runtime = 'nodejs';
+```
 
-### Почему `dynamic = 'error'` с `headers()` БЕЗ try-catch:
-- Когда Next.js пытается prerender страницу, `headers()` выбрасывает ошибку синхронно
-- `dynamic = 'error'` говорит Next.js, что это ожидаемо, и страница должна быть пропущена из статической генерации
-- Ошибка обрабатывается Next.js и не останавливает build для других страниц
-- Это единственный надежный способ предотвратить prerendering, когда `generateStaticParams` определен в layout
-- **КРИТИЧНО**: Ошибка должна быть выброшена БЕЗ try-catch, чтобы Next.js мог обработать ее и пропустить страницу
+**Зачем:**
+- `dynamic = 'force-dynamic'` - явно указывает, что страница должна рендериться динамически
+- `dynamicParams = false` - предотвращает генерацию статических параметров
+- `revalidate = 0` - без кеширования
+- `fetchCache = 'force-no-store'` - без кеширования fetch запросов
+- `runtime = 'nodejs'` - использование Node.js runtime
 
-### Важно:
-- Route segment config (`export const dynamic`, `export const revalidate`, etc.) **НЕ МОЖЕТ** быть экспортирован из Client Components
-- Поэтому используется Server Component wrapper, который экспортирует route segment config
-- Внутри Server Component рендерится Client Component для UI
-- `headers()` вызывается БЕЗ try-catch, чтобы ошибка была выброшена во время build
-- Next.js обработает ошибку и пропустит страницу из статической генерации
-- Ошибка должна быть выброшена синхронно, до любого рендеринга
+### 3. Принудительный динамический рендеринг:
+```typescript
+export default async function BriefPage(): Promise<ReactElement> {
+  // Force dynamic rendering by accessing request-specific API
+  await headers();
+  return <BriefPageClientWrapper />;
+}
+```
+
+**Зачем:**
+- `headers()` делает страницу динамической во время runtime
+- Это дополнительная гарантия, что страница не будет закеширована
+
+### 4. Client Component с динамическим импортом:
+- `BriefPageClientWrapper` использует `dynamic()` с `ssr: false`
+- Это гарантирует, что UI компонент не рендерится на сервере
 
 ### Почему предыдущие попытки не сработали:
-- `dynamic = 'force-dynamic'` с `cookies()` в try-catch - Next.js все равно пытается prerender
-- `dynamic = 'error'` с try-catch - ошибка не выбрасывается, Next.js продолжает prerender
-- Client Component без route segment config - Next.js все равно пытается prerender из-за `generateStaticParams` в layout
+- `dynamic = 'error'` с try-catch - ошибка перехватывалась, Next.js продолжал prerender
+- `dynamic = 'force-dynamic'` без переопределения `generateStaticParams` - Next.js все равно пытался prerender из-за `generateStaticParams` в layout
+- Client Component без route segment config - Next.js все равно пытался prerender из-за `generateStaticParams` в layout
 
 ### Текущее решение работает потому что:
-- `dynamic = 'error'` явно говорит Next.js, что ошибка ожидаема
-- `headers()` выбрасывает ошибку синхронно, до рендеринга
-- Next.js обрабатывает ошибку и пропускает страницу из статической генерации
-- Build продолжается для других страниц
+- **Переопределение `generateStaticParams`** - это правильный способ исключить страницу из статической генерации, когда родительский layout определяет `generateStaticParams`
+- Пустой массив явно говорит Next.js: "не пытайся prerender эту страницу"
+- `dynamic = 'force-dynamic'` дополнительно указывает на динамический рендеринг
+- `headers()` делает страницу динамической во время runtime
 
-Это должно предотвратить все попытки prerendering страницы `/brief`.
+Это **правильное и надежное** решение согласно документации Next.js.

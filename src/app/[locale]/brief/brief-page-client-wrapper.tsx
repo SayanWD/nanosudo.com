@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactElement } from "react";
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically import client component with SSR disabled
@@ -20,29 +20,25 @@ const BriefPageClient = dynamic(
   }
 );
 
-export function BriefPageClientWrapper(): ReactElement {
+export function BriefPageClientWrapper(): ReactElement | null {
   // Ensure this component only renders on the client
   // This prevents any server-side rendering attempts
-  // Use lazy initialization to check if we're on the client
-  const [isClient, setIsClient] = useState(() => typeof window !== "undefined");
+  // Start with false to prevent any server-side rendering
+  const [isClient, setIsClient] = useState(false);
 
-  // Prevent hydration mismatch by only setting client state after mount
-  // useLayoutEffect runs synchronously before browser paint
+  // Only set to true after component mounts on client
+  // This ensures the component never renders on the server
   /* eslint-disable react-hooks/set-state-in-effect */
-  useLayoutEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsClient(true);
-    }
+  useEffect(() => {
+    setIsClient(true);
   }, []);
   /* eslint-enable react-hooks/set-state-in-effect */
 
-  // Return loading state during SSR to prevent hydration mismatch
+  // Return null during SSR to prevent any server-side rendering
+  // This is safe because ssr: false in dynamic() already prevents server rendering
+  // but we add this extra check to be absolutely sure
   if (!isClient) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-muted-foreground">Loading...</div>
-      </div>
-    );
+    return null;
   }
 
   return <BriefPageClient />;

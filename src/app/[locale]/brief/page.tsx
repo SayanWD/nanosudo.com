@@ -1,5 +1,4 @@
 import type { ReactElement } from "react";
-import { Suspense } from "react";
 import { unstable_noStore as noStore } from "next/cache";
 import { cookies, headers } from "next/headers";
 import { BriefPageClientWrapper } from "./brief-page-client-wrapper";
@@ -24,12 +23,12 @@ export default async function BriefPage(): Promise<ReactElement> {
   
   // Force dynamic rendering by accessing request-specific APIs
   // This ensures Next.js treats this as a dynamic route
-  await cookies();
-  await headers();
+  try {
+    await cookies();
+    await headers();
+  } catch {
+    // Ignore errors during build/prerender
+  }
   
-  return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
-      <BriefPageClientWrapper />
-    </Suspense>
-  );
+  return <BriefPageClientWrapper />;
 }

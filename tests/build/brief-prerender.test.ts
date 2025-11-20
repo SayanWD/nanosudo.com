@@ -22,19 +22,30 @@ describe("Brief page prerender check", () => {
       return;
     }
 
-    // Check the build manifest to see if /brief is in the static pages list
+    // Check the build manifest to see if old /brief route exists
+    // The manifest contains all routes (including dynamic ones), so we only check for old route
     const manifestPath = join(buildOutputPath, "server", "app-paths-manifest.json");
     
     if (existsSync(manifestPath)) {
       const manifest = JSON.parse(readFileSync(manifestPath, "utf-8"));
       
-      // The brief route should NOT be in the static pages manifest
-      // If it is, that means it was prerendered, which is the problem
-      const briefRoutes = Object.keys(manifest).filter((path) =>
-        path.includes("/brief")
+      // The old /brief route should NOT exist (we use /[locale]/brief now)
+      // API routes are fine, we only check page routes
+      const oldBriefPageRoute = Object.keys(manifest).find(
+        (path) => path === "/brief/page"
       );
       
-      expect(briefRoutes.length).toBe(0);
+      // Old route should not exist
+      expect(oldBriefPageRoute).toBeUndefined();
+      
+      // The new /[locale]/brief route should exist in manifest (it's normal for dynamic routes)
+      // But it should be marked as dynamic in the build output, not static
+      const localeBriefRoute = Object.keys(manifest).find(
+        (path) => path === "/[locale]/brief/page"
+      );
+      
+      // New route should exist
+      expect(localeBriefRoute).toBeDefined();
     }
   });
 
@@ -55,14 +66,19 @@ describe("Brief page prerender check", () => {
     
     const pageContent = readFileSync(pagePath, "utf-8");
     
-    // The page should be a Client Component or have dynamic configuration
-    // Check for "use client" directive or dynamic route config
-    const isClientComponent = pageContent.includes('"use client"');
-    const hasDynamicConfig =
-      pageContent.includes("export const dynamic") ||
-      pageContent.includes("export const revalidate");
+    // The page should have:
+    // 1. generateStaticParams returning empty array (to override layout's generateStaticParams)
+    // 2. dynamic = 'force-dynamic' configuration
+    // 3. unstable_noStore() call to force dynamic rendering
+    const hasGenerateStaticParams = pageContent.includes("generateStaticParams");
+    const hasEmptyArrayReturn = pageContent.includes("return []");
+    const hasDynamicConfig = pageContent.includes("export const dynamic");
+    const hasForceDynamic = pageContent.includes("'force-dynamic'");
+    const hasNoStore = pageContent.includes("unstable_noStore") || pageContent.includes("noStore");
     
-    expect(isClientComponent || hasDynamicConfig).toBe(true);
+    expect(hasGenerateStaticParams && hasEmptyArrayReturn).toBe(true);
+    expect(hasDynamicConfig && hasForceDynamic).toBe(true);
+    expect(hasNoStore).toBe(true);
   });
 });
 

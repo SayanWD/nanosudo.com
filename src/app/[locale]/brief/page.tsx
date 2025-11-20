@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { headers } from "next/headers";
+import { unstable_noStore as noStore } from "next/cache";
 import { BriefPageClientWrapper } from "./brief-page-client-wrapper";
 
 // CRITICAL: This page MUST NOT be prerendered
@@ -19,10 +19,11 @@ export const revalidate = 0;
 export const fetchCache = 'force-no-store';
 export const runtime = 'nodejs';
 
-export default async function BriefPage(): Promise<ReactElement> {
-  // Force dynamic rendering by accessing request-specific API
+export default function BriefPage(): ReactElement {
+  // Force dynamic rendering by using unstable_noStore
   // This ensures the page is always rendered dynamically at request time
-  await headers();
+  // unstable_noStore is safe to use and doesn't throw errors during build
+  noStore();
   
   return <BriefPageClientWrapper />;
 }

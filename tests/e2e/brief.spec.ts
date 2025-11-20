@@ -21,7 +21,7 @@ test("brief wizard happy path", async ({ page }) => {
     });
   });
 
-  await page.goto("/brief");
+  await page.goto("/en/brief");
 
   await completeStepOne(page);
   await completeStepTwo(page);

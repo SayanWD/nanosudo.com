@@ -9,7 +9,7 @@ import {
 } from "./utils/brief-helpers";
 
 test("step 1 blocks progression when required fields are empty", async ({ page }) => {
-  await page.goto("/brief");
+  await page.goto("/en/brief");
 
   await page.getByRole("button", { name: "Далее" }).click();
 
@@ -21,7 +21,7 @@ test("step 1 blocks progression when required fields are empty", async ({ page }
 });
 
 test("invalid email prevents final submission", async ({ page }) => {
-  await page.goto("/brief");
+  await page.goto("/en/brief");
 
   await completeStepOne(page);
   await completeStepTwo(page);

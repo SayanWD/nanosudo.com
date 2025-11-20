@@ -3,6 +3,7 @@
 import type { ReactElement } from "react";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/cn";
 import { useBriefNewStep } from "../hooks/use-brief-new-step";
 import { BriefNewStepNavigator } from "./brief-new-step-navigator";
 
@@ -67,11 +68,13 @@ export function ProjectInfoStep(): ReactElement {
               return (
               <label
                 key={type.value}
-                className={`relative flex items-start gap-3 rounded-lg border-2 p-4 cursor-pointer transition ${
+                suppressHydrationWarning
+                className={cn(
+                  "relative flex items-start gap-3 rounded-lg border-2 p-4 cursor-pointer transition",
                   isSelected
                     ? "border-accent bg-accent/10"
                     : "border-border/60 bg-surface/80 hover:border-accent/50"
-                }`}
+                )}
               >
                 <input
                   type="radio"

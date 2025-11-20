@@ -2,7 +2,6 @@
 
 // Layout wrapper: base shell for pages with optional header and footer.
 import type { ReactElement, ReactNode } from "react";
-import { usePathname } from "@/i18n/routing";
 
 import { cn } from "@/lib/cn";
 import { DynamicBackground } from "@/components/background/dynamic-background";
@@ -22,7 +21,6 @@ export function SiteShell({
   header,
   footer,
 }: SiteShellProps): ReactElement {
-  const pathname = usePathname();
   // Show header on all pages
   const resolvedHeader = header !== undefined 
     ? header 

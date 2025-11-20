@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactElement } from "react";
+import { useTranslations } from "next-intl";
 
 import { useBriefFormContext } from "./brief-form-provider";
 
@@ -13,13 +14,16 @@ type BriefStepNavigatorProps = {
 
 export function BriefStepNavigator({
   onNext,
-  nextLabel = "Далее",
+  nextLabel,
   isNextDisabled = false,
   onBeforeBack,
 }: BriefStepNavigatorProps): ReactElement {
+  const t = useTranslations("brief.navigation");
   const { canGoBack, goToPreviousStep, goToNextStep, canGoForward } =
     useBriefFormContext();
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  
+  const defaultNextLabel = nextLabel ?? t("next");
 
   const handleBack = async (): Promise<void> => {
     if (!canGoBack) {
@@ -59,7 +63,7 @@ export function BriefStepNavigator({
         className="inline-flex items-center justify-center rounded-lg border border-border px-4 py-2 text-sm font-semibold text-muted-foreground transition hover:border-accent/50 hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50"
         disabled={!canGoBack || isProcessing}
       >
-        Назад
+        {t("back")}
       </button>
       <button
         type="button"
@@ -67,7 +71,7 @@ export function BriefStepNavigator({
         className="inline-flex items-center justify-center rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-soft transition hover:bg-accent/85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60"
         disabled={isNextDisabled || isProcessing}
       >
-        {isProcessing ? "Сохранение..." : nextLabel}
+        {isProcessing ? t("saving") : defaultNextLabel}
       </button>
     </div>
   );

@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import {
   Inter,
@@ -69,13 +69,14 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
+  const t = await getTranslations({ locale });
 
   return (
     <div lang={locale} className={`${inter.variable} ${manrope.variable} ${jetBrainsMono.variable} font-sans antialiased scroll-smooth bg-background text-foreground`}>
       <ThemeProvider>
         <NextIntlClientProvider messages={messages}>
           <a className="skip-link" href="#main-content">
-            Перейти к основному контенту
+            {t("common.skipToContent")}
           </a>
           {children}
         </NextIntlClientProvider>

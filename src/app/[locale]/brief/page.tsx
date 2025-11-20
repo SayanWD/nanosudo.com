@@ -1,7 +1,6 @@
 import type { ReactElement } from "react";
 import { unstable_noStore as noStore } from "next/cache";
 import { headers } from "next/headers";
-import { notFound } from "next/navigation";
 import { BriefPageClientWrapper } from "./brief-page-client-wrapper";
 
 // Use 'error' to prevent static generation - Next.js will skip this page during build

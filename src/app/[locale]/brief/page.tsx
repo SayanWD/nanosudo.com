@@ -15,9 +15,14 @@ export function generateStaticParams(): Array<never> {
   return [];
 }
 
-export default function BriefPage(): ReactElement {
+// This page must be rendered dynamically, never statically
+export default async function BriefPage(): Promise<ReactElement> {
   // Prevent caching and static generation
   noStore();
+  
+  // Force dynamic rendering by making this an async function
+  // This ensures Next.js treats this as a dynamic route
+  await Promise.resolve();
   
   return <BriefPageClient />;
 }

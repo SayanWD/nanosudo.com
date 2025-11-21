@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/Nano_sudo_logo_dark.png",
-    shortcut: "/Nano_sudo_logo_dark.png",
-    apple: "/Nano_sudo_logo_dark.png",
+    icon: "/Nanosudo_logo_favicon.png",
+    shortcut: "/Nanosudo_logo_favicon.png",
+    apple: "/Nanosudo_logo_dark.png",
   },
 };
 

@@ -49,9 +49,9 @@ export async function generateMetadata({ params }: LocaleLayoutMetadataProps): P
     return {
       ...generateBaseMetadata(),
       icons: {
-        icon: "/Nano_sudo_logo_dark.png",
-        shortcut: "/Nano_sudo_logo_dark.png",
-        apple: "/Nano_sudo_logo_dark.png",
+        icon: "/Nanosudo_logo_favicon.png",
+        shortcut: "/Nanosudo_logo_favicon.png",
+        apple: "/Nanosudo_logo_dark.png",
       },
     };
   }
@@ -63,9 +63,9 @@ export async function generateMetadata({ params }: LocaleLayoutMetadataProps): P
   return {
     ...baseMetadata,
     icons: {
-      icon: "/Nano_sudo_logo_dark.png",
-      shortcut: "/Nano_sudo_logo_dark.png",
-      apple: "/Nano_sudo_logo_dark.png",
+      icon: "/Nanosudo_logo_favicon.png",
+      shortcut: "/Nanosudo_logo_favicon.png",
+      apple: "/Nanosudo_logo_dark.png",
     },
   };
 }

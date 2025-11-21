@@ -27,8 +27,8 @@ function FooterBrandColumn(): ReactElement {
   const resolvedTheme = theme ?? "dark";
   const logoSrc =
     resolvedTheme === "light"
-      ? "/Nano_sudo_logo_dark.png"
-      : "/Nano_sudo_logo_light.png";
+      ? "/Nanosudo_logo_dark.png"
+      : "/Nanosudo_logo_light.png";
 
   return (
     <div className="space-y-4 text-center">

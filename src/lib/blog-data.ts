@@ -48,6 +48,555 @@ type BlogPostSource = {
 
 export const BLOG_POSTS: readonly BlogPostSource[] = [
   {
+    slug: "kz-developer-tender-checklist",
+    image: "/need_developer_who.png",
+    publishedAt: "2025-02-01",
+    author: "Sayan Roor",
+    tags: ["Kazakhstan", "Tenders", "Development", "Full-stack"],
+    readingTime: 9,
+    translations: {
+      title: {
+        ru: "Как выбрать разработчика в Казахстане: чек-лист для тендеров и прямых подрядчиков",
+        en: "Choosing a developer in Kazakhstan: tender checklist for direct contractors",
+        kk: "Қазақстанда әзірлеушіні қалай таңдау керек: тендерге арналған чек-лист",
+      },
+      description: {
+        ru: "Разбираем критерии отбора подрядчика на казахстанском рынке: тендеры, KPI, Kaspi/1С интеграции и финансовые риски.",
+        en: "A detailed checklist for selecting a full-stack vendor in Kazakhstan: tenders, KPIs, Kaspi/1C integrations and financial risks.",
+        kk: "Қазақстанда әзірлеушіні таңдауға арналған толық чек-лист: тендер, KPI, Kaspi/1C интеграциялары және қаржылық тәуекелдер.",
+      },
+      excerpt: {
+        ru: "16 критериев, которые я использую при оценке подрядчиков в Казахстане. Подойдёт отделу закупок, тендерным комиссиям и бизнесу, который нанимает напрямую.",
+        en: "16 criteria I use when evaluating developers in Kazakhstan — suitable for procurement teams, tender committees and founders hiring directly.",
+        kk: "Қазақстандағы әзірлеушілерді бағалау үшін қолданатын 16 критерийім — сатып алу бөлімдері мен тікелей жалдайтын бизнеске арналған.",
+      },
+      imageAlt: {
+        ru: "Tender checklist Kazakhstan",
+        en: "Tender checklist Kazakhstan",
+        kk: "Тендер чек-листі Қазақстан",
+      },
+      category: {
+        ru: "Разработка",
+        en: "Development",
+        kk: "Әзірлеу",
+      },
+      publishedLabel: {
+        ru: "1 февраля 2025",
+        en: "February 1, 2025",
+        kk: "2025 ж. 1 ақпан",
+      },
+      content: {
+        ru: `# Чек-лист для закупок и тендеров в Казахстане
+
+> Регулярно участвую в тендерах B2B/B2G и часто помогаю клиентам оценивать подрядчиков. Ниже — чек-лист, который закрывает 90% рисков.
+
+## 1. KPI, сроки и metrix
+- Зафиксируйте KPI: LCP < 2 сек, конверсия, SLA по багфиксам.
+- Убедитесь, что подрядчик умеет работать с KZT и локальными налогами (УСН/ИП).
+
+## 2. Локальные интеграции
+- Чётко указать: Kaspi API, 1С:Бухгалтерия, Халык, ККМ, ЭЦП (NCALayer), госуведомления.
+- Спросите демо или ссылку на производство, где это уже работает.
+
+## 3. Структура тендерного ТЗ
+1. Бизнес-цель и метрики.
+2. Ограничения (НПА, СТ РК, ГОСТ).
+3. Требования к DevOps и средам.
+4. График платежей (30-40-30, аванс, постоплата).
+
+## 4. Финансовые риски
+- Проверяйте BIN/ИП в eGov.
+- Настоять на фиксированном бюджете + прозрачном change request.
+
+## 5. Чем полезен прямой подрядчик
+- Меньше накладных расходов (экономия 30–50%).
+- Прямая коммуникация и быстрые итерации без менеджеров.
+- Личная ответственность за код, RTO < 1 часа.
+
+## Что ещё почитать
+- [Интеграция Kaspi, 1С и CRM](/blog/kaspi-1c-crm-integration-case) — как выстроить middleware и синхронизировать заявки за 2 минуты.
+- [Техническое задание для тендера](/blog/kz-tender-technical-spec-template) — готовый шаблон ТЗ и пример бюджета в тенге.
+
+## Итог
+> **Коротко:** проверяем KPI, финансы и интеграции до подписания договора, чтобы избежать сюрпризов.
+
+- фиксируем метрики и SLA в договоре;
+- оцениваем опыт с Kaspi/1С и локальными платежами;
+- требуем прозрачный change-request и ответственного исполнителя.
+
+---
+
+➡️ **Готовы к такому же результату?** Заполните [бриф](/brief), и я вернусь с планом и оценкой в течение 24 часов.`,
+        en: `# Tender checklist for Kazakhstan
+
+> I often support procurement teams and founders when they evaluate vendors. This checklist consistently saves budgets in local tenders.
+
+## 1. KPIs and timelines
+- Fix KPIs: LCP < 2s, conversion target, SLA for bug fixes.
+- Confirm the vendor can work with KZT billing, local taxes and official paperwork.
+
+## 2. Local integrations
+- Explicitly mention Kaspi API, 1C, Halyk acquiring, fiscal registers, NCALayer/EDS.
+- Ask for a live reference where these integrations already work.
+
+## 3. Tender-ready scope
+1. Business goal and measurable metrics.
+2. Compliance requirements (Kazakh regulations).
+3. DevOps, environments, release pipeline.
+4. Payment milestones (30-40-30 or similar).
+
+## 4. Financial & legal due diligence
+- Check BIN/IP status via eGov.
+- Demand a transparent change request process.
+
+## 5. Why hire directly
+- No agency overhead (30–50% cheaper).
+- Direct communication and faster iterations.
+- Single responsible engineer for code + support.
+
+## Recommended reading
+- [Kaspi, 1C and CRM integration case study](/blog/kaspi-1c-crm-integration-case) — middleware architecture and measurable impact.
+- [Tender technical spec template](/blog/kz-tender-technical-spec-template) — structure + budget example for public procurement.
+
+## Takeaway
+> **TL;DR:** define KPIs, check local integrations and make the vendor financially accountable before signing.
+
+- capture KPIs + SLA in the contract;
+- review Kaspi / 1C / payment experience;
+- demand a clear change-request process and a single accountable engineer.
+
+---
+
+➡️ **Ready to start?** Fill out the [brief](/brief) and I’ll reply with scope and budget within 24 hours.`,
+        kk: `# Қазақстандағы тендерлерге арналған чек-лист
+
+> B2B және B2G тендерлеріне жиі қатысамын, сол себепті клиенттерге мердігер таңдау кезінде мына критерийлерді ұсынамын.
+
+## 1. KPI және мерзімдер
+- KPI-ды бекітіңіз: LCP < 2 сек, конверсия, багтарды түзетуге арналған SLA.
+- Мердігер KZT-мен, жергілікті салық режимдерімен және құжаттармен жұмыс істей алуы тиіс.
+
+## 2. Локалды интеграциялар
+- Kaspi API, 1C, Halyk, ККМ, NCALayer талап етілетінін нақты жазыңыз.
+- Бұрынғы жобалардың мысалын сұраңыз.
+
+## 3. Тендерлік ТЗ құрылымы
+1. Бизнес-мақсат және метрикалар.
+2. Нормативтік талаптар (СТ РК, ГОСТ, НҚА).
+3. DevOps және орта сипаттамасы.
+4. Төлем графигі (30-40-30 және т.б.).
+
+## 4. Қаржылық тексеру
+- BIN/IP-ті eGov арқылы тексеріңіз.
+- Change request процесін шартта бекітіңіз.
+
+## 5. Неге тікелей мердігер тиімді
+- Делдалдық шығындар жоқ (30–50% үнем).
+- Коммуникация тікелей, итерациялар жылдам.
+- Кодқа және қолдауға жеке жауапкершілік.
+
+## Қосымша оқу
+- [Kaspi, 1C және CRM интеграциясы](/blog/kaspi-1c-crm-integration-case) — автоматтандыру архитектурасы мен нәтижелері.
+- [Тендерге арналған ТЗ шаблоны](/blog/kz-tender-technical-spec-template) — құрылым және бюджет мысалы.
+
+## Қорытынды
+> **Негізгі ой:** KPI, интеграция және қаржылық тәуекелдерді алдын ала тексеріңіз.
+
+- шартта KPI және SLA бекітіңіз;
+- Kaspi/1C интеграция тәжірибесін бағалаңыз;
+- change-request пен жауапты адамды нақтылаңыз.
+
+---
+
+➡️ **Осындай нәтижеге дайынсыз ба?** [Брифті толтырыңыз](/brief), 24 сағат ішінде жоспар мен сметаны жіберемін.`,
+      },
+    },
+  },
+  {
+    slug: "kz-tender-technical-spec-template",
+    image: "/supabase-integration.jpg",
+    publishedAt: "2025-01-10",
+    author: "Sayan Roor",
+    tags: ["Tender", "Technical Specification", "Goszakup", "Kazakhstan"],
+    readingTime: 11,
+    translations: {
+      title: {
+        ru: "Техническое задание для тендеров в Казахстане: шаблон + бюджет",
+        en: "Technical specification for Kazakhstan tenders: template and budget",
+        kk: "Қазақстандағы тендерлерге арналған техникалық тапсырма: шаблон және бюджет",
+      },
+      description: {
+        ru: "Даю структуру ТЗ, пример бюджета и чек-лист подачи заявки для гос- и квазигос проектов.",
+        en: "Structure, budget example and submission checklist for Kazakh government and quasi-government tenders.",
+        kk: "Мемлекеттік және квазимемлекеттік жобаларға арналған ТЗ құрылымы, бюджет мысалы және өтінім чек-листі.",
+      },
+      excerpt: {
+        ru: "Если вы участвуете в госзакупках по веб-проектам, это руководство поможет упаковать ТЗ так, чтобы комиссия не отклоняла заявку.",
+        en: "If you participate in Kazakh public procurement for web projects, this guide shows how to package the technical spec so it passes the commission.",
+        kk: "Веб-жобаларға арналған мемлекеттік сатып алуларға қатыссаңыз, бұл нұсқаулық ТЗ-ны комиссия қабылдайтындай етіп рәсімдеуге көмектеседі.",
+      },
+      imageAlt: {
+        ru: "Техническое задание для тендера",
+        en: "Tender technical specification",
+        kk: "Тендерге арналған техникалық тапсырма",
+      },
+      category: {
+        ru: "Интеграции",
+        en: "Integrations",
+        kk: "Интеграциялар",
+      },
+      publishedLabel: {
+        ru: "10 января 2025",
+        en: "January 10, 2025",
+        kk: "2025 ж. 10 қаңтар",
+      },
+      content: {
+        ru: `# ТЗ для тендеров Казахстана
+
+## 1. Нормативная база
+- Ссылайтесь на НПА: Закон РК «О госзакупках», приказы MIIR.
+- Для квазигос нужно учитывать внутренние регламенты (Самрук-Казына, БРК).
+
+## 2. Обязательные разделы ТЗ
+1. **Цель и бизнес-показатели.** Например, LTV↑, автоматизация заявок.
+2. **Функциональные требования.** В формате user stories или таблицы.
+3. **Интеграции.** Kaspi, 1С, EDS, платежные шлюзы.
+4. **Безопасность.** Резервное копирование, доступы, аудит.
+5. **DevOps.** Среды, CICD, требования к коду (TS, no-any, eslint).
+6. **Поддержка.** SLA, гарантия 6–12 месяцев.
+
+## 3. Пример бюджета (KZT)
+| Этап | Срок | Стоимость |
+| --- | --- | --- |
+| Discovery & ТЗ | 2 недели | 2 200 000 ₸ |
+| Разработка (Front/Back) | 6 недель | 6 500 000 ₸ |
+| Интеграции Kaspi/1C | 2 недели | 1 400 000 ₸ |
+| Тестирование + запуск | 1 неделя | 850 000 ₸ |
+| Итого | 11 недель | **10 950 000 ₸** |
+
+## 4. Чек-лист подачи
+- BIN, лицензии, портфолио с аналогами.
+- План-график и ресурсы (team CV).
+- Подтверждения по аналогичным проектам (рекомендации).
+- Гарантийное письмо о соблюдении сроков.
+
+## 5. Что приложить дополнительно
+- Макеты/прототипы (Figma).
+- ER-диаграммы, API контракты.
+- RACI-матрица.
+
+## Что ещё почитать
+- [Чек-лист для выбора подрядчика](/blog/kz-developer-tender-checklist) — 16 критериев для закупок и тендеров.
+- [Интеграция Kaspi, 1С и CRM](/blog/kaspi-1c-crm-integration-case) — как автоматизировать учёт и заказы.
+
+## Итог
+> **Коротко:** ТЗ должно связывать бизнес-цели, интеграции и бюджет в один документ.
+
+- начинаем с KPI и бизнес-метрик, которые ждёт комиссия;
+- описываем интеграции (Kaspi, 1С, платежи, ЭЦП) и DevOps-процессы;
+- прикладываем макеты, RACI и гарантийные письма, чтобы снять вопросы.
+
+Скачайте мой шаблон ТЗ и адаптируйте под проект — ускорит согласование и снимет вопросы комиссии.
+
+---
+
+➡️ **Нужно упаковать проект для тендера?** Заполните [бриф](/brief) и получите индивидуальный план и смету за 24 часа.`,
+        en: `# Technical specification template for Kazakhstan tenders
+
+## 1. Regulations
+- Reference local laws: the Law on Public Procurement, MIIR orders.
+- For quasi-state companies (Samruk-Kazyna, Baiterek) include internal regulations.
+
+## 2. Mandatory sections
+1. **Business goals & KPIs** (conversion growth, automation share).
+2. **Functional scope** — user stories, tables, acceptance criteria.
+3. **Integrations** — Kaspi, 1C, EDS, local payment providers.
+4. **Security** — backups, access matrix, audit trail.
+5. **DevOps** — environments, CI/CD, code standards.
+6. **Support** — warranty 6–12 months, reaction SLA.
+
+## 3. Budget example (KZT)
+| Phase | Timeline | Cost |
+| --- | --- | --- |
+| Discovery & spec | 2 weeks | 2,200,000 ₸ |
+| Development | 6 weeks | 6,500,000 ₸ |
+| Integrations (Kaspi/1C) | 2 weeks | 1,400,000 ₸ |
+| QA & launch | 1 week | 850,000 ₸ |
+| **Total** | **11 weeks** | **10,950,000 ₸** |
+
+## 4. Submission checklist
+- BIN certificate, licenses, case studies.
+- Project schedule + resource plan.
+- Letters of recommendation / references.
+- Warranty letter for timeline compliance.
+
+## 5. Attachments
+- Prototype or wireframes.
+- ER diagrams, API contracts.
+- RACI matrix.
+
+## Read next
+- [Tender checklist for Kazakhstan](/blog/kz-developer-tender-checklist) — 16 vendor selection criteria.
+- [Kaspi, 1C and CRM integration case](/blog/kaspi-1c-crm-integration-case) — real automation results.
+
+## Takeaway
+> **TL;DR:** a winning spec links business KPIs, integrations and proof documents.
+
+- lead with metrics (conversion, automation, SLA);
+- detail integrations (Kaspi, 1C, payments, EDS) and DevOps expectations;
+- attach prototypes, RACI and warranty letters to build trust.
+
+Use this template, customize it and the tender committee will have fewer questions.
+
+---
+
+➡️ **Want help with the tender package?** Fill out the [brief](/brief) and I’ll send a tailored scope + budget within 24 hours.`,
+        kk: `# Қазақстандағы тендерлерге арналған ТЗ шаблоны
+
+## 1. Нормативтік негіз
+- «Мемлекеттік сатып алу туралы» Заң, MIIR бұйрықтары.
+- Самұрық-Қазына, Бәйтерек сияқты квазимемлекеттік ұйымдардың регламенттері.
+
+## 2. Міндетті бөлімдер
+1. **Бизнес-мақсат және KPI** (конверсия, автоматтандыру үлесі).
+2. **Функционалдық талаптар** — user story немесе кесте.
+3. **Интеграциялар** — Kaspi, 1C, ЭЦҚ, төлем провайдерлері.
+4. **Қауіпсіздік** — резервтік көшіру, қолжетімділік, аудит.
+5. **DevOps** — орталар, CI/CD, код стандарттары.
+6. **Қолдау** — 6–12 ай кепілдік, SLA.
+
+## 3. Бюджет мысалы (₸)
+| Этап | Мерзім | Баға |
+| --- | --- | --- |
+| Discovery & ТЗ | 2 апта | 2 200 000 ₸ |
+| Әзірлеу | 6 апта | 6 500 000 ₸ |
+| Kaspi/1C интеграциялары | 2 апта | 1 400 000 ₸ |
+| Тестілеу және іске қосу | 1 апта | 850 000 ₸ |
+| **Барлығы** | **11 апта** | **10 950 000 ₸** |
+
+## 4. Өтінімді тапсыру чек-листі
+- BIN, лицензиялар, ұқсас жобалар.
+- Жоба кестесі және ресурстар жоспары.
+- Ұсыным хаттар.
+- Мерзімді сақтау туралы кепілдік хат.
+
+## 5. Қосымша материалдар
+- Прототиптер немесе макеттер.
+- ER диаграммалар, API келісімдері.
+- RACI матрицасы.
+
+## Қосымша оқу
+- [Мердігер таңдау чек-листі](/blog/kz-developer-tender-checklist) — тендердегі негізгі критерийлер.
+- [Kaspi, 1C және CRM интеграциясы](/blog/kaspi-1c-crm-integration-case) — автоматтандыру практикалық нәтижелері.
+
+## Қорытынды
+> **Қысқаша:** сапалы ТЗ бизнес мақсаттарын, интеграцияларды және дәлел құжаттарын біріктіреді.
+
+- KPI мен SLA-ны нақты көрсетіңіз;
+- Kaspi, 1C, төлем, ЭЦҚ интеграцияларын және DevOps талаптарын сипаттаңыз;
+- Макет, RACI және кепілдік хаттарды қосыңыз.
+
+Осы шаблонды өз жобаңызға бейімдеп, тендер комиссиясынан қосымша сұрақтар алмайсыз.
+
+---
+
+➡️ **Тендерге дайындалу керек пе?** [Брифті толтырыңыз](/brief), 24 сағат ішінде жоба жоспары мен бюджетін беремін.`,
+      },
+    },
+  },
+  {
+    slug: "kaspi-1c-crm-integration-case",
+    image: "/crm_integration.png",
+    publishedAt: "2025-01-24",
+    author: "Sayan Roor",
+    tags: ["Kaspi", "1C", "CRM", "Automation", "Case study"],
+    readingTime: 10,
+    translations: {
+      title: {
+        ru: "Кейс: интеграция Kaspi, 1С и CRM для ускорения продаж",
+        en: "Case study: Kaspi, 1C and CRM integration for faster sales",
+        kk: "Кейс: Kaspi, 1C және CRM интеграциясы сату жылдамдығын арттыру үшін",
+      },
+      description: {
+        ru: "Показываю архитектуру, API-слой и бизнес-результаты проекта, где объединили Kaspi Store, 1С и CRM за 4 недели.",
+        en: "Architecture, API layer and business impact of a project that connected Kaspi Store, 1C and CRM in four weeks.",
+        kk: "Kaspi Store, 1C және CRM жүйелерін төрт аптада біріктірген жобаның архитектурасы мен нәтижелері.",
+      },
+      excerpt: {
+        ru: "Клиент: e-commerce в Алматы. Проблема — ручные заявки и разрозненные системы. Решение — единый middleware между Kaspi, 1С и CRM.",
+        en: "Client: e-commerce in Almaty. Problem: manual orders and siloed systems. Solution: middleware that syncs Kaspi, 1C and CRM.",
+        kk: "Клиент: Алматыдағы e-commerce. Мәселе: қолмен өңделетін тапсырыстар. Шешім: Kaspi, 1C және CRM-ді ортақ middleware арқылы біріктіру.",
+      },
+      imageAlt: {
+        ru: "Интеграция Kaspi и 1C",
+        en: "Kaspi and 1C integration",
+        kk: "Kaspi және 1C интеграциясы",
+      },
+      category: {
+        ru: "Интеграции",
+        en: "Integrations",
+        kk: "Интеграциялар",
+      },
+      publishedLabel: {
+        ru: "24 января 2025",
+        en: "January 24, 2025",
+        kk: "2025 ж. 24 қаңтар",
+      },
+      content: {
+        ru: `# Кейс по автоматизации с Kaspi и 1С
+
+## Исходные данные
+- E-commerce площадка в Алматы, 700+ SKU.
+- Заказы приходили из Kaspi Store, CRM и Instagram — менеджеры дублировали всё в 1С руками.
+
+## Цель проекта
+1. Синхронизация заказов и оплат Kaspi → 1С → CRM.
+2. Обновление остатков в реальном времени.
+3. Авто-уведомления клиента (WhatsApp, email).
+
+## Архитектура
+\`\`\`
+Kaspi API → Integration Layer (Nest.js + Supabase) → 1С + Bitrix24 CRM
+\`\`\`
+- Integration Layer подписывается на вебхуки Kaspi (orders, payments).
+- 1С получает заказы через OData REST.
+- CRM обновляется через Bitrix24 REST API.
+
+## Технические детали
+- Queue: Supabase Edge Functions + cron для ретраев.
+- Безопасность: подписанные вебхуки, VPN канал с 1С.
+- SLA: < 2 минут на синхронизацию.
+
+## Результат
+- 0 ручных переносов (экономия 30 часов/неделю).
+- Ошибки в CRM ↓ на 92%.
+- Время обработки заказа с 15 до 3 минут.
+
+## Что важно учесть
+1. Kaspi и 1С работают с разными кодировками — обязательно нормализовать.
+2. Учитывать лимиты API Kaspi (5 запросов/сек).
+3. Делать трассировку: logs + dashboard в Supabase Studio.
+
+## Что ещё почитать
+- [Чек-лист по выбору подрядчика в Казахстане](/blog/kz-developer-tender-checklist) — 16 критериев для закупок.
+- [ТЗ для тендеров](/blog/kz-tender-technical-spec-template) — структура, бюджет и чек-лист подачи.
+
+## Итог
+> **Главное:** автоматизация через middleware окупается только при чётких SLA и наблюдаемости.
+
+- фиксируем SLA для синхронизаций и уведомлений;
+- контролируем кодировки/лимиты API ещё на этапе дизайна;
+- подключаем мониторинг, чтобы команда поддержки видела ошибки в моменте.
+
+Если нужен такой интеграционный слой, просто оставьте заявку — покажу демо.
+
+---
+
+➡️ **Хотите такую же интеграцию?** Заполните [бриф](/brief), и за 24 часа я пришлю архитектуру и бюджет.`,
+        en: `# Case study: Kaspi, 1C and CRM integration
+
+## Client background
+- E-commerce retailer in Almaty, 700+ SKUs.
+- Orders arrived from Kaspi Store, CRM and Instagram; managers retyped everything into 1C manually.
+
+## Objectives
+1. Sync orders/payments from Kaspi → 1C → CRM.
+2. Real-time stock updates.
+3. Automated customer notifications (WhatsApp/email).
+
+## Architecture
+\`\`\`
+Kaspi API → Integration Layer (Nest.js + Supabase) → 1C + Bitrix24 CRM
+\`\`\`
+- The integration layer listens to Kaspi webhooks (orders, payments).
+- 1C consumes the data via OData REST.
+- Bitrix24 is updated through its REST API.
+
+## Implementation highlights
+- Queue/retry logic built on Supabase Edge Functions + scheduled cron.
+- Security: signed webhooks, VPN tunnel with on-prem 1C.
+- SLA: < 2 minutes from purchase to synced state.
+
+## Results
+- Eliminated manual copying (30 hours saved weekly).
+- CRM errors decreased by 92%.
+- Order processing time dropped from 15 to 3 minutes.
+
+## Lessons learned
+1. Kaspi and 1C expect different encodings — normalize early.
+2. Respect Kaspi rate limits (5 req/sec) and plan batching.
+3. Observability matters: structured logs + Supabase dashboards.
+
+## More resources
+- [Tender checklist for Kazakhstan](/blog/kz-developer-tender-checklist) — procurement criteria and risk mitigation.
+- [Technical spec template](/blog/kz-tender-technical-spec-template) — ready-to-use structure with KZT budget.
+
+## Wrap-up
+> **TL;DR:** middleware works when you control latency, encoding and monitoring from day one.
+
+- agree on SLA (<2 minutes) for every integration path;
+- normalize data formats between Kaspi, 1C and CRM;
+- instrument the pipeline with logs + dashboards so ops can react instantly.
+
+Want a similar middleware? Let’s discuss your stack.
+
+---
+
+➡️ **Need a similar middleware?** Fill out the [brief](/brief) and I’ll send architecture + quote within 24 hours.`,
+        kk: `# Kaspi, 1C және CRM интеграциясы туралы кейс
+
+## Клиент туралы
+- Алматыдағы e-commerce, 700+ SKU.
+- Тапсырыстар Kaspi Store, CRM және Instagram-нан келіп, 1C-ке қолмен енгізілді.
+
+## Жобаның мақсаты
+1. Kaspi → 1C → CRM арасындағы тапсырыстар мен төлемдерді автоматты синхрондау.
+2. Қойма қалдықтарын нақты уақыт режимінде жаңарту.
+3. Клиентке автоматты хабарламалар (WhatsApp/email).
+
+## Архитектура
+\`\`\`
+Kaspi API → Integration Layer (Nest.js + Supabase) → 1C + Bitrix24 CRM
+\`\`\`
+- Integration Layer Kaspi вебхуктарына жазылады.
+- 1C деректерді OData REST арқылы алады.
+- Bitrix24 REST API арқылы жаңарып отырады.
+
+## Іске асыру ерекшеліктері
+- Қайта жіберу логикасы Supabase Edge Functions + cron арқылы жасалды.
+- Қауіпсіздік: қол қойылған вебхуктар, 1C-пен VPN туннель.
+- SLA: сатып алудан кейін < 2 минут ішінде синхрондау.
+
+## Нәтижелер
+- Қолмен көшіру нөлге тең (аптасына 30 сағат үнем).
+- CRM қателері 92% азайды.
+- Тапсырысты өңдеу уақыты 15 минуттан 3 минутқа дейін қысқарды.
+
+## Қорытындылар
+1. Kaspi және 1C әртүрлі кодировкаларды қолданады — алдын ала нормализациялаңыз.
+2. Kaspi API лимиттерін (5 сұрау/сек) ескеріңіз.
+3. Бақылау: логтар және Supabase бақылау тақталары.
+
+## Қосымша материалдар
+- [Мердігер таңдау чек-листі](/blog/kz-developer-tender-checklist) — сатып алуларға арналған 16 критерий.
+- [Тендерге арналған ТЗ шаблоны](/blog/kz-tender-technical-spec-template) — құрылым мен смета.
+
+## Қорытынды
+> **Бастысы:** middleware тек SLA, нормализация және мониторинг орнатылғанда тиімді.
+
+- Синхрондау үшін SLA келісіңіз (< 2 минут);
+- Kaspi, 1C және CRM арасындағы форматтарды біріздендіріңіз;
+- Логтар мен бақылау тақталарын қосып, қолдау тобын хабардар етіңіз.
+
+Осындай интеграциялық қабат керек болса, байланысыңыз.
+
+---
+
+➡️ **Ұқсас интеграция керек пе?** [Брифті толтырыңыз](/brief), 24 сағат ішінде архитектура мен сметаны беремін.`,
+      },
+    },
+  },
+  {
     slug: "nextjs-performance-optimization",
     image: "/nextjs-optimization.jpg",
     publishedAt: "2024-11-15",
@@ -148,6 +697,11 @@ export async function getStaticProps() {
 - PageSpeed Score: 96/100
 
 ## Выводы
+> **Коротко:** сначала измеряем, потом оптимизируем критичные узкие места.
+
+- фиксируем метрики (LCP/FID/CLS) до и после изменений;
+- раскатываем code splitting и оптимизацию изображений;
+- выбираем SSR/SSG исходя из сценария, чтобы не перегружать сервер.
 
 Оптимизация производительности — это итеративный процесс. Начните с измерения, затем оптимизируйте критичные участки.`,
         en: `# Next.js performance optimization
@@ -211,6 +765,11 @@ export async function getStaticProps() {
 - PageSpeed Score: 96/100
 
 ## Takeaways
+> **TL;DR:** measure, prioritize bottlenecks, iterate.
+
+- establish a performance baseline (LCP/FID/CLS);
+- apply code splitting + optimized images for quick wins;
+- choose SSR/SSG per use case to keep latency predictable.
 
 Performance optimization is an iterative process. Start with measuring, then focus on the most critical bottlenecks.`,
         kk: `# Next.js өнімділігін оңтайландыру
@@ -274,6 +833,11 @@ export async function getStaticProps() {
 - PageSpeed Score: 96/100
 
 ## Қорытынды
+> **Қысқаша:** алдымен өлшеу, кейін басты тар жерлерді түзету.
+
+- LCP/FID/CLS көрсеткіштерін базалық деңгейде өлшеңіз;
+- code splitting және суреттерді оңтайландыруды енгізіңіз;
+- сценарийге қарай SSR немесе SSG таңдаңыз.
 
 Өнімділікті оңтайландыру — итеративті процесс. Алдымен өлшеңіз, содан кейін ең маңызды тар орындарды жақсартыңыз.`,
       },
@@ -501,7 +1065,7 @@ TypeScript қауіпсіз код жазуға көмектеседі, біра
   },
   {
     slug: "supabase-integration-guide",
-    image: "/supabase-integration.jpg",
+    image: "/build_fast_website.png",
     publishedAt: "2024-11-05",
     author: "Sayan Roor",
     tags: ["Supabase", "Next.js", "Backend", "Database"],

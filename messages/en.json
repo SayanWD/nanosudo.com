@@ -379,7 +379,12 @@
       "description": "Practical articles on development, performance and best practices. Real experience from projects.",
       "readMore": "Read article",
       "empty": "Articles coming soon",
-      "readPostAria": "Read article: {title}"
+      "readPostAria": "Read article: {title}",
+      "cta": {
+        "title": "Need a developer who understands Kaspi, 1C and tenders?",
+        "description": "Describe your project in a short brief. Within 24 hours I'll send a roadmap, budget band and integration plan.",
+        "button": "Fill the brief"
+      }
     },
     "post": {
       "backToBlog": "Back to blog",
@@ -401,6 +406,11 @@
     },
     "progress": {
       "label": "Progress",
+      "activeStep": "Active step",
+      "toggle": {
+        "show": "Show steps",
+        "hide": "Hide steps"
+      },
       "steps": {
         "projectInfo": {
           "title": "About Project",

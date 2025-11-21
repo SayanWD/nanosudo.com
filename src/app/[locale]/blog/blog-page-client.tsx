@@ -154,6 +154,53 @@ export function BlogPageClient(): ReactElement {
             )}
           </Container>
         </section>
+
+        <section className="border-t border-border/60 bg-gradient-to-b from-surface/70 to-background/40 py-section">
+          <Container>
+            <div className="max-w-3xl mx-auto space-y-6 text-center">
+              <motion.p
+                className="text-xs font-semibold uppercase tracking-[0.32em] text-muted-foreground"
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                {t("blog.list.cta.title")}
+              </motion.p>
+              <motion.h2
+                className="font-heading text-3xl md:text-4xl"
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                {t("blog.list.cta.title")}
+              </motion.h2>
+              <motion.p
+                className="text-lg text-muted-foreground"
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                {t("blog.list.cta.description")}
+              </motion.p>
+              <motion.div
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                variants={fadeInUp}
+              >
+                <Link
+                  href="/brief"
+                  className="inline-flex items-center justify-center rounded-full border-2 border-accent bg-accent px-10 py-4 text-base font-semibold text-accent-foreground shadow-soft transition hover:-translate-y-1 hover:bg-accent/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  {t("blog.list.cta.button")}
+                </Link>
+              </motion.div>
+            </div>
+          </Container>
+        </section>
       </main>
     </SiteShell>
   );

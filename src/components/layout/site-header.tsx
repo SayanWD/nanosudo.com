@@ -1,7 +1,7 @@
 "use client";
 
 // Responsive site header with navigation and CTA.
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { ReactElement } from "react";
 import { useTranslations } from 'next-intl';
 
@@ -30,17 +30,6 @@ function AnimatedLogoText(): ReactElement {
 export function SiteHeader(): ReactElement {
   const t = useTranslations();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isMenuScrolled, setIsMenuScrolled] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleScroll = (): void => {
-      setIsMenuScrolled(window.scrollY > 12);
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const toggleMenu = (): void => {
     setIsMenuOpen((prev) => !prev);

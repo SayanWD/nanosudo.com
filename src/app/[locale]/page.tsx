@@ -58,7 +58,8 @@ const staggerContainer = {
 // Adaptive viewport settings for mobile and desktop
 // Use amount instead of negative margins for better mobile compatibility
 // amount: 0.2 means trigger when 20% of element is visible
-const getViewportSettings = (amount = 0.2): { once: true; amount: number } => ({ once: true, amount });
+type ViewportSettings = { readonly once: true; readonly amount: number };
+const getViewportSettings = (amount = 0.2): ViewportSettings => ({ once: true, amount });
 
 const HERO_PHRASE_KEYS = ["results", "scale", "convert", "automate"] as const;
 type HeroPhraseKey = (typeof HERO_PHRASE_KEYS)[number];
@@ -67,12 +68,12 @@ function HeroSection(): ReactElement {
   const t = useTranslations();
   const [phraseIndex, setPhraseIndex] = useState(0);
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     const intervalId = window.setInterval(() => {
       setPhraseIndex((prev) => (prev + 1) % HERO_PHRASE_KEYS.length);
     }, 4200);
 
-    return () => window.clearInterval(intervalId);
+    return (): void => window.clearInterval(intervalId);
   }, []);
 
   const activePhraseKey: HeroPhraseKey = HERO_PHRASE_KEYS[phraseIndex];

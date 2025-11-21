@@ -1,7 +1,7 @@
 "use client";
 
 // Responsive site header with navigation and CTA.
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactElement } from "react";
 import { useTranslations } from 'next-intl';
 
@@ -30,6 +30,17 @@ function AnimatedLogoText(): ReactElement {
 export function SiteHeader(): ReactElement {
   const t = useTranslations();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isMenuScrolled, setIsMenuScrolled] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleScroll = (): void => {
+      setIsMenuScrolled(window.scrollY > 12);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMenu = (): void => {
     setIsMenuOpen((prev) => !prev);
@@ -40,7 +51,27 @@ export function SiteHeader(): ReactElement {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/40 bg-surface/60 backdrop-blur-xl transition-colors duration-200">
+    <header className="sticky top-0 z-50 border-b border-border/40 bg-transparent">
+      <div
+        className="absolute inset-0 -z-10 pointer-events-none overflow-hidden transition-opacity duration-300"
+        aria-hidden="true"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-background/92 via-background/88 to-muted/35 backdrop-blur-2xl" />
+        <div className="absolute inset-0">
+          <div className="absolute -left-1/4 -top-1/4 h-[400px] w-[400px] rounded-full bg-[#99b9ff] opacity-25 blur-3xl transition-opacity duration-1000 dark:opacity-15" />
+          <div className="absolute -right-1/4 -top-1/3 h-[350px] w-[350px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-10" />
+        </div>
+        <div
+          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, currentColor 1px, transparent 1px),
+              linear-gradient(to bottom, currentColor 1px, transparent 1px)
+            `,
+            backgroundSize: '48px 48px',
+          }}
+        />
+      </div>
       <Container className="flex h-16 items-center justify-between gap-6 md:h-20">
         <Link
           href="/"

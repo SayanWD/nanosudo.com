@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactElement } from "react";
-import { motion, useSpring, useMotionValueEvent, useInView } from "framer-motion";
+import { motion, useSpring, useMotionValueEvent, useInView, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
@@ -29,6 +29,7 @@ import {
   Instagram,
   Github,
   Send,
+  Mail,
   type LucideIcon,
 } from "lucide-react";
 
@@ -59,8 +60,23 @@ const staggerContainer = {
 // amount: 0.2 means trigger when 20% of element is visible
 const getViewportSettings = (amount = 0.2): { once: true; amount: number } => ({ once: true, amount });
 
+const HERO_PHRASE_KEYS = ["results", "scale", "convert", "automate"] as const;
+type HeroPhraseKey = (typeof HERO_PHRASE_KEYS)[number];
+
 function HeroSection(): ReactElement {
   const t = useTranslations();
+  const [phraseIndex, setPhraseIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setPhraseIndex((prev) => (prev + 1) % HERO_PHRASE_KEYS.length);
+    }, 4200);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
+
+  const activePhraseKey: HeroPhraseKey = HERO_PHRASE_KEYS[phraseIndex];
+
   return (
     <section className="relative py-section overflow-hidden">
       {/* Background with gradient orbs and grid pattern */}
@@ -116,11 +132,30 @@ function HeroSection(): ReactElement {
               <p className="text-sm font-semibold uppercase tracking-[0.32em] text-muted-foreground">
                 {t("home.hero.subtitle")}
               </p>
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl leading-tight">
-                {t.rich("home.hero.title", {
-                  highlight: (chunks) => <span className="text-accent">{chunks}</span>,
-                })}
-              </h1>
+              <motion.h1
+                className="font-heading text-4xl md:text-5xl lg:text-6xl leading-tight flex flex-wrap items-center gap-2 justify-center md:justify-start"
+                variants={fadeInUp}
+              >
+                <span>
+                  {t.rich("home.hero.dynamic.prefix", {
+                    wave: (chunks) => <span className="wave-highlight">{chunks}</span>,
+                  })}
+                </span>
+                <span className="inline-flex min-h-[1.1em] items-center" role="status" aria-live="polite">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={activePhraseKey}
+                      className="bg-gradient-to-r from-accent via-[#8a7bff] to-accent bg-[length:200%_200%] bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(138,123,255,0.45)]"
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0, backgroundPosition: ['0% 50%', '100% 50%'] }}
+                      exit={{ opacity: 0, y: -12 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      {t(`home.hero.dynamic.phrases.${activePhraseKey}`)}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+              </motion.h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto md:mx-0">
                 {t("home.hero.description")}
               </p>
@@ -1368,9 +1403,26 @@ function ProjectCardContent({ project }: { readonly project: PortfolioProject })
 
 function FinalCTASection(): ReactElement {
   const t = useTranslations();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   return (
-    <section className="border-t border-border/60 py-section bg-gradient-to-b from-surface/40 to-surface/80">
-      <Container className="max-w-4xl">
+    <section className="relative border-t border-border/60 py-section overflow-hidden">
+      {/* Background video */}
+      <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+        <video
+          className="h-full w-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/main_back.mp4"
+          disablePictureInPicture
+        >
+          <source src="/main_back.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <Container className="relative z-10 max-w-4xl">
         <motion.div
           className="space-y-10 text-balance"
           initial="initial"
@@ -1427,29 +1479,74 @@ function FinalCTASection(): ReactElement {
           </motion.div>
 
           {/* CTA Section */}
-          <motion.div
-            className="space-y-4 text-center"
-            variants={fadeInUp}
-          >
-            <motion.p
-              className="text-sm text-muted-foreground"
-              variants={fadeInUp}
-            >
+          <motion.div className="space-y-4 text-center" variants={fadeInUp}>
+            <motion.p className="text-sm text-muted-foreground" variants={fadeInUp}>
               {t("home.finalCta.subtitle")}
             </motion.p>
-            <motion.div
-              variants={fadeInUp}
-            >
-              <Link
-                href="/brief"
+            <motion.div variants={fadeInUp}>
+              <button
+                type="button"
+                onClick={() => setIsContactModalOpen(true)}
                 className="btn-accent inline-flex items-center justify-center rounded-lg bg-accent px-10 py-5 text-base font-semibold normal-case border-2 shadow-soft transition-all hover:bg-accent/90 hover:shadow-lg hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
               >
                 {t("common.cta.getFreeConsultation")}
-              </Link>
+              </button>
             </motion.div>
           </motion.div>
         </motion.div>
       </Container>
+
+      {isContactModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 backdrop-blur-sm px-4"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="w-full max-w-md space-y-6 rounded-2xl border border-border/60 bg-surface/95 p-6 shadow-soft text-left">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.32em] text-muted-foreground">
+                  {t("contact.hero.label")}
+                </p>
+                <h3 className="font-heading text-2xl text-foreground">{t("contact.hero.title")}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{t("contact.hero.description")}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsContactModalOpen(false)}
+                className="rounded-full border border-border/60 p-2 text-muted-foreground transition hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                aria-label="Close contact options"
+              >
+                <ArrowRight className="h-4 w-4 rotate-45" />
+              </button>
+            </div>
+            <div className="grid gap-3">
+              {[
+                { icon: MessageCircle, label: t("common.footer.whatsapp"), href: "https://wa.me/77478277485" },
+                { icon: Send, label: t("common.footer.telegram"), href: "https://t.me/satoshi_iam" },
+                { icon: Instagram, label: t("common.footer.instagram"), href: "https://instagram.com/satoshi_iam" },
+                { icon: Linkedin, label: t("common.footer.linkedin"), href: "https://www.linkedin.com/in/sayan-roor/" },
+                { icon: Github, label: t("common.footer.github"), href: "https://github.com/SayanWD" },
+                { icon: Mail, label: t("common.footer.email"), href: "mailto:roorsayan@gmail.com" },
+              ].map(({ icon: Icon, label, href }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="flex items-center justify-between rounded-xl border border-border/60 bg-surface px-4 py-3 text-sm font-semibold text-foreground shadow-soft transition hover:border-accent hover:bg-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                >
+                  <span className="flex items-center gap-3">
+                    <Icon className="h-5 w-5 text-accent" />
+                    {label}
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -1474,6 +1571,28 @@ export default function Home(): ReactElement {
         <PortfolioSection />
         <FinalCTASection />
       </main>
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+        <button
+          type="button"
+          className="rounded-full border border-border/60 bg-surface/80 p-3 text-foreground shadow-soft transition hover:-translate-y-1 hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          aria-label="Scroll to top"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
+          <ArrowRight className="h-4 w-4 -rotate-90" />
+        </button>
+        <button
+          type="button"
+          className="rounded-full border border-border/60 bg-surface/80 p-3 text-foreground shadow-soft transition hover:translate-y-1 hover:bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          aria-label="Scroll to bottom"
+          onClick={() => {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+          }}
+        >
+          <ArrowRight className="h-4 w-4 rotate-90" />
+        </button>
+      </div>
     </SiteShell>
   );
 }

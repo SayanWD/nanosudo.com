@@ -214,7 +214,16 @@
       "description": "High-performance web applications on Next.js and TypeScript. Full cycle: development, integrations with CRM/1C/Kaspi, marketing. ROI 2-3 months.",
       "photoPlaceholder": "Photo — Sayan Roor",
       "resume": "Resume",
-      "commercialProposal": "Commercial Proposal"
+      "commercialProposal": "Commercial Proposal",
+      "dynamic": {
+        "prefix": "I develop <wave>solutions</wave> that",
+        "phrases": {
+          "results": "deliver measurable results",
+          "scale": "scale revenue reliably",
+          "convert": "convert visitors faster",
+          "automate": "automate operations"
+        }
+      }
     },
     "stats": {
       "label": "results",

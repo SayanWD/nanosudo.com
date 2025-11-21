@@ -64,6 +64,8 @@ const getViewportSettings = (amount = 0.2): ViewportSettings => ({ once: true, a
 const HERO_PHRASE_KEYS = ["results", "scale", "convert", "automate"] as const;
 type HeroPhraseKey = (typeof HERO_PHRASE_KEYS)[number];
 
+import { HeroGalaxyBackground } from "@/components/background";
+
 function HeroSection(): ReactElement {
   const t = useTranslations();
   const [phraseIndex, setPhraseIndex] = useState(0);
@@ -79,47 +81,9 @@ function HeroSection(): ReactElement {
   const activePhraseKey: HeroPhraseKey = HERO_PHRASE_KEYS[phraseIndex];
 
   return (
-    <section className="relative py-section overflow-hidden">
-      {/* Background with gradient orbs and grid pattern */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
-        {/* Base gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
-        
-        {/* Animated gradient orbs */}
-        <div className="absolute inset-0">
-          {/* Orb 1 - Azure (top-left) */}
-          <div
-            className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full bg-[#99b9ff] opacity-20 blur-3xl transition-opacity duration-1000 dark:opacity-10"
-          />
-          
-          {/* Orb 2 - Spring Green (top-right) */}
-          <div
-            className="absolute -right-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
-          />
-          
-          {/* Orb 3 - Flamingo (bottom-left) */}
-          <div
-            className="absolute -bottom-1/4 -left-1/4 h-[550px] w-[550px] rounded-full bg-[#ffb3c2] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
-          />
-          
-          {/* Orb 4 - Lime (bottom-right) */}
-          <div
-            className="absolute -bottom-1/4 -right-1/4 h-[450px] w-[450px] rounded-full bg-[#f0ffa6] opacity-12 blur-3xl transition-opacity duration-1000 dark:opacity-6"
-          />
-        </div>
-        
-        {/* Subtle grid pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, currentColor 1px, transparent 1px),
-              linear-gradient(to bottom, currentColor 1px, transparent 1px)
-            `,
-            backgroundSize: '48px 48px',
-          }}
-        />
-      </div>
+    <section className="relative py-section overflow-hidden min-h-[80vh] md:min-h-screen flex items-center">
+      {/* Galaxy background based on ANIMATION.md, adapted to brand colors */}
+      <HeroGalaxyBackground />
       
       <Container className="relative z-10">
         <div className="grid gap-12 lg:grid-cols-[1fr_400px] lg:items-center items-center">

@@ -218,10 +218,10 @@
       "dynamic": {
         "prefix": "I develop <wave>solutions</wave> that",
         "phrases": {
-          "results": "deliver measurable results",
-          "scale": "scale revenue reliably",
-          "convert": "convert visitors faster",
-          "automate": "automate operations"
+          "results": "deliver results",
+          "scale": "scale revenue",
+          "convert": "boost conversion",
+          "automate": "automate processes"
         }
       }
     },

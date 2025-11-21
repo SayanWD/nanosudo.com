@@ -2,20 +2,20 @@
 -- Run this script to ensure all tables, functions, and policies are created
 
 -- Enable required extensions
-create extension if not exists "uuid-ossp";
-create extension if not exists "pgcrypto";
+create extension  "uuid-ossp";
+create extension  "pgcrypto";
 
 -- ============================================
 -- 1. Admin Members Table
 -- ============================================
-create table if not exists public.admin_members (
+create table  public.admin_members (
   auth_user_id uuid primary key,
   email text unique,
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now())
 );
 
-create index if not exists admin_members_email_idx on public.admin_members (email);
+create index  admin_members_email_idx on public.admin_members (email);
 
 -- ============================================
 -- 2. Helper Function for updated_at
@@ -33,7 +33,7 @@ $$;
 -- ============================================
 -- 3. Submissions Table (Old Brief Form)
 -- ============================================
-create table if not exists public.submissions (
+create table  public.submissions (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now()),
@@ -78,15 +78,15 @@ before update on public.submissions
 for each row
 execute function public.set_updated_at_timestamp();
 
-create index if not exists submissions_created_at_idx on public.submissions (created_at desc);
-create index if not exists submissions_status_idx on public.submissions (status);
-create index if not exists submissions_contact_email_idx on public.submissions (contact_email);
-create index if not exists submissions_contact_method_idx on public.submissions (contact_method);
+create index  submissions_created_at_idx on public.submissions (created_at desc);
+create index  submissions_status_idx on public.submissions (status);
+create index  submissions_contact_email_idx on public.submissions (contact_email);
+create index  submissions_contact_method_idx on public.submissions (contact_method);
 
 -- ============================================
 -- 4. Brief Submissions Table (New Interactive Form)
 -- ============================================
-create table if not exists public.brief_submissions (
+create table  public.brief_submissions (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now()),
@@ -117,10 +117,10 @@ create table if not exists public.brief_submissions (
   user_agent text
 );
 
-create index if not exists brief_submissions_created_at_idx on public.brief_submissions (created_at desc);
-create index if not exists brief_submissions_status_idx on public.brief_submissions (status);
-create index if not exists brief_submissions_contact_email_idx on public.brief_submissions (contact_email);
-create index if not exists brief_submissions_project_type_idx on public.brief_submissions (project_type);
+create index  brief_submissions_created_at_idx on public.brief_submissions (created_at desc);
+create index  brief_submissions_status_idx on public.brief_submissions (status);
+create index  brief_submissions_contact_email_idx on public.brief_submissions (contact_email);
+create index  brief_submissions_project_type_idx on public.brief_submissions (project_type);
 
 drop trigger if exists brief_submissions_set_updated_at on public.brief_submissions;
 create trigger brief_submissions_set_updated_at
@@ -133,7 +133,7 @@ execute function public.set_updated_at_timestamp();
 -- ============================================
 do $$
 begin
-  if not exists (
+   (
     select 1
     from storage.buckets
     where id = 'brandbooks'

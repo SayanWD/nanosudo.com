@@ -1,3 +1,1 @@
-export { DynamicBackground } from './dynamic-background';
-export { HeroGalaxyBackground } from './hero-galaxy-background';
-
+export { DynamicBackground } from './dynamic-background'

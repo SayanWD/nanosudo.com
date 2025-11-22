@@ -4,7 +4,7 @@
 import type { ReactElement, ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
-import { DynamicBackground } from "@/components/background/dynamic-background";
+// Dynamic background removed to simplify hero visuals and avoid intrusive animations
 import { SiteFooter } from "./site-footer";
 import { SiteHeader } from "./site-header";
 
@@ -34,7 +34,7 @@ export function SiteShell({
         className,
       )}
     >
-      <DynamicBackground />
+      {/* Static background only; dynamic background removed to improve UX */}
       {resolvedHeader ? (
         <header className="sticky top-0 z-20 border-b border-border/60 bg-surface/60 backdrop-blur-xl">
           {resolvedHeader}

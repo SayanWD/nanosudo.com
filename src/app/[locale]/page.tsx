@@ -6,14 +6,14 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
 import { StructuredData, generatePersonStructuredData, generateWebsiteStructuredData, generateServiceStructuredData } from "@/components/seo/structured-data";
-import { 
-  Code, 
-  Link2, 
-  Zap, 
-  BarChart3, 
-  Shield, 
-  FileText, 
-  CreditCard, 
+import {
+  Code,
+  Link2,
+  Zap,
+  BarChart3,
+  Shield,
+  FileText,
+  CreditCard,
   Eye,
   CheckCircle2,
   TrendingUp,
@@ -64,7 +64,6 @@ const getViewportSettings = (amount = 0.2): ViewportSettings => ({ once: true, a
 const HERO_PHRASE_KEYS = ["results", "scale", "convert", "automate"] as const;
 type HeroPhraseKey = (typeof HERO_PHRASE_KEYS)[number];
 
-import { HeroGalaxyBackground } from "@/components/background";
 
 function HeroSection(): ReactElement {
   const t = useTranslations();
@@ -82,9 +81,7 @@ function HeroSection(): ReactElement {
 
   return (
     <section className="relative py-section overflow-hidden min-h-[80vh] md:min-h-screen flex items-center">
-      {/* Galaxy background based on ANIMATION.md, adapted to brand colors */}
-      <HeroGalaxyBackground />
-      
+
       <Container className="relative z-10">
         <div className="grid gap-12 lg:grid-cols-[1fr_400px] lg:items-center items-center">
           <motion.div
@@ -256,11 +253,11 @@ type TypewriterTextProps = {
   readonly showCursor?: boolean;
 };
 
-function TypewriterText({ 
-  text, 
-  speed = 30, 
+function TypewriterText({
+  text,
+  speed = 30,
   delay = 0,
-  showCursor = true 
+  showCursor = true
 }: TypewriterTextProps): ReactElement {
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -304,17 +301,17 @@ function TypewriterText({
 /**
  * Animated number component that counts from 0 to target
  */
-function AnimatedNumber({ 
+function AnimatedNumber({
   value
-}: { 
+}: {
   readonly value: string;
 }): ReactElement {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, getViewportSettings(0.2));
-  
+
   // Parse value to extract number and suffix
   const match = value.match(/^([\d.]+)(.*)$/);
-  
+
   const spring = useSpring(0, { stiffness: 50, damping: 30 });
   const [display, setDisplay] = useState(0);
 
@@ -346,8 +343,8 @@ function AnimatedNumber({
   }
 
   // Format number (preserve decimals if original had them)
-  const formattedNum = hasDecimals 
-    ? display.toFixed(decimalPlaces) 
+  const formattedNum = hasDecimals
+    ? display.toFixed(decimalPlaces)
     : display.toString();
 
   return <span ref={ref}>{formattedNum}{suffix}</span>;
@@ -394,7 +391,7 @@ function StatsCard({ stat }: StatsCardProps): ReactElement {
         whileHover={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       />
-      
+
       <div className="relative z-10">
         <div className="flex justify-center mb-2">
           <motion.div
@@ -519,30 +516,30 @@ function ExpertiseSection(): ReactElement {
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
         {/* Base gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
-        
+
         {/* Animated gradient orbs */}
         <div className="absolute inset-0">
           {/* Orb 1 - Azure (top-left) */}
           <div
             className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full bg-[#99b9ff] opacity-20 blur-3xl transition-opacity duration-1000 dark:opacity-10"
           />
-          
+
           {/* Orb 2 - Spring Green (top-right) */}
           <div
             className="absolute -right-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
           />
-          
+
           {/* Orb 3 - Flamingo (bottom-left) */}
           <div
             className="absolute -bottom-1/4 -left-1/4 h-[550px] w-[550px] rounded-full bg-[#ffb3c2] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
           />
-          
+
           {/* Orb 4 - Lime (bottom-right) */}
           <div
             className="absolute -bottom-1/4 -right-1/4 h-[450px] w-[450px] rounded-full bg-[#f0ffa6] opacity-12 blur-3xl transition-opacity duration-1000 dark:opacity-6"
           />
         </div>
-        
+
         {/* Subtle grid pattern overlay */}
         <div
           className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
@@ -555,7 +552,7 @@ function ExpertiseSection(): ReactElement {
           }}
         />
       </div>
-      
+
       <Container className="relative z-10 space-y-12">
         <motion.div
           className="space-y-4 text-balance text-center"
@@ -601,8 +598,8 @@ function ExpertiseSection(): ReactElement {
                 <div className="flex-1 space-y-3">
                   <h3 className="font-heading text-xl">{t(`home.expertise.items.${item.id}.title`)}</h3>
                   <p className="text-sm text-muted-foreground">
-                    <TypewriterText 
-                      text={t(`home.expertise.items.${item.id}.description`)} 
+                    <TypewriterText
+                      text={t(`home.expertise.items.${item.id}.description`)}
                       speed={15}
                       delay={index * 300}
                       showCursor={true}
@@ -674,12 +671,12 @@ function WhyMeCard({ advantage, t }: WhyMeCardProps): ReactElement {
         whileHover={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       />
-      
+
       <div className="flex flex-col h-full gap-5 relative z-10">
         <div className="flex items-start gap-4">
-          <motion.div 
+          <motion.div
             className="why-me-icon-small-wrapper flex-shrink-0"
-            style={{ 
+            style={{
               '--icon-bg-color': advantage.colorBright,
             } as React.CSSProperties}
             whileHover={{
@@ -713,9 +710,9 @@ function WhyMeCard({ advantage, t }: WhyMeCardProps): ReactElement {
             </p>
           </div>
         </div>
-        <div 
+        <div
           className="why-me-benefit mt-auto"
-          style={{ 
+          style={{
             '--benefit-color': advantage.color,
             '--benefit-bg-color': advantage.colorBright,
           } as React.CSSProperties}
@@ -876,7 +873,7 @@ function ProcessStepCard({ step, t }: ProcessStepCardProps): ReactElement {
         whileHover={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       />
-      
+
       <div className="grid gap-6 md:grid-cols-[100px_1fr] relative z-10">
         <div className="flex flex-col items-center md:items-start">
           <span className="text-4xl font-heading text-accent mb-2">{step.number}</span>
@@ -952,30 +949,30 @@ function ProcessSection(): ReactElement {
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
         {/* Base gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
-        
+
         {/* Animated gradient orbs */}
         <div className="absolute inset-0">
           {/* Orb 1 - Azure (top-left) */}
           <div
             className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full bg-[#99b9ff] opacity-20 blur-3xl transition-opacity duration-1000 dark:opacity-10"
           />
-          
+
           {/* Orb 2 - Spring Green (top-right) */}
           <div
             className="absolute -right-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
           />
-          
+
           {/* Orb 3 - Flamingo (bottom-left) */}
           <div
             className="absolute -bottom-1/4 -left-1/4 h-[550px] w-[550px] rounded-full bg-[#ffb3c2] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
           />
-          
+
           {/* Orb 4 - Lime (bottom-right) */}
           <div
             className="absolute -bottom-1/4 -right-1/4 h-[450px] w-[450px] rounded-full bg-[#f0ffa6] opacity-12 blur-3xl transition-opacity duration-1000 dark:opacity-6"
           />
         </div>
-        
+
         {/* Subtle grid pattern overlay */}
         <div
           className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
@@ -988,7 +985,7 @@ function ProcessSection(): ReactElement {
           }}
         />
       </div>
-      
+
       <Container className="relative z-10 space-y-12">
         <motion.div
           className="space-y-4 text-balance text-center"
@@ -1087,7 +1084,7 @@ function GuaranteeCard({ guarantee, t }: GuaranteeCardProps): ReactElement {
         whileHover={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       />
-      
+
       <div className="relative z-10">
         <div className="flex justify-center mb-4">
           <motion.div
@@ -1209,30 +1206,30 @@ function PortfolioSection(): ReactElement {
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
         {/* Base gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
-        
+
         {/* Animated gradient orbs */}
         <div className="absolute inset-0">
           {/* Orb 1 - Azure (top-left) */}
           <div
             className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full bg-[#99b9ff] opacity-20 blur-3xl transition-opacity duration-1000 dark:opacity-10"
           />
-          
+
           {/* Orb 2 - Spring Green (top-right) */}
           <div
             className="absolute -right-1/4 -top-1/4 h-[500px] w-[500px] rounded-full bg-[#78ffd1] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
           />
-          
+
           {/* Orb 3 - Flamingo (bottom-left) */}
           <div
             className="absolute -bottom-1/4 -left-1/4 h-[550px] w-[550px] rounded-full bg-[#ffb3c2] opacity-15 blur-3xl transition-opacity duration-1000 dark:opacity-8"
           />
-          
+
           {/* Orb 4 - Lime (bottom-right) */}
           <div
             className="absolute -bottom-1/4 -right-1/4 h-[450px] w-[450px] rounded-full bg-[#f0ffa6] opacity-12 blur-3xl transition-opacity duration-1000 dark:opacity-6"
           />
         </div>
-        
+
         {/* Subtle grid pattern overlay */}
         <div
           className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03]"
@@ -1245,7 +1242,7 @@ function PortfolioSection(): ReactElement {
           }}
         />
       </div>
-      
+
       <Container className="relative z-10 space-y-12">
         <motion.div
           className="space-y-4 text-balance text-center"
@@ -1371,20 +1368,9 @@ function FinalCTASection(): ReactElement {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   return (
     <section className="relative border-t border-border/60 py-section overflow-hidden">
-      {/* Background video */}
+      {/* Static background (video removed for improved UX) */}
       <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
-        <video
-          className="h-full w-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/main_back.mp4"
-          disablePictureInPicture
-        >
-          <source src="/main_back.mp4" type="video/mp4" />
-        </video>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
       </div>
 
       <Container className="relative z-10 max-w-4xl">

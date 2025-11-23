@@ -22,8 +22,8 @@ export function SiteShell({
   footer,
 }: SiteShellProps): ReactElement {
   // Show header on all pages
-  const resolvedHeader = header !== undefined 
-    ? header 
+  const resolvedHeader = header !== undefined
+    ? header
     : <SiteHeader />;
   const resolvedFooter = footer ?? <SiteFooter />;
 

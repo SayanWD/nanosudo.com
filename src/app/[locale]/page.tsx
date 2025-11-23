@@ -35,6 +35,7 @@ import {
 
 import Image from "next/image";
 import { Container } from "@/components/layout/container";
+import CTAParticles from "@/components/background/cta-particles-clean";
 import { SiteShell } from "@/components/layout/site-shell";
 import { TechnologiesMarquee } from "@/components/technologies-marquee";
 import { getFeaturedProjects, getTranslatedProject, type PortfolioProject } from "@/lib/portfolio-data";
@@ -1372,6 +1373,8 @@ function FinalCTASection(): ReactElement {
       <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/30" />
       </div>
+
+      <CTAParticles />
 
       <Container className="relative z-10 max-w-4xl">
         <motion.div

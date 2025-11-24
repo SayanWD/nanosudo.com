@@ -940,7 +940,7 @@ function ProcessSection(): ReactElement {
       description: 'Смотрю аналитику еженедельно, оптимизирую рекламу, предлагаю улучшения, поддержка 24/7.',
       duration: t('home.process.steps.growth.duration'),
       output: 'Стабильный рост продаж',
-      payment: 'Абонентка от 80,000₸/мес (если нужна)',
+      payment: 'Абонентка от 112,000₸/мес (если нужна)',
     },
   ];
 

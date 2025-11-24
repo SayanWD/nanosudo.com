@@ -232,7 +232,7 @@ function buildClientEmailHtml(
             <p>Часов: ${calculation.totalHours}</p>
             <p class="total">${formatCurrency(calculation.totalCost, locale)}</p>
             <p style="font-size: 12px; color: #666; margin-top: 10px;">
-              * Discovery & Планирование — ${locale === 'ru' ? '900 ₽/ч' : locale === 'kk' ? '2,700 ₸/ч' : '$10/ч'}<br>
+              * Discovery & Планирование — ${locale === 'ru' ? '1 260 ₽/ч' : locale === 'kk' ? '3 780 ₸/ч' : '$14/ч'}<br>
               * ${locale === 'kk' ? 'Все тарифы в тенге на 40% дешевле' : locale === 'ru' ? 'Все тарифы в рублях' : 'Все тарифы уменьшены на 50% от рыночных'}
             </p>
           </div>

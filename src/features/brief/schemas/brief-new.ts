@@ -185,20 +185,20 @@ export const MODULE_HOURS = {
 // Дифференцированные ставки по типам работ (USD/час)
 // Уменьшены на 50% от рыночных ставок для Казахстана/СНГ
 export const HOURLY_RATES = {
-  discovery: 10, // Discovery & Планирование
-  frontend: 20, // Frontend разработка (было 40)
-  backend: 25, // Backend разработка (было 50)
-  design: 17.5, // UI/UX дизайн (было 35)
-  ecommerce: 25, // E-commerce функционал (было 50)
-  integrations: 30, // Интеграции (высокая сложность) (было 60)
-  technical: 30, // Технические задачи (оптимизация, безопасность) (было 60)
-  testing: 15, // Тестирование & QA
-  deployment: 30, // Деплой и настройка
-  documentation: 10, // Документация
+  discovery: 14, // Discovery & Планирование (+40%)
+  frontend: 28, // Frontend разработка (+40%)
+  backend: 35, // Backend разработка (+40%)
+  design: 24.5, // UI/UX дизайн (+40%)
+  ecommerce: 35, // E-commerce функционал (+40%)
+  integrations: 42, // Интеграции (высокая сложность) (+40%)
+  technical: 42, // Технические задачи (оптимизация, безопасность) (+40%)
+  testing: 21, // Тестирование & QA (+40%)
+  deployment: 42, // Деплой и настройка (+40%)
+  documentation: 14, // Документация (+40%)
 } as const;
 
 // Устаревшая константа для обратной совместимости (используется в расчете)
-export const HOURLY_RATE = 50; // USD (средняя ставка)
+export const HOURLY_RATE = 70; // USD (средняя ставка) (+40%)
 
 export const URGENCY_COEFFICIENTS = {
   urgent: 1.3, // <4 недели

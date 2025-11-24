@@ -131,7 +131,17 @@ export default function CTAParticlesClean(): React.ReactElement {
     }
 
     function resize(): void {
-      const rect = wrapperRef.current!.getBoundingClientRect();
+      if (!wrapperRef.current) {
+        width = 0;
+        height = 0;
+        return;
+      }
+      const rect = wrapperRef.current?.getBoundingClientRect();
+      if (!rect) {
+        width = 0;
+        height = 0;
+        return;
+      }
       width = Math.max(0, Math.floor(rect.width));
       height = Math.max(0, Math.floor(rect.height));
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -153,7 +163,15 @@ export default function CTAParticlesClean(): React.ReactElement {
     // kept for readability — not used programmatically
 
     function onPointerMove(e: PointerEvent): void {
-      const rect = wrapperRef.current!.getBoundingClientRect();
+      if (!wrapperRef.current) {
+        mouse.current.active = false;
+        return;
+      }
+      const rect = wrapperRef.current?.getBoundingClientRect();
+      if (!rect) {
+        mouse.current.active = false;
+        return;
+      }
       const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
       if (inside) {
         mouse.current.x = e.clientX - rect.left;
@@ -236,25 +254,27 @@ export default function CTAParticlesClean(): React.ReactElement {
 
     // Listen on window so we receive pointer events even when overlay elements
     // or page elements above the canvas prevent the wrapper from receiving them.
-    window.addEventListener("pointermove", (e: PointerEvent) => {
+    const windowPointerMove = (e: PointerEvent): void => {
       const prevActive = mouse.current.active;
       onPointerMove(e);
       // if became active now (enter), trigger a short boost
       if (!prevActive && mouse.current.active) {
         boostUntil = performance.now() + BOOST_DURATION;
       }
-    });
+    };
+
+    window.addEventListener("pointermove", windowPointerMove);
     window.addEventListener("pointerup", onPointerLeave);
     window.addEventListener("pointercancel", onPointerLeave);
 
     const ro = new ResizeObserver(() => resize());
-    ro.observe(wrapperRef.current);
+    if (wrapperRef.current) ro.observe(wrapperRef.current);
     resize();
     rafRef.current = requestAnimationFrame(draw);
 
     return (): void => {
       ro.disconnect();
-      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointermove", windowPointerMove);
       window.removeEventListener("pointerup", onPointerLeave);
       window.removeEventListener("pointercancel", onPointerLeave);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);

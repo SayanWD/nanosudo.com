@@ -86,7 +86,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         hint: insertResult.error.hint,
       });
       return NextResponse.json(
-        { 
+        {
           error: "Failed to save submission",
           details: insertResult.error.message,
         },
@@ -221,12 +221,12 @@ function buildClientEmailHtml(
         <div class="content">
           <p>Здравствуйте, ${formData.contact.contactName}!</p>
           <p>Спасибо за вашу заявку на проект <strong>${formData.projectInfo.projectName}</strong>.</p>
-          
+
           <div class="notice">
             <p><strong>Важно:</strong> Мы рассмотрим вашу заявку и свяжемся с вами для уточнения деталей и финальной стоимости проекта.</p>
             <p>Указанная стоимость является <strong>ориентировочной</strong>. Финальные тарифы будут скорректированы после обсуждения деталей проекта.</p>
           </div>
-          
+
           <div class="calculation">
             <h3>Ориентировочная стоимость:</h3>
             <p>Часов: ${calculation.totalHours}</p>
@@ -236,7 +236,7 @@ function buildClientEmailHtml(
               * ${locale === 'kk' ? 'Все тарифы в тенге на 40% дешевле' : locale === 'ru' ? 'Все тарифы в рублях' : 'Все тарифы уменьшены на 50% от рыночных'}
             </p>
           </div>
-          
+
           <p>Мы свяжемся с вами в ближайшее время!</p>
           <p>С уважением,<br>Sayan Roor</p>
         </div>

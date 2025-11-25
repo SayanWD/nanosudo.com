@@ -1845,7 +1845,7 @@ Next.js — жылдам, SEO-оңтайландырылған сайттар қ
 // Обработчик запроса
 Функция ОбработатьЗапрос(Запрос) Экспорт
     ПараметрыЗапроса = Запрос.ПараметрыЗапроса;
-    
+
     Если Запрос.Метод = "GET" Тогда
         // Получение данных
         Возврат ПолучитьДанные(ПараметрыЗапроса);
@@ -1953,13 +1953,13 @@ export async function POST() {
   try {
     // Получаем товары из 1С
     const products = await oneC.getData('catalog/products');
-    
+
     // Синхронизируем с базой данных
     // ... логика синхронизации
-    
-    return NextResponse.json({ 
-      success: true, 
-      synced: products.length 
+
+    return NextResponse.json({
+      success: true,
+      synced: products.length
     });
   } catch (error) {
     return NextResponse.json(
@@ -2017,7 +2017,7 @@ The most modern and recommended approach. 1C provides HTTP services for data exc
 // Request handler
 Function ProcessRequest(Request) Export
     RequestParams = Request.RequestParams;
-    
+
     If Request.Method = "GET" Then
         // Get data
         Return GetData(RequestParams);
@@ -2125,13 +2125,13 @@ export async function POST() {
   try {
     // Get products from 1C
     const products = await oneC.getData('catalog/products');
-    
+
     // Sync with database
     // ... sync logic
-    
-    return NextResponse.json({ 
-      success: true, 
-      synced: products.length 
+
+    return NextResponse.json({
+      success: true,
+      synced: products.length
     });
   } catch (error) {
     return NextResponse.json(
@@ -2189,7 +2189,7 @@ Integrating 1C with web applications requires understanding both systems' archit
 // Сұрау өңдеушісі
 Функция СұраудыӨңдеу(Сұрау) Экспорт
     СұрауПараметрлері = Сұрау.СұрауПараметрлері;
-    
+
     Егер Сұрау.Әдіс = "GET" Онда
         // Деректерді алу
         Қайтару ДеректердіАлу(СұрауПараметрлері);
@@ -2297,13 +2297,13 @@ export async function POST() {
   try {
     // 1С-тен тауарларды алу
     const products = await oneC.getData('catalog/products');
-    
+
     // Дерекқормен синхронизациялау
     // ... синхронизация логикасы
-    
-    return NextResponse.json({ 
-      success: true, 
-      synced: products.length 
+
+    return NextResponse.json({
+      success: true,
+      synced: products.length
     });
   } catch (error) {
     return NextResponse.json(
@@ -2415,29 +2415,29 @@ export function ContactForm() {
   return (
     <form className="space-y-4">
       {/* Минимум полей */}
-      <input 
-        type="text" 
-        placeholder="Ваше имя" 
-        required 
+      <input
+        type="text"
+        placeholder="Ваше имя"
+        required
         aria-label="Имя"
       />
-      <input 
-        type="email" 
-        placeholder="Email" 
-        required 
+      <input
+        type="email"
+        placeholder="Email"
+        required
         aria-label="Email"
       />
-      
+
       {/* Социальное доказательство */}
       <p className="text-sm text-muted-foreground">
         ✓ Более 100 довольных клиентов
       </p>
-      
+
       {/* Четкий CTA */}
       <button type="submit" className="w-full">
         Получить консультацию бесплатно
       </button>
-      
+
       {/* Гарантия конфиденциальности */}
       <p className="text-xs text-muted-foreground">
         Ваши данные защищены
@@ -2462,12 +2462,12 @@ export function ContactForm() {
 // Пример A/B теста заголовка
 export function HeroSection() {
   const variant = useABTest('hero-title', ['A', 'B']);
-  
+
   const titles = {
     A: 'Создаем сайты, которые продают',
     B: 'Веб-сайты с гарантией конверсии',
   };
-  
+
   return (
     <h1>{titles[variant]}</h1>
   );
@@ -2559,29 +2559,29 @@ export function ContactForm() {
   return (
     <form className="space-y-4">
       {/* Minimum fields */}
-      <input 
-        type="text" 
-        placeholder="Your name" 
-        required 
+      <input
+        type="text"
+        placeholder="Your name"
+        required
         aria-label="Name"
       />
-      <input 
-        type="email" 
-        placeholder="Email" 
-        required 
+      <input
+        type="email"
+        placeholder="Email"
+        required
         aria-label="Email"
       />
-      
+
       {/* Social proof */}
       <p className="text-sm text-muted-foreground">
         ✓ Over 100 satisfied clients
       </p>
-      
+
       {/* Clear CTA */}
       <button type="submit" className="w-full">
         Get free consultation
       </button>
-      
+
       {/* Privacy guarantee */}
       <p className="text-xs text-muted-foreground">
         Your data is protected
@@ -2606,12 +2606,12 @@ export function ContactForm() {
 // Example A/B test for headline
 export function HeroSection() {
   const variant = useABTest('hero-title', ['A', 'B']);
-  
+
   const titles = {
     A: 'We build websites that sell',
     B: 'Websites with conversion guarantee',
   };
-  
+
   return (
     <h1>{titles[variant]}</h1>
   );
@@ -2703,29 +2703,29 @@ export function ContactForm() {
   return (
     <form className="space-y-4">
       {/* Минималды өрістер */}
-      <input 
-        type="text" 
-        placeholder="Сіздің атыңыз" 
-        required 
+      <input
+        type="text"
+        placeholder="Сіздің атыңыз"
+        required
         aria-label="Аты"
       />
-      <input 
-        type="email" 
-        placeholder="Email" 
-        required 
+      <input
+        type="email"
+        placeholder="Email"
+        required
         aria-label="Email"
       />
-      
+
       {/* Әлеуметтік дәлел */}
       <p className="text-sm text-muted-foreground">
         ✓ 100-ден астам қанағаттанған клиенттер
       </p>
-      
+
       {/* Анық CTA */}
       <button type="submit" className="w-full">
         Тегін консультация алу
       </button>
-      
+
       {/* Құпиялылық кепілдігі */}
       <p className="text-xs text-muted-foreground">
         Сіздің деректеріңіз қорғалған
@@ -2750,12 +2750,12 @@ export function ContactForm() {
 // Тақырыптың A/B тестінің мысалы
 export function HeroSection() {
   const variant = useABTest('hero-title', ['A', 'B']);
-  
+
   const titles = {
     A: 'Сататын сайттар құрамыз',
     B: 'Конверсия кепілдігімен веб-сайттар',
   };
-  
+
   return (
     <h1>{titles[variant]}</h1>
   );

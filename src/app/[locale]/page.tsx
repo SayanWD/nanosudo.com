@@ -36,7 +36,6 @@ import {
 import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import CTAParticles from "@/components/background/cta-particles-clean";
-import CTAParticlesHero from "@/components/background/cta-particles-hero";
 import CTAParticlesCTA from "@/components/background/cta-particles-cta";
 import { SiteShell } from "@/components/layout/site-shell";
 import { TechnologiesMarquee } from "@/components/technologies-marquee";
@@ -80,6 +79,7 @@ function HeroSection(): ReactElement {
     return (): void => window.clearInterval(intervalId);
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const activePhrase = t(`home.hero.rotatingPhrases.${phraseIndex}` as any);
 
   return (

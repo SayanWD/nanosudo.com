@@ -44,6 +44,14 @@
       "title": "Нәтиже <highlight>беретін шешімдерді әзірлеймін</highlight>",
       "description": "Next.js және TypeScript-те жоғары өнімді веб-қосымшалар. Толық цикл: әзірлеу, CRM/1С/Kaspi интеграциялары, маркетинг. Өтелу мерзімі 2-3 ай.",
       "photoPlaceholder": "Фото — Sayan Roor",
+      "mainTitle": "Толық циклді әзірлеу",
+      "imageAlt": "Sayan Roor - Full-stack әзірлеуші",
+      "rotatingPhrases": {
+        "0": "ТАЗА КОД",
+        "1": "ДЕРЕҚҚОРЛАР",
+        "2": "ИНТЕГРАЦИЯЛАР",
+        "3": "АНАЛИТИКА"
+      },
       "resume": "Резюме",
       "commercialProposal": "Коммерциялық ұсыныс",
       "dynamic": {
@@ -762,4 +770,3 @@
     }
   }
 }
-

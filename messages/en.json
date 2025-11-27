@@ -38,14 +38,6 @@
       "description": "One‑month delivery: strategy, development, integrations, launch & analytics. Focus on speed, conversion and ROI."
     }
   },
-  "home": {
-    "hero": {
-      "subtitle": "Full-stack developer · Almaty",
-      "title": "I develop solutions that <highlight>deliver results</highlight>",
-      "description": "High-performance web applications on Next.js and TypeScript. Full cycle: development, integrations with CRM/1C/Kaspi, marketing. ROI 2-3 months.",
-      "photoPlaceholder": "Photo — Sayan Roor"
-    }
-  },
   "cases": {
     "list": {
       "label": "cases",
@@ -213,6 +205,14 @@
       "title": "I develop solutions that <highlight>deliver results</highlight>",
       "description": "High-performance web applications on Next.js and TypeScript. Full cycle: development, integrations with CRM/1C/Kaspi, marketing. ROI 2-3 months.",
       "photoPlaceholder": "Photo — Sayan Roor",
+      "mainTitle": "Full-cycle development",
+      "imageAlt": "Sayan Roor - Full-stack developer",
+      "rotatingPhrases": {
+        "0": "CLEAN CODE",
+        "1": "DATABASES",
+        "2": "INTEGRATIONS",
+        "3": "ANALYTICS"
+      },
       "resume": "Resume",
       "commercialProposal": "Commercial Proposal",
       "dynamic": {
@@ -770,4 +770,3 @@
     }
   }
 }
-

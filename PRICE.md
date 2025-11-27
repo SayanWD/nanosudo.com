@@ -6,6 +6,7 @@ Values are taken from `src/features/brief/schemas/brief-new.ts` and example budg
 ---
 
 ## Overview
+
 - Currency: USD for hourly rates; some example budgets shown in KZT in `blog-data`.
 - Note: a +40% uplift was applied to base hourly rates (see repository constants).
 
@@ -29,6 +30,7 @@ These rates are defined in `src/features/brief/schemas/brief-new.ts` as `HOURLY_
 ## Module Hours (baseline hours used by calculator)
 
 Selected key values from `MODULE_HOURS` (hours):
+
 - Frontend
   - mainPage: 10
   - innerPage: 5
@@ -72,6 +74,7 @@ All entries are in `MODULE_HOURS` in `brief-new.ts`.
 ## Coefficients
 
 - Urgency coefficients (`URGENCY_COEFFICIENTS`):
+
   - urgent: 1.3 (<4 weeks)
   - normal: 1.0 (4–8 weeks)
   - flexible: 0.9 (>8 weeks)
@@ -87,13 +90,13 @@ All entries are in `MODULE_HOURS` in `brief-new.ts`.
 
 Example KZT budget shown in `src/lib/blog-data.ts` (used in public content as an example):
 
-| Phase | Timeline | Cost (KZT) |
-| --- | --- | --- |
-| Discovery & spec | 2 weeks | 3 080 000 ₸ |
-| Development (Front/Back) | 6 weeks | 9 100 000 ₸ |
-| Integrations (Kaspi/1C) | 2 weeks | 1 960 000 ₸ |
-| QA & launch | 1 week | 1 190 000 ₸ |
-| **Total** | **11 weeks** | **15 330 000 ₸** |
+| Phase                    | Timeline     | Cost (KZT)       |
+| ------------------------ | ------------ | ---------------- |
+| Discovery & spec         | 2 weeks      | 3 080 000 ₸      |
+| Development (Front/Back) | 6 weeks      | 9 100 000 ₸      |
+| Integrations (Kaspi/1C)  | 2 weeks      | 1 960 000 ₸      |
+| QA & launch              | 1 week       | 1 190 000 ₸      |
+| **Total**                | **11 weeks** | **15 330 000 ₸** |
 
 This example mirrors the rate and conversion logic in the repository and was updated after the hourly rate uplift.
 
@@ -116,6 +119,7 @@ total = base_with_coeffs + testing + fixed
 ```
 
 ## Notes & recommendations
+
 - Rates are stored in `src/features/brief/schemas/brief-new.ts`. Update that file to change canonical pricing.
 - Currency formatting and conversion helpers live in `src/lib/currency.ts` — use them when showing localized values.
 - Example KZT values in `src/lib/blog-data.ts` must be regenerated if exchange rates or coefficients change (these are static illustrative numbers in content).
@@ -124,6 +128,7 @@ total = base_with_coeffs + testing + fixed
 ---
 
 If you'd like, I can:
+
 - generate a CSV or JSON representation of these rates for external tools;
 - add a small `PRICE_CALC.md` with worked examples (small/medium/large project) using current constants.
 

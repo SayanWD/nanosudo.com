@@ -1,16 +1,16 @@
 'use client';
 
 // Footer with contact info and quick links.
-import { type ReactElement } from "react";
+import { type ReactElement, useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from 'next-intl';
 import { Link } from "@/i18n/routing";
-import { 
-  Github, 
-  Mail, 
-  Send, 
-  MessageCircle, 
-  Instagram, 
+import {
+  Github,
+  Mail,
+  Send,
+  MessageCircle,
+  Instagram,
   Linkedin,
   FileText,
   Briefcase,
@@ -24,7 +24,13 @@ import { useTheme } from "@/components/theme/theme-provider";
 
 function FooterBrandColumn(): ReactElement {
   const { theme } = useTheme();
-  const resolvedTheme = theme ?? "dark";
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const resolvedTheme = (mounted ? theme : "dark") ?? "dark";
   const logoSrc =
     resolvedTheme === "light"
       ? "/Nanosudo_logo_dark.png"
@@ -54,18 +60,18 @@ function FooterBrandColumn(): ReactElement {
   );
 }
 
-const CONTACT_LINKS: Array<{ 
-  readonly labelKey: string; 
+const CONTACT_LINKS: Array<{
+  readonly labelKey: string;
   readonly href: string;
   readonly icon: typeof Mail;
 }> = [
-  { labelKey: "common.footer.email", href: "mailto:roorsayan@gmail.com", icon: Mail },
-  { labelKey: "common.footer.whatsapp", href: "https://wa.me/77478277485", icon: MessageCircle },
-  { labelKey: "common.footer.telegram", href: "https://t.me/satoshi_iam", icon: Send },
-  { labelKey: "common.footer.instagram", href: "https://instagram.com/satoshi_iam", icon: Instagram },
-  { labelKey: "common.footer.linkedin", href: "https://www.linkedin.com/in/sayan-roor/", icon: Linkedin },
-  { labelKey: "common.footer.github", href: "https://github.com/SayanWD", icon: Github },
-];
+    { labelKey: "common.footer.email", href: "mailto:roorsayan@gmail.com", icon: Mail },
+    { labelKey: "common.footer.whatsapp", href: "https://wa.me/77478277485", icon: MessageCircle },
+    { labelKey: "common.footer.telegram", href: "https://t.me/satoshi_iam", icon: Send },
+    { labelKey: "common.footer.instagram", href: "https://instagram.com/satoshi_iam", icon: Instagram },
+    { labelKey: "common.footer.linkedin", href: "https://www.linkedin.com/in/sayan-roor/", icon: Linkedin },
+    { labelKey: "common.footer.github", href: "https://github.com/SayanWD", icon: Github },
+  ];
 
 const QUICK_LINKS: Array<{
   readonly labelKey: string;
@@ -73,18 +79,18 @@ const QUICK_LINKS: Array<{
   readonly route?: string;
   readonly icon: typeof FileText;
 }> = [
-  { labelKey: "common.footer.fillBrief", href: "/brief", icon: FileText },
-  { labelKey: "common.nav.cases", route: "/cases", icon: Briefcase },
-  { labelKey: "common.nav.about", route: "/about", icon: User },
-  { labelKey: "common.nav.blog", route: "/blog", icon: BookOpen },
-  { labelKey: "common.nav.contact", route: "/contact", icon: MessageSquare },
-];
+    { labelKey: "common.footer.fillBrief", href: "/brief", icon: FileText },
+    { labelKey: "common.nav.cases", route: "/cases", icon: Briefcase },
+    { labelKey: "common.nav.about", route: "/about", icon: User },
+    { labelKey: "common.nav.blog", route: "/blog", icon: BookOpen },
+    { labelKey: "common.nav.contact", route: "/contact", icon: MessageSquare },
+  ];
 
 const currentYear = new Date().getFullYear();
 
 export function SiteFooter(): ReactElement {
   const t = useTranslations();
-  
+
   return (
     <div className="relative text-sm text-muted-foreground overflow-hidden">
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -117,7 +123,7 @@ export function SiteFooter(): ReactElement {
               const href = link.route ?? link.href;
               const isExternal = href?.startsWith('#') || href?.startsWith('http') || href === '/brief';
               const Icon = link.icon;
-              
+
               return (
                 <li key={href}>
                   {isExternal ? (
